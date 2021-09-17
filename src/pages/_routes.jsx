@@ -1,29 +1,45 @@
 import React from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import HomePage from "./home";
-import NavSidebar from "../components/NavSidebar/NavSidebar";
-import HeaderOlab from "../components/HeaderOlab/Header_Olab";
+import Reservas from "./Reservas"
+import Usuario from "./Usuario"
+import Prestamos from "./Prestamos"
+import Historial from "./Historial"
+import Inventario from "./Inventario"
+import Politicas from "./Politicas"
+import Auxiliares from "./Auxiliarestab"
 
-const Routes = () => {
+/*<NavSidebar admin={admin} />
+<HeaderOlab/>*/
+
+const Routes = ({admin}) => {
+  admin = "true"
   return (
     <BrowserRouter>
-    <NavSidebar/>
-    <HeaderOlab/>
       <Switch>
         <Route path="/Usuario">
-          AAAAAAAAAAAAAAAAAAAAAAAAAAqui Va la componente Usuario
+          <Usuario admin={admin}/>
         </Route>
         <Route path="/Reservas">
-          AAAAAAAAAAAAAAAAAAAAAAAAAAqui Va la componente Reservas
+          <Reservas admin={admin}/>
         </Route>
         <Route path="/Prestamos">
-          AAAAAAAAAAAAAAAAAAAAAAAAAAqui Va la componente Prestamos
+          <Prestamos admin={admin}/>
         </Route>
         <Route path="/Historial">
-          AAAAAAAAAAAAAAAAAAAAAAAAAAqui Va la componente Historial
+          <Historial admin={admin}/>
         </Route>
         <Route path="/Inventario">
-          AAAAAAAAAAAAAAAAAAAAAAAAAAqui Va la componente Inventario
+          <Inventario admin={admin}/>
+        </Route>
+        <Route path="/Politicas">
+          <Politicas/>
+        </Route>
+        <Route path="/Auxiliares">
+          <Auxiliares/>
+        </Route>
+        <Route path="/TipoUsuario">
+          AAAAAAAAAAAAAAAAAAAAAAAAAAqui Va la componente Tipouser
         </Route>
         <Route path="/">
           <HomePage />

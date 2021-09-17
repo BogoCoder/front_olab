@@ -13,9 +13,9 @@ import {
 
 //import icons from react icons
 import { HiUserCircle } from "react-icons/hi";
-import { RiShoppingCart2Fill } from "react-icons/ri";
+import { RiShoppingCart2Fill, RiBankLine } from "react-icons/ri";
 import { GiReceiveMoney, GiOpenBook } from "react-icons/gi";
-import { FaHistory } from "react-icons/fa";
+import { FaHistory, FaUserAlt } from "react-icons/fa";
 import { FiLogOut, FiArrowLeftCircle, FiArrowRightCircle /*,FiChevronsLeft*/ } from "react-icons/fi";
 
 
@@ -26,8 +26,8 @@ import "./NavSidebar.css";
 import {ReactComponent as OLabLogo} from '../../assets/olab_logo.svg';
 
 
-const Header = () => {
-  
+const Header = ({admin}) => {
+
     //create initial menuCollapse state using useState hook
     const [menuCollapse, setMenuCollapse] = useState(true)
 
@@ -41,7 +41,7 @@ const Header = () => {
     <>
       <div id="header">
           {/* collapsed props to change menu size using menucollapse state */}
-        <ProSidebar collapsed={menuCollapse} id="menubox" onMouseEnter={()=>{menuIconClick()}} onMouseLeave={()=>{menuIconClick()}}>
+        <ProSidebar collapsed={menuCollapse} id="menubox" onMouseEnter={()=>{setMenuCollapse(false)}} onMouseLeave={()=>{setMenuCollapse(true)}}>
           <SidebarHeader id="headerbox">
           <div className="logotext">
               {/* small and big change using menucollapse state */}
@@ -72,7 +72,12 @@ const Header = () => {
               
               
             <MenuItem icon={<GiOpenBook />}><Link to="/Inventario">Inventario</Link></MenuItem>
-              
+            {admin ==="true" &&
+            <React.Fragment>
+            <MenuItem icon={<RiBankLine />}><Link to="/Politicas">Politicas</Link></MenuItem>
+            <MenuItem icon={<FaUserAlt />}><Link to="/Auxiliares">Auxiliares</Link></MenuItem>
+            </React.Fragment>
+            }
             </Menu>
           </SidebarContent>
           <SidebarFooter>
