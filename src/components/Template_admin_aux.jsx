@@ -2,11 +2,11 @@ import React from 'react';
 import NavSidebar from "./NavSidebar/NavSidebar";
 import HeaderOlab from "./HeaderOlab/Header_Olab";
 
-const Tempadminaux = ({content,admin}) => {
+const Tempadminaux = ({content,admin,tipousuario,nombre}) => {
   return (
     <React.Fragment>
     <NavSidebar admin={admin} />
-    <HeaderOlab tipousuario="Auxiliar" nombre="David Martinez"/>
+    <HeaderOlab tipousuario={tipousuario} nombre={nombre}/>
     {content}
     </React.Fragment>
   )

@@ -8,12 +8,13 @@ import Historial from "./Historial"
 import Inventario from "./Inventario"
 import Politicas from "./Politicas"
 import Auxiliares from "./Auxiliarestab"
+import TipoUsuario from "./Tipo_usuario"
 
 /*<NavSidebar admin={admin} />
 <HeaderOlab/>*/
 
 const Routes = ({admin}) => {
-  admin = "true"
+  admin = "false"
   return (
     <BrowserRouter>
       <Switch>
@@ -39,7 +40,7 @@ const Routes = ({admin}) => {
           <Auxiliares/>
         </Route>
         <Route path="/TipoUsuario">
-          AAAAAAAAAAAAAAAAAAAAAAAAAAqui Va la componente Tipouser
+          <TipoUsuario/>
         </Route>
         <Route path="/">
           <HomePage />
