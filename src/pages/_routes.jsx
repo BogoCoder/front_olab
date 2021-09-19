@@ -24,12 +24,12 @@ import { FcElectronics } from "react-icons/fc";
 import { GiCircuitry } from "react-icons/gi";
 import { GiCircularSaw } from "react-icons/gi";
 import { SiAirplayvideo } from "react-icons/si";
-var n_items = 1;
+var n_items = 16;
 var imgs_test = [<SiAirplayvideo/>,<CgAlarm/>,<CgBoy/>,
   <HiChip/>,<FcCableRelease/>,<RiSubwayWifiLine/>,
   <GiWifiRouter/>,<GrSelection/>,<MdPhotoSizeSelectActual/>,
   <FcElectronics/>,<GiCircuitry/>,<GiCircularSaw/>]
-var items_test = ["Arduino","Chip","Articulo x","Articulo y","Router","Jumper","Motor","Pinzas","Sensor","Boton","Multimetro","Voltimetro","Metro"]
+var items_test = ["Arduino","Chip AND","Chip XOR","Jumper","Motor","Pinzas","Sensor","Boton","Multimetro","Voltimetro","Chip NOT","Ventilador","Resistencias","Bateria","Transistor"]
 var user = {tipo:"Auxiliar",nombre:"David Martinez"}
 /* Imports para el test nada mas, solo iconos -------------------------------------------------------------------------*/
 
