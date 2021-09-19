@@ -1,4 +1,4 @@
-.container{
+.conti{
     display: grid;
     margin: 0px 0px 0px 80px;
     grid-template-columns: 3fr 1fr 3% 3%;
@@ -6,8 +6,6 @@
     background-color: white;
     font-family: 'Montserrat', sans-serif;
     padding: 10px;
-    
-    
 }
 .Titulo{
     grid-column: 1;

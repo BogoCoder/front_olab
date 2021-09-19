@@ -5,6 +5,7 @@ import { BsFillBellFill } from "react-icons/bs";
 import { FaUserCircle } from "react-icons/fa";
 
 const HeaderOlab = ({tipousuario,nombre}) => {
+  console.log(tipousuario)
   if (!(tipousuario && nombre)){
     console.log("No Hay usuario")
     return (
@@ -18,7 +19,7 @@ const HeaderOlab = ({tipousuario,nombre}) => {
   else{
   return (
     <React.Fragment>
-      <div className="container">
+      <div className="conti">
         <div className="Titulo">Laboratorio Tesla</div>
         <div className="Nombreuser">{tipousuario} {nombre}</div>
         <div className="Dibujo1">{<BsFillBellFill/>}</div>

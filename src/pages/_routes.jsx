@@ -9,9 +9,35 @@ import Inventario from "./Inventario"
 import Politicas from "./Politicas"
 import Auxiliares from "./Auxiliarestab"
 import TipoUsuario from "./Tipo_usuario"
-
+import {v4 as uuidv4} from "uuid"
 /*<NavSidebar admin={admin} />
 <HeaderOlab/>*/
+var items_test = [
+  {id:uuidv4(),img:"img",articulo:"Arduino",cantidad:"xxx"},
+  {id:uuidv4(),img:"img",articulo:"Arduino",cantidad:"xxx"},
+  {id:uuidv4(),img:"img",articulo:"Arduino",cantidad:"xxx"},
+  {id:uuidv4(),img:"img",articulo:"Arduino",cantidad:"xxx"},
+  {id:uuidv4(),img:"img",articulo:"Arduino",cantidad:"xxx"},
+  {id:uuidv4(),img:"img",articulo:"Arduino",cantidad:"xxx"},
+  {id:uuidv4(),img:"img",articulo:"Arduino",cantidad:"xxx"},
+  {id:uuidv4(),img:"img",articulo:"Arduino",cantidad:"xxx"},
+  {id:uuidv4(),img:"img",articulo:"Arduino",cantidad:"xxx"},
+  {id:uuidv4(),img:"img",articulo:"Arduino",cantidad:"xxx"},
+  {id:uuidv4(),img:"img",articulo:"Arduino",cantidad:"xxx"},
+  {id:uuidv4(),img:"img",articulo:"Arduino",cantidad:"xxx"},
+  {id:uuidv4(),img:"img",articulo:"Arduino",cantidad:"xxx"},
+  {id:uuidv4(),img:"img",articulo:"Arduino",cantidad:"xxx"},
+  {id:uuidv4(),img:"img",articulo:"Arduino",cantidad:"xxx"},
+  {id:uuidv4(),img:"img",articulo:"Arduino",cantidad:"xxx"},
+  {id:uuidv4(),img:"img",articulo:"Arduino",cantidad:"xxx"},
+  {id:uuidv4(),img:"img",articulo:"Arduino",cantidad:"xxx"},
+  {id:uuidv4(),img:"img",articulo:"Arduino",cantidad:"xxx"},
+  {id:uuidv4(),img:"img",articulo:"Arduino",cantidad:"xxx"},
+  {id:uuidv4(),img:"img",articulo:"Arduino",cantidad:"xxx"},
+  {id:uuidv4(),img:"img",articulo:"Arduino",cantidad:"xxx"},
+  {id:uuidv4(),img:"img",articulo:"Arduino",cantidad:"xxx"}
+]
+var user = {tipo:"Auxiliar",nombre:"David Martinez"}
 
 const Routes = ({admin}) => {
   admin = "false"
@@ -31,7 +57,7 @@ const Routes = ({admin}) => {
           <Historial admin={admin}/>
         </Route>
         <Route path="/Inventario">
-          <Inventario admin={admin}/>
+          <Inventario admin={"true"} user={user} inventario={items_test} sugerencias={items_test}/>
         </Route>
         <Route path="/Politicas">
           <Politicas/>
