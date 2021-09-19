@@ -10,34 +10,28 @@ import Politicas from "./Politicas"
 import Auxiliares from "./Auxiliarestab"
 import TipoUsuario from "./Tipo_usuario"
 import {v4 as uuidv4} from "uuid"
-/*<NavSidebar admin={admin} />
-<HeaderOlab/>*/
-var items_test = [
-  {id:uuidv4(),img:"img",articulo:"Arduino",cantidad:"xxx"},
-  {id:uuidv4(),img:"img",articulo:"Arduino",cantidad:"xxx"},
-  {id:uuidv4(),img:"img",articulo:"Arduino",cantidad:"xxx"},
-  {id:uuidv4(),img:"img",articulo:"Arduino",cantidad:"xxx"},
-  {id:uuidv4(),img:"img",articulo:"Arduino",cantidad:"xxx"},
-  {id:uuidv4(),img:"img",articulo:"Arduino",cantidad:"xxx"},
-  {id:uuidv4(),img:"img",articulo:"Arduino",cantidad:"xxx"},
-  {id:uuidv4(),img:"img",articulo:"Arduino",cantidad:"xxx"},
-  {id:uuidv4(),img:"img",articulo:"Arduino",cantidad:"xxx"},
-  {id:uuidv4(),img:"img",articulo:"Arduino",cantidad:"xxx"},
-  {id:uuidv4(),img:"img",articulo:"Arduino",cantidad:"xxx"},
-  {id:uuidv4(),img:"img",articulo:"Arduino",cantidad:"xxx"},
-  {id:uuidv4(),img:"img",articulo:"Arduino",cantidad:"xxx"},
-  {id:uuidv4(),img:"img",articulo:"Arduino",cantidad:"xxx"},
-  {id:uuidv4(),img:"img",articulo:"Arduino",cantidad:"xxx"},
-  {id:uuidv4(),img:"img",articulo:"Arduino",cantidad:"xxx"},
-  {id:uuidv4(),img:"img",articulo:"Arduino",cantidad:"xxx"},
-  {id:uuidv4(),img:"img",articulo:"Arduino",cantidad:"xxx"},
-  {id:uuidv4(),img:"img",articulo:"Arduino",cantidad:"xxx"},
-  {id:uuidv4(),img:"img",articulo:"Arduino",cantidad:"xxx"},
-  {id:uuidv4(),img:"img",articulo:"Arduino",cantidad:"xxx"},
-  {id:uuidv4(),img:"img",articulo:"Arduino",cantidad:"xxx"},
-  {id:uuidv4(),img:"img",articulo:"Arduino",cantidad:"xxx"}
-]
+
+/* Imports y cosas para el test nada mas, solo iconos y arrays --------------------------------------------------------*/
+import { CgAlarm } from "react-icons/cg";
+import { CgBoy } from "react-icons/cg";
+import { HiChip } from "react-icons/hi";
+import { FcCableRelease } from "react-icons/fc";
+import { RiSubwayWifiLine } from "react-icons/ri";
+import { GiWifiRouter } from "react-icons/gi";
+import { GrSelection } from "react-icons/gr";
+import { MdPhotoSizeSelectActual } from "react-icons/md";
+import { FcElectronics } from "react-icons/fc";
+import { GiCircuitry } from "react-icons/gi";
+import { GiCircularSaw } from "react-icons/gi";
+import { SiAirplayvideo } from "react-icons/si";
+var n_items = 1;
+var imgs_test = [<SiAirplayvideo/>,<CgAlarm/>,<CgBoy/>,
+  <HiChip/>,<FcCableRelease/>,<RiSubwayWifiLine/>,
+  <GiWifiRouter/>,<GrSelection/>,<MdPhotoSizeSelectActual/>,
+  <FcElectronics/>,<GiCircuitry/>,<GiCircularSaw/>]
+var items_test = ["Arduino","Chip","Articulo x","Articulo y","Router","Jumper","Motor","Pinzas","Sensor","Boton","Multimetro","Voltimetro","Metro"]
 var user = {tipo:"Auxiliar",nombre:"David Martinez"}
+/* Imports para el test nada mas, solo iconos -------------------------------------------------------------------------*/
 
 const Routes = ({admin}) => {
   admin = "false"
@@ -57,7 +51,14 @@ const Routes = ({admin}) => {
           <Historial admin={admin}/>
         </Route>
         <Route path="/Inventario">
-          <Inventario admin={"true"} user={user} inventario={items_test} sugerencias={items_test}/>
+          <Inventario admin={"true"} user={user} inventario={[...Array(n_items)].map((item)=>{return {id:uuidv4(),
+                                                                                             img:imgs_test[Math.floor(Math.random() * imgs_test.length)],
+                                                                                             articulo:items_test[Math.floor(Math.random() * items_test.length)],
+                                                                                             cantidad:Math.floor(Math.random() * 120)}})}
+                      sugerencias={[...Array(n_items)].map((item)=>{return {id:uuidv4(),
+                                                                            articulo:items_test[Math.floor(Math.random() * items_test.length)],
+                                                                            cantidad:Math.floor(Math.random() * 15)}})}/>
+
         </Route>
         <Route path="/Politicas">
           <Politicas/>
