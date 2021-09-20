@@ -9,6 +9,7 @@ import Inventario from "./Inventario"
 import Politicas from "./Politicas"
 import Auxiliares from "./Auxiliarestab"
 import TipoUsuario from "./Tipo_usuario"
+import LogIn from "./login"
 import {v4 as uuidv4} from "uuid"
 
 /* Imports y cosas para el test nada mas, solo iconos y arrays --------------------------------------------------------*/
@@ -69,8 +70,11 @@ const Routes = ({admin}) => {
         <Route path="/TipoUsuario">
           <TipoUsuario/>
         </Route>
-        <Route path="/">
+        <Route path="/home">
           <HomePage />
+        </Route>
+        <Route path="/">
+          <LogIn />
         </Route>
       </Switch>
     </BrowserRouter>
