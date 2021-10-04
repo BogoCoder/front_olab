@@ -1,14 +1,10 @@
 import React from 'react';
-import {ReactComponent as OLabLogo} from '../assets/olab_logo.svg';
-
+import Templateadminaux from "../components/Template_admin_aux"
 const HomePage = () => {
   return (
     <React.Fragment>
-      <p className="aligncenter">
-      <OLabLogo/>
-      </p>
+      <Templateadminaux admin="true"/>
     </React.Fragment>
   )
 }
-
 export default HomePage;

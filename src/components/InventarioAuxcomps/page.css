@@ -1,0 +1,49 @@
+.cont{
+    position:absolute;
+    top: 10%;
+    bottom: 0;
+    left: 80px;
+    right: 0;
+    height: 90%;
+}
+.divinvent{
+    position: absolute;
+    top: 15%;
+    left: 10%;
+    width: 40%;
+    height: 70%;
+    border-bottom-style: solid;
+    border-bottom-color: rgb(167, 166, 166);
+}
+.divsugs{
+    position: absolute;
+    top: 15%;
+    right: 10%;
+    width: 30%;
+    height: 40%;
+    border-bottom-style: solid;
+    border-bottom-color: rgb(167, 166, 166);
+}
+.divheader{
+    position: absolute;
+    width: 100%;
+    top: 0;
+    height: 3%;
+}
+.divbusqueda{
+    position: absolute;
+    top: 5%;
+    left: 5%;
+    width: 75%;
+    height: 5%;
+}
+::-webkit-scrollbar{
+    width: 10px;
+}
+::-webkit-scrollbar-thumb{
+    background-color: #1750A6;
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover{
+    background-color: #113368;
+}

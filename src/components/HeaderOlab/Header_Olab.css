@@ -1,0 +1,27 @@
+.conti{
+    display: grid;
+    margin: 0px 0px 0px 80px;
+    grid-template-columns: 3fr 1fr 3% 3%;
+    color: #0B397D;
+    background-color: white;
+    font-family: 'Montserrat', sans-serif;
+    padding: 10px;
+}
+.Titulo{
+    grid-column: 1;
+    text-align: center;
+}
+.Nombreuser{
+    grid-column: 2;
+    text-align: right;
+    margin: 0  10px 0 0;
+
+}
+.Dibujo1{
+    grid-column: 3;
+    text-align: center;
+}
+.Dibujo2{
+    grid-column: 4;
+    text-align: center;
+}

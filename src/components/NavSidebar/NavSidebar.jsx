@@ -1,6 +1,6 @@
 //import useState hook to create menu collapse state
 import React, { useState } from "react";
-
+import {Link} from "react-router-dom"
 //import react pro sidebar components
 import {
   ProSidebar,
@@ -13,10 +13,10 @@ import {
 
 //import icons from react icons
 import { HiUserCircle } from "react-icons/hi";
-import { RiShoppingCart2Fill } from "react-icons/ri";
+import { RiShoppingCart2Fill, RiBankLine } from "react-icons/ri";
 import { GiReceiveMoney, GiOpenBook } from "react-icons/gi";
-import { FaHistory } from "react-icons/fa";
-import { FiLogOut, FiArrowLeftCircle, FiArrowRightCircle } from "react-icons/fi";
+import { FaHistory, FaUserAlt } from "react-icons/fa";
+import { FiLogOut, FiArrowLeftCircle, FiArrowRightCircle /*,FiChevronsLeft*/ } from "react-icons/fi";
 
 
 //import sidebar css from react-pro-sidebar module and our custom css 
@@ -26,10 +26,10 @@ import "./NavSidebar.css";
 import {ReactComponent as OLabLogo} from '../../assets/olab_logo.svg';
 
 
-const Header = () => {
-  
+const Header = ({admin}) => {
+
     //create initial menuCollapse state using useState hook
-    const [menuCollapse, setMenuCollapse] = useState(false)
+    const [menuCollapse, setMenuCollapse] = useState(true)
 
     //create a custom function that will change menucollapse state from false to true and true to false
   const menuIconClick = () => {
@@ -41,7 +41,7 @@ const Header = () => {
     <>
       <div id="header">
           {/* collapsed props to change menu size using menucollapse state */}
-        <ProSidebar collapsed={menuCollapse} id="menubox">
+        <ProSidebar collapsed={menuCollapse} id="menubox" onMouseEnter={()=>{setMenuCollapse(false)}} onMouseLeave={()=>{setMenuCollapse(true)}}>
           <SidebarHeader id="headerbox">
           <div className="logotext">
               {/* small and big change using menucollapse state */}
@@ -58,13 +58,26 @@ const Header = () => {
           </SidebarHeader>
           <SidebarContent>
             <Menu iconShape="square">
-              <MenuItem active={true} icon={<HiUserCircle />}>
-                Usuario
-              </MenuItem>
-              <MenuItem icon={<RiShoppingCart2Fill />}>Reservas</MenuItem>
-              <MenuItem icon={<GiReceiveMoney />}>Préstamos</MenuItem>
-              <MenuItem icon={<FaHistory />}>Historial</MenuItem>
-              <MenuItem icon={<GiOpenBook />}>Inventario</MenuItem>
+            
+            
+            <MenuItem active={true} icon={<HiUserCircle/>}><Link to="/Usuario"></Link>Usuario</MenuItem>
+            
+            <MenuItem icon={<RiShoppingCart2Fill />}><Link to="/Reservas">Reservas</Link></MenuItem>
+              
+              
+            <MenuItem icon={<GiReceiveMoney />}><Link to="/Prestamos">Préstamos</Link></MenuItem>
+              
+              
+            <MenuItem icon={<FaHistory />}><Link to="/Historial">Historial</Link></MenuItem>
+              
+              
+            <MenuItem icon={<GiOpenBook />}><Link to="/Inventario">Inventario</Link></MenuItem>
+            {admin ==="true" &&
+            <React.Fragment>
+            <MenuItem icon={<RiBankLine />}><Link to="/Politicas">Politicas</Link></MenuItem>
+            <MenuItem icon={<FaUserAlt />}><Link to="/Auxiliares">Auxiliares</Link></MenuItem>
+            </React.Fragment>
+            }
             </Menu>
           </SidebarContent>
           <SidebarFooter>
