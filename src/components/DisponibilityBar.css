@@ -1,0 +1,32 @@
+.container {
+	height: 15px;
+	background-color: #ccc;
+	position: relative;
+	border-radius: 7px;
+	width: 50px;
+	transform: translateX(20px);
+}
+
+.container .low-disponibility {
+	position: absolute;
+	height: 100%;
+	background-color: red;
+	width: 30%;
+	border-radius: 7px;
+}
+
+.container .high-disponibility {
+	position: absolute;
+	height: 100%;
+	background-color: green;
+	width: 80%;
+	border-radius: 7px;
+}
+
+.container .medium-disponibility {
+	position: absolute;
+	height: 100%;
+	background-color: orange;
+	width: 50%;
+	border-radius: 7px;
+}
