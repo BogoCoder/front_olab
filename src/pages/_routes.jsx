@@ -42,7 +42,7 @@ const Routes = ({admin}) => {
           <Usuario admin={admin}/>
         </Route>
         <Route path="/Reservas">
-          <Reservas admin={admin}/>
+          <Reservas admin={"false"} user={user}/>
         </Route>
         <Route path="/Prestamos">
           <Prestamos admin={admin}/>
