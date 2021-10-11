@@ -15,8 +15,9 @@ import SearchIcon from '@material-ui/icons/Search';
 import DeleteIcon from '@material-ui/icons/Delete';
 import Button from '@material-ui/core/Button';
 
-// Tabla detalles
+// Componentes adicionales
 import TablaDetalleReserva from './TablaDetallesReserva';
+import ConfirmacionBorrado from './ConfirmacionBorrado';
 
 // Datos de prueba
 import { dataPrueba, detallePrueba } from './dataPruebas';
@@ -112,6 +113,8 @@ const ReservasModerador = () => {
   const [dataBusqueda, setDataBusqueda] = useState(dataReservas);
   const [idDetalle, setIdDetalle] = useState(dataBusqueda[0].id_reserva);
   const [numReservas, setNumReservas] = useState(dataReservas.length);
+  const [showConfirmacionBorrado, setShowConfirmacionBorrado] = useState('');
+  // Cambiar bool por id a eliminar
 
   // Efectos al cambiar estados
   useEffect(() => {
@@ -138,6 +141,13 @@ const ReservasModerador = () => {
     setDataBusqueda(dataReservas);
   };
 
+  // Función para eliminar reserva
+  const eliminarReserva = (id_reserva) => {
+    //Elimina la fila, debe llamar a la API para eliminar
+    console.log('Eliminar reserva:', id_reserva)
+    setShowConfirmacionBorrado('');
+  };
+
   // Pruebas de estados
   //console.log('idDetalle: ',idDetalle)
   return (
@@ -151,6 +161,16 @@ const ReservasModerador = () => {
             </div>
 
             <br />
+
+            {/* ---------- Confirmación eliminación ------------- */}
+            <ConfirmacionBorrado 
+                          showModal={showConfirmacionBorrado}
+                          hideModal={() => setShowConfirmacionBorrado('')}
+                          confirmModal={() => eliminarReserva(showConfirmacionBorrado)}
+                          message={`¿Está seguro de que desea eliminar la reserva ${showConfirmacionBorrado},
+                          de ${showConfirmacionBorrado==='' ? 
+                          '' : dataBusqueda.find((r)=> r.id_reserva===showConfirmacionBorrado).nombre}?`}
+                        />
             
             {/* ------------- Tabla Reservas --------------- */}
             <SearchBar className={classes.boxBusqueda}
@@ -197,7 +217,7 @@ const ReservasModerador = () => {
                       </TableCell>
                       <TableCell align='center'className={classes.tableCell}> 
                         <IconButton aria-label='Eliminar' size='small' 
-                        onClick={() => { alert('pulsado') }}>
+                        onClick={() => setShowConfirmacionBorrado(row.id_reserva)}>
                           <DeleteIcon style={{fill: 'red'}}/>
                         </IconButton>
                       </TableCell>
