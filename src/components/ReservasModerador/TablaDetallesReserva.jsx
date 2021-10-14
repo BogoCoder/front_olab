@@ -23,7 +23,6 @@ const useStyles = makeStyles({
 
 export default function TablaDetalleReserva({productos}) {
   const classes = useStyles();
-  console.log(productos)
 
   return (
     <TableContainer component={Paper} className={classes.tableContainer}>

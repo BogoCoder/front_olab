@@ -18,6 +18,7 @@ import Button from '@material-ui/core/Button';
 // Componentes adicionales
 import TablaDetalleReserva from './TablaDetallesReserva';
 import ConfirmacionBorrado from './ConfirmacionBorrado';
+import ConfirmacionEntrega from './ConfirmacionEntrega';
 
 // Datos de prueba
 import { dataPrueba, detallePrueba } from './dataPruebas';
@@ -80,6 +81,7 @@ const useStyles = makeStyles({
   boxBusqueda: {
     width: '40%',
     height: '32px',
+    marginTop:'10px',
     marginLeft: '5%'
   },
   tableRow: {
@@ -96,14 +98,33 @@ const useStyles = makeStyles({
   }
 });
 
+// Función para obtener todas las reservas realizadas
 const getReservas = () => {
   return dataPrueba;
 };
 
+// Función para obtener los productos reservados dado un Id de reserva
 const getDetalleReserva = (id_reserva) => {
-  const dataDetalle = detallePrueba.find(e => e.id_reserva===id_reserva).productos
-  return dataDetalle;
+  try {
+    const dataDetalle = detallePrueba.find(e => e.id_reserva===id_reserva).productos 
+    return dataDetalle;
+  } catch (error) {
+    console.log('Error getDetalle', error.message) //Al estar vacío no encuentra productos
+    return []
+  }
 };
+
+// Función para obtener toda la info, no productos, de una reserva por id
+const getInfoReserva = (id_reserva) => {
+  try {
+    const dataInfo = dataPrueba.find(e => e.id_reserva===id_reserva);
+    return dataInfo; 
+  } catch (error) {
+    console.log('Error getInfo', error.message)
+    return {}
+  }
+};
+
 // ------------------------ Componente a exportar ----------------------------
 const ReservasModerador = () => {
   const classes = useStyles();
@@ -113,8 +134,8 @@ const ReservasModerador = () => {
   const [dataBusqueda, setDataBusqueda] = useState(dataReservas);
   const [idDetalle, setIdDetalle] = useState(dataBusqueda[0].id_reserva);
   const [numReservas, setNumReservas] = useState(dataReservas.length);
-  const [showConfirmacionBorrado, setShowConfirmacionBorrado] = useState('');
-  // Cambiar bool por id a eliminar
+  const [showConfirmacionBorrado, setShowConfirmacionBorrado] = useState(''); // Id reserva a eliminar
+  const [showConfirmacionEntrega, setShowConfirmacionEntrega] = useState(''); // Id reserva a entregar
 
   // Efectos al cambiar estados
   useEffect(() => {
@@ -149,7 +170,6 @@ const ReservasModerador = () => {
   };
 
   // Pruebas de estados
-  //console.log('idDetalle: ',idDetalle)
   return (
       <React.Fragment>
           <div className={classes.boxTablaReservas}>
@@ -160,17 +180,22 @@ const ReservasModerador = () => {
               </div>
             </div>
 
-            <br />
-
             {/* ---------- Confirmación eliminación ------------- */}
             <ConfirmacionBorrado 
-                          showModal={showConfirmacionBorrado}
-                          hideModal={() => setShowConfirmacionBorrado('')}
-                          confirmModal={() => eliminarReserva(showConfirmacionBorrado)}
-                          message={`¿Está seguro de que desea eliminar la reserva ${showConfirmacionBorrado},
-                          de ${showConfirmacionBorrado==='' ? 
-                          '' : dataBusqueda.find((r)=> r.id_reserva===showConfirmacionBorrado).nombre}?`}
-                        />
+              showModal={showConfirmacionBorrado}
+              hideModal={() => setShowConfirmacionBorrado('')}
+              confirmModal={() => eliminarReserva(showConfirmacionBorrado)}
+              message={`¿Está seguro de que desea eliminar la reserva ${showConfirmacionBorrado},
+              de ${showConfirmacionBorrado==='' ? 
+              '' : dataBusqueda.find((r)=> r.id_reserva===showConfirmacionBorrado).nombre}?`}
+            />
+            {/* ---------- Confirmación entrega ----------- */}
+            <ConfirmacionEntrega
+              idReserva={showConfirmacionEntrega}
+              hideModal={() => setShowConfirmacionEntrega('')}
+              infoReserva={getInfoReserva(showConfirmacionEntrega)}
+              detalleReserva={getDetalleReserva(showConfirmacionEntrega)}
+            />
             
             {/* ------------- Tabla Reservas --------------- */}
             <SearchBar className={classes.boxBusqueda}
@@ -211,7 +236,7 @@ const ReservasModerador = () => {
                       <TableCell align='center'className={classes.tableCell}> 
                         <Button variant="contained" disableElevation size='small'
                         className={classes.botonEntrega}
-                        onClick={() => { alert('pulsado') }}> 
+                        onClick={() => setShowConfirmacionEntrega(row.id_reserva)}> 
                           Entrega 
                         </Button>
                       </TableCell>
