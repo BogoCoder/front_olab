@@ -73,7 +73,7 @@ const Routes = ({ admin }) => {
 				<Route path='/Cliente' component={HomeCliente} />
 
 				<Route path='/Reservas'>
-					<Reservas admin={admin} />
+					<Reservas admin={"false"} user={user}/>
 				</Route>
 				<Route path='/Prestamos'>
 					<Prestamos admin={admin} />
