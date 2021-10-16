@@ -13,15 +13,22 @@ const useStyles = makeStyles({
     maxWidth: '100%',
   },
   tableContainer: {
-    maxHeight: '36vh',
+    maxHeight: '50vh',
+    marginTop: '15px',
     "&::-webkit-scrollbar-track, & *::-webkit-scrollbar-track": {
       borderRadius: 8,
       border: "1.5px solid #1750A6"
     },
   },
+  tableRow: {
+    height: 40
+  },
+  tableCell: {
+    padding: "0px 16px"
+  }
 });
 
-export default function TablaDetalleReserva({productos}) {
+export default function TablaDetallesEntrega({productos}) {
   const classes = useStyles();
 
   return (
@@ -29,25 +36,17 @@ export default function TablaDetalleReserva({productos}) {
       <Table stickyHeader className={classes.table} aria-label="simple table">
         
         <TableHead>
-          <TableRow>
-            <TableCell align="left"> Código </TableCell>
-            <TableCell align="left"> Descripción </TableCell>
-            <TableCell align="left"> Categoría </TableCell>
-            <TableCell align="left"> Ubicación </TableCell>
-            <TableCell align="center"> Cantidad </TableCell>
+          <TableRow className={classes.tableRow}>
+            <TableCell align="left" className={classes.tableCell}> Descripción </TableCell>
+            <TableCell align="center" className={classes.tableCell}> Cantidad </TableCell>
           </TableRow>
         </TableHead>
 
         <TableBody>
           {productos.map((row) => (
-            <TableRow key={row.codigo}>
-              <TableCell component="th" scope="row">
-                {row.codigo}
-              </TableCell>
-              <TableCell align="left">{row.descripcion}</TableCell>
-              <TableCell align="left">{row.categoria}</TableCell>
-              <TableCell align="left">{row.ubicacion}</TableCell>
-              <TableCell align="center">{row.cantidad}</TableCell>
+            <TableRow key={row.codigo} className={classes.tableRow}>
+              <TableCell align="left" className={classes.tableCell}>{row.descripcion}</TableCell>
+              <TableCell align="center" className={classes.tableCell}>{row.cantidad}</TableCell>
             </TableRow>
           ))}
         </TableBody>

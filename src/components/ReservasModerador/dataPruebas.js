@@ -156,6 +156,13 @@ const detallePrueba = [
           categoria: 'Cat5',
           ubicacion: 'Estanteria 2',
           cantidad: '1',
+        },
+        {
+          codigo: '000006',
+          descripcion: 'Panel solar',
+          categoria: 'Cat5',
+          ubicacion: 'Estanteria 2',
+          cantidad: '1',
         }
       ]
     },
