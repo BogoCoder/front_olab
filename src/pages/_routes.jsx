@@ -26,6 +26,8 @@ import { GiCircularSaw } from "react-icons/gi";
 import { SiAirplayvideo } from "react-icons/si";
 // import navbarCliente from "../components/NavSidebarCliente";
 import HomeCliente from "./homeCliente";
+import PerfilCliente from "./PerfilCliente";
+
 var n_items = 16;
 var imgs_test = [
 	<SiAirplayvideo />,
@@ -71,6 +73,7 @@ const Routes = ({ admin }) => {
 				</Route>
 
 				<Route path='/Cliente' component={HomeCliente} />
+				<Route path='/ClientePerfil' component={PerfilCliente} />
 
 				<Route path='/Reservas'>
 					<Reservas admin={"false"} user={user}/>
