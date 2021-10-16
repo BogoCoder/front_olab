@@ -1,15 +1,15 @@
 import React from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import HomePage from "./home";
-import Reservas from "./Reservas"
-import Usuario from "./Usuario"
-import Prestamos from "./Prestamos"
-import Historial from "./Historial"
-import Inventario from "./Inventario"
-import Politicas from "./Politicas"
-import Auxiliares from "./Auxiliarestab"
-import TipoUsuario from "./Tipo_usuario"
-import {v4 as uuidv4} from "uuid"
+import Reservas from "./Reservas";
+import Usuario from "./Usuario";
+import Prestamos from "./Prestamos";
+import Historial from "./Historial";
+import Inventario from "./Inventario";
+import Politicas from "./Politicas";
+import Auxiliares from "./Auxiliarestab";
+import TipoUsuario from "./Tipo_usuario";
+import { v4 as uuidv4 } from "uuid";
 
 /* Imports y cosas para el test nada mas, solo iconos y arrays --------------------------------------------------------*/
 import { CgAlarm } from "react-icons/cg";
@@ -24,57 +24,101 @@ import { FcElectronics } from "react-icons/fc";
 import { GiCircuitry } from "react-icons/gi";
 import { GiCircularSaw } from "react-icons/gi";
 import { SiAirplayvideo } from "react-icons/si";
+// import navbarCliente from "../components/NavSidebarCliente";
+import HomeCliente from "./homeCliente";
 var n_items = 16;
-var imgs_test = [<SiAirplayvideo/>,<CgAlarm/>,<CgBoy/>,
-  <HiChip/>,<FcCableRelease/>,<RiSubwayWifiLine/>,
-  <GiWifiRouter/>,<GrSelection/>,<MdPhotoSizeSelectActual/>,
-  <FcElectronics/>,<GiCircuitry/>,<GiCircularSaw/>]
-var items_test = ["Arduino","Chip AND","Chip XOR","Jumper","Motor","Pinzas","Sensor","Boton","Multimetro","Voltimetro","Chip NOT","Ventilador","Resistencias","Bateria","Transistor"]
-var user = {tipo:"Auxiliar",nombre:"David Martinez"}
+var imgs_test = [
+	<SiAirplayvideo />,
+	<CgAlarm />,
+	<CgBoy />,
+	<HiChip />,
+	<FcCableRelease />,
+	<RiSubwayWifiLine />,
+	<GiWifiRouter />,
+	<GrSelection />,
+	<MdPhotoSizeSelectActual />,
+	<FcElectronics />,
+	<GiCircuitry />,
+	<GiCircularSaw />,
+];
+var items_test = [
+	"Arduino",
+	"Chip AND",
+	"Chip XOR",
+	"Jumper",
+	"Motor",
+	"Pinzas",
+	"Sensor",
+	"Boton",
+	"Multimetro",
+	"Voltimetro",
+	"Chip NOT",
+	"Ventilador",
+	"Resistencias",
+	"Bateria",
+	"Transistor",
+];
+let user = { tipo: "Auxiliar", nombre: "David Martinez" };
 /* Imports para el test nada mas, solo iconos -------------------------------------------------------------------------*/
 
-const Routes = ({admin}) => {
-  admin = "false"
-  return (
-    <BrowserRouter>
-      <Switch>
-        <Route path="/Usuario">
-          <Usuario admin={admin}/>
-        </Route>
-        <Route path="/Reservas">
-          <Reservas admin={"false"} user={user}/>
-        </Route>
-        <Route path="/Prestamos">
-          <Prestamos admin={admin}/>
-        </Route>
-        <Route path="/Historial">
-          <Historial admin={admin}/>
-        </Route>
-        <Route path="/Inventario">
-          <Inventario admin={"true"} user={user} inventario={[...Array(n_items)].map((item)=>{return {id:uuidv4(),
-                                                                                             img:imgs_test[Math.floor(Math.random() * imgs_test.length)],
-                                                                                             articulo:items_test[Math.floor(Math.random() * items_test.length)],
-                                                                                             cantidad:Math.floor(Math.random() * 120)}})}
-                      sugerencias={[...Array(n_items)].map((item)=>{return {id:uuidv4(),
-                                                                            articulo:items_test[Math.floor(Math.random() * items_test.length)],
-                                                                            cantidad:Math.floor(Math.random() * 15)}})}/>
+const Routes = ({ admin }) => {
+	admin = "false";
+	return (
+		<BrowserRouter>
+			<Switch>
+				<Route path='/Usuario'>
+					<Usuario admin={admin} />
+				</Route>
 
-        </Route>
-        <Route path="/Politicas">
-          <Politicas/>
-        </Route>
-        <Route path="/Auxiliares">
-          <Auxiliares/>
-        </Route>
-        <Route path="/TipoUsuario">
-          <TipoUsuario/>
-        </Route>
-        <Route path="/">
-          <HomePage />
-        </Route>
-      </Switch>
-    </BrowserRouter>
-  );
+				<Route path='/Cliente' component={HomeCliente} />
+
+				<Route path='/Reservas'>
+					<Reservas admin={admin} />
+				</Route>
+				<Route path='/Prestamos'>
+					<Prestamos admin={admin} />
+				</Route>
+				<Route path='/Historial'>
+					<Historial admin={admin} />
+				</Route>
+				<Route path='/Inventario'>
+					<Inventario
+						admin={"true"}
+						user={user}
+						inventario={[...Array(n_items)].map((item) => {
+							return {
+								id: uuidv4(),
+								img: imgs_test[Math.floor(Math.random() * imgs_test.length)],
+								articulo:
+									items_test[Math.floor(Math.random() * items_test.length)],
+								cantidad: Math.floor(Math.random() * 120),
+							};
+						})}
+						sugerencias={[...Array(n_items)].map((item) => {
+							return {
+								id: uuidv4(),
+								articulo:
+									items_test[Math.floor(Math.random() * items_test.length)],
+								cantidad: Math.floor(Math.random() * 15),
+							};
+						})}
+					/>
+				</Route>
+				<Route path='/Politicas'>
+					<Politicas />
+				</Route>
+				<Route path='/Auxiliares'>
+					<Auxiliares />
+				</Route>
+				<Route exact path='/'>
+					<TipoUsuario />
+				</Route>
+				<Route path='/homeAux'>
+					<HomePage />
+				</Route>
+			</Switch>
+		</BrowserRouter>
+	);
 };
 
 export default Routes;
