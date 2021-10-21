@@ -22,7 +22,7 @@ const Scrollableinvent= ({content}) => {
               <Iteminvent key={item.id} articuloinfo={item}/>
             ))}</React.Fragment>}
           </div>
-          <button type="button" className="btn bb">Crear Kit</button>
+          <button type="button" className="btntpsr bb">Crear Kit</button>
     </React.Fragment>
   )
 }
@@ -61,7 +61,7 @@ const Busqueda= ({content}) => {
   return (
       <React.Fragment>
             <input className="busqueda" ref={searchref}type="text" placeholder="Buscar por nombre" onChange={handleChange} />
-            <button type="button" className="btnsearch btn" onClick={handlesearch}>Buscar</button>
+            <button type="button" className="btnsearch btntpsr" onClick={handlesearch}>Buscar</button>
     </React.Fragment>
   )
 }
