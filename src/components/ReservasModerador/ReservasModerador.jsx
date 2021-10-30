@@ -26,7 +26,7 @@ import { dataPrueba, detallePrueba } from './dataPruebas';
 
 // Crear estilos
 const useStyles = makeStyles({
-  boxTablaReservas: { // Buscar grid para hacer estos box responsive
+  boxTablaReservas: { 
     alignSelf: 'center',
     backgroundColor: 'white',
     width: '90%', 
@@ -132,7 +132,7 @@ const ReservasModerador = () => {
   // Componentes de estado
   const [dataReservas, setDataReservas] = useState(getReservas());
   const [dataBusqueda, setDataBusqueda] = useState(dataReservas);
-  const [idDetalle, setIdDetalle] = useState(dataBusqueda[0].id_reserva);
+  const [idDetalle, setIdDetalle] = useState('');
   const [numReservas, setNumReservas] = useState(dataReservas.length);
   const [showConfirmacionBorrado, setShowConfirmacionBorrado] = useState(''); // Id reserva a eliminar
   const [showConfirmacionEntrega, setShowConfirmacionEntrega] = useState(''); // Id reserva a entregar
@@ -147,7 +147,11 @@ const ReservasModerador = () => {
   }, [dataReservas])
   
   useEffect(() => {
-    setIdDetalle(dataBusqueda[0].id_reserva)
+    try {
+      setIdDetalle(dataBusqueda[0].id_reserva)
+    } catch (error) { // En caso de no encontrar coincidencias la busqueda
+      setIdDetalle('')
+    }
   }, [dataBusqueda])
 
   // Funciones para la busqueda
@@ -169,7 +173,6 @@ const ReservasModerador = () => {
     setShowConfirmacionBorrado('');
   };
 
-  // Pruebas de estados
   return (
       <React.Fragment>
           <div className={classes.boxTablaReservas}>
@@ -256,6 +259,7 @@ const ReservasModerador = () => {
           </div>
 
           <div className={classes.boxTablaDetalles}>
+            {/* ------------- Tabla Detalle Reservas --------------- */}
             <TablaDetalleReserva productos={getDetalleReserva(idDetalle)}/>
           </div>
       </React.Fragment>
