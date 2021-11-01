@@ -16,9 +16,14 @@ import SearchIcon from '@material-ui/icons/Search';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import WarningIcon from '@material-ui/icons/Warning';
 import ErrorIcon from '@material-ui/icons/Error';
+import Button from '@material-ui/core/Button';
+import AddCircleIcon from '@material-ui/icons/AddCircle';
 
 // Importar demás componentes
 import TablaDetallesPrestamos from './TablaDetallesPrestamo';
+import AnuncioEstadoPrestamo from './AnuncioEstadoPrestamo';
+import ModalNuevoPrestamo from './ModalNuevoPrestamo';
+import ModalDevolucion from './ModalDevolucion';
 
 // Importar datos de prueba
 import {dataPrueba, detallePrueba} from './dataPrueba';
@@ -63,7 +68,7 @@ const useStyles = makeStyles({
     maxHeight: '35vh',
     marginTop:'5px',
     marginLeft: '3%',
-    maxWidth: '90%',
+    maxWidth: '97%',
     "&::-webkit-scrollbar-track, & *::-webkit-scrollbar-track": {
       borderRadius: 8,
       border: "1.5px solid #1750A6"
@@ -83,7 +88,22 @@ const useStyles = makeStyles({
   },
   tableCell: {
     padding: "0px 16px"
-  }    
+  },
+  botonDevolucion: {
+    backgroundColor: '#1C6EE5',
+    color: 'white',
+    padding: '1px 25% 1px 25%',
+    height: '40px',
+    width: '75%',
+    fontWeight: 'bold'
+  },
+  botonNuevoPrestamo: {
+    height: '120px',
+    width: '75%',
+    backgroundColor: '#ededed',
+    textTransform: 'none',
+    color: '#013570'
+  }
 });
 
 // Función para definir el estado del prestamo
@@ -91,7 +111,6 @@ const estadoPrestamo = (fecha_limite_devolucion) => {
   const diaHoy = new Date()
   const fechaDev = new Date(fecha_limite_devolucion)
   const diasDiff = Math.floor((fechaDev - diaHoy)/(1000*60*60*24))
-  console.log('Días diff:', diasDiff)
   if (diasDiff < 0){
     return(
       <React.Fragment>
@@ -111,32 +130,40 @@ const estadoPrestamo = (fecha_limite_devolucion) => {
       </React.Fragment>
     );
   }
-  
 };
 
 // Función para obtener todos los prestamos activos
-const getPrestamos = () => {
-  return dataPrueba;
+const getPrestamos = (setData) => {
+  setData(dataPrueba);
 };
 
 // Función para obtener los productos prestados dado un ID de prestamo
-const getDetallePrestamo = (id_prestamo) => {
+const getDetallePrestamo = (id_prestamo, setData) => {
   try {
     const dataDetalle = detallePrueba.find(e => e.id_prestamo===id_prestamo).productos 
-    return dataDetalle;
+    setData(dataDetalle);
   } catch (error) {
     console.log('Error getDetalle', error.message) //Al estar vacío no encuentra productos
     return []
   }
 };
 
+// Componente a exportar
 const PrestamosModerador = () => {
   const classes = useStyles();
 
   // Componentes de estado
-  const [dataPrestamos, setDataPrestamos] = useState(getPrestamos());
+  const [dataPrestamos, setDataPrestamos] = useState([]);
   const [dataBusqueda, setDataBusqueda] = useState(dataPrestamos);
   const [idDetalle, setIdDetalle] = useState('');
+  const [dataDetalle, setdataDetalle] = useState([]);
+  const [showDevolucion, setShowDevolucion] = useState(false);
+  const [showNuevoPrestamo, setShowNuevoPrestamo] = useState(false);
+
+  // Cargar datos al iniciar
+  useEffect(() => {
+    getPrestamos(setDataPrestamos);
+  }, [])
 
   // Efectos al cambiar estados
   useEffect(()=>{
@@ -150,6 +177,10 @@ const PrestamosModerador = () => {
       setIdDetalle('')
     }
   }, [dataBusqueda])
+
+  useEffect(() => {
+    getDetallePrestamo(idDetalle, setdataDetalle);
+  }, [idDetalle])
 
   // Funciones para la busqueda
   const requestBusqueda = (valor) => {
@@ -165,7 +196,6 @@ const PrestamosModerador = () => {
 
   // Prueba estados
   console.log('id detalle:', idDetalle)
-  console.log(getDetallePrestamo(idDetalle))
 
   return(
     <React.Fragment>
@@ -223,26 +253,58 @@ const PrestamosModerador = () => {
               </Table>
             </TableContainer>
           </Col>  
-          <Col xs={3}>
-            Elemento a la derecha
+
+          <Col xs={3} style={{margin: '0 3% 0 1.5%'}}>
+            <Row className="justify-content-center">
+              <Button variant="contained" 
+                className={classes.botonNuevoPrestamo}
+                onClick={() => { setShowNuevoPrestamo(true) }}
+              >
+                <AddCircleIcon style={{fill: '#013570', fontSize: 70}}/>
+                Agregar préstamo sin reserva
+              </Button>
+            </Row>
+            <Row className="justify-content-center" style={{marginTop:'15%'}}>
+              <Button variant="contained" 
+                className={classes.botonDevolucion}
+                onClick={() => { setShowDevolucion(true)}}
+              >
+                Devolución
+              </Button>
+            </Row>
           </Col>
         </Row>
       </div>
 
       <div className={classes.boxInfoPrestamo}>
-        <div className={classes.tituloPrestamoDetalle}>
-          Préstamo {idDetalle}
-        </div>
         <Row>
           <Col>
+            <div className={classes.tituloPrestamoDetalle}>
+              Préstamo {idDetalle}
+            </div>
             {/* ---------- Tabla detalle prestamo ---------- */}
-            <TablaDetallesPrestamos productos={getDetallePrestamo(idDetalle)} />
+            <TablaDetallesPrestamos productos={dataDetalle} />
           </Col>
-          <Col xs={3}>
-            <b>Estado</b>
+          <Col xs={3} style={{margin: '2% 3% 2% 0'}}>
+            <AnuncioEstadoPrestamo idDetalle={idDetalle} dataPrestamos={dataPrestamos}/>
           </Col>
         </Row>
       </div>
+
+      {/* ---------- Modal devolución prestamo ----------*/}
+      <ModalDevolucion
+        showModal={showDevolucion}
+        hideModal={() => setShowDevolucion(false)}
+        idPrestamo={idDetalle}
+        productos={dataDetalle}
+      />
+
+      {/* ---------- Modal nuevo prestamo sin reserva ----------*/}
+      <ModalNuevoPrestamo 
+        showModal={showNuevoPrestamo}
+        hideModal={() => setShowNuevoPrestamo(false)}
+      />
+
     </React.Fragment>
   );
 };
