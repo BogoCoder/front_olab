@@ -148,7 +148,8 @@ const getDetallePrestamo = (id_prestamo, setData) => {
   }
 };
 
-// Componente a exportar
+// -------------------------------------------
+// ---------- Componente a exportar ----------
 const PrestamosModerador = () => {
   const classes = useStyles();
 
@@ -193,9 +194,6 @@ const PrestamosModerador = () => {
   const cancelBusqueda = () => {
     setDataBusqueda(dataPrestamos);
   };
-
-  // Prueba estados
-  console.log('id detalle:', idDetalle)
 
   return(
     <React.Fragment>

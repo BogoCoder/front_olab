@@ -146,7 +146,7 @@ const ReservasModerador = () => {
   // Efectos al cambiar estados
   useEffect(() => {
     getReservas(setDataReservas);
-  }, [numReservas]); // En caso de eliminar
+  }, [numReservas]); // En caso de eliminar actualice la tabla
   
   useEffect(()=>{
     setDataBusqueda(dataReservas);
