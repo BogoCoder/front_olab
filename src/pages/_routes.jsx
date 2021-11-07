@@ -108,7 +108,7 @@ const Routes = ({ admin }) => {
 					/>
 				</Route>
 				<Route path='/Politicas'>
-					<Politicas />
+					<Politicas user={user} admin={"true"}/>
 				</Route>
 				<Route path='/Auxiliares'>
 					<Auxiliares />
