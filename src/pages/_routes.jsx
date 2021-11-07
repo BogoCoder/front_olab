@@ -76,10 +76,10 @@ const Routes = ({ admin }) => {
 				<Route path='/ClientePerfil' component={PerfilCliente} />
 
 				<Route path='/Reservas'>
-					<Reservas admin={"false"} user={user}/>
+					<Reservas admin={admin} user={user}/>
 				</Route>
 				<Route path='/Prestamos'>
-					<Prestamos admin={admin} />
+					<Prestamos admin={admin} user={user}/>
 				</Route>
 				<Route path='/Historial'>
 					<Historial admin={admin} />

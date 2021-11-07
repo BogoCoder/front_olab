@@ -28,7 +28,7 @@ const useStyles = makeStyles({
 const ConfirmacionBorrado = ({
 	showModal,
 	hideModal,
-	confirmModal,
+	confirmModal, // Acción a realizar al confirmar
 	message,
 }) => {
   const classes = useStyles();

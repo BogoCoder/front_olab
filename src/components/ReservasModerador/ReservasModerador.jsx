@@ -26,7 +26,7 @@ import { dataPrueba, detallePrueba } from './dataPruebas';
 
 // Crear estilos
 const useStyles = makeStyles({
-  boxTablaReservas: { // Buscar grid para hacer estos box responsive
+  boxTablaReservas: { 
     alignSelf: 'center',
     backgroundColor: 'white',
     width: '90%', 
@@ -99,15 +99,15 @@ const useStyles = makeStyles({
 });
 
 // Función para obtener todas las reservas realizadas
-const getReservas = () => {
-  return dataPrueba;
+const getReservas = (setData) => {
+  setData(dataPrueba);
 };
 
 // Función para obtener los productos reservados dado un Id de reserva
-const getDetalleReserva = (id_reserva) => {
+const getDetalleReserva = (id_reserva, setData) => {
   try {
     const dataDetalle = detallePrueba.find(e => e.id_reserva===id_reserva).productos 
-    return dataDetalle;
+    setData(dataDetalle);
   } catch (error) {
     console.log('Error getDetalle', error.message) //Al estar vacío no encuentra productos
     return []
@@ -115,9 +115,9 @@ const getDetalleReserva = (id_reserva) => {
 };
 
 // Función para obtener toda la info, no productos, de una reserva por id
-const getInfoReserva = (id_reserva) => {
+const getInfoReserva = (id_reserva, data) => {
   try {
-    const dataInfo = dataPrueba.find(e => e.id_reserva===id_reserva);
+    const dataInfo = data.find(e => e.id_reserva===id_reserva);
     return dataInfo; 
   } catch (error) {
     console.log('Error getInfo', error.message)
@@ -130,25 +130,39 @@ const ReservasModerador = () => {
   const classes = useStyles();
 
   // Componentes de estado
-  const [dataReservas, setDataReservas] = useState(getReservas());
+  const [dataReservas, setDataReservas] = useState([]);
   const [dataBusqueda, setDataBusqueda] = useState(dataReservas);
-  const [idDetalle, setIdDetalle] = useState(dataBusqueda[0].id_reserva);
+  const [idDetalle, setIdDetalle] = useState('');
+  const [dataDetalle, setDataDetalle] = useState([]);
   const [numReservas, setNumReservas] = useState(dataReservas.length);
   const [showConfirmacionBorrado, setShowConfirmacionBorrado] = useState(''); // Id reserva a eliminar
   const [showConfirmacionEntrega, setShowConfirmacionEntrega] = useState(''); // Id reserva a entregar
 
+  // Traer datos al iniciar
+  useEffect(() => {
+    getReservas(setDataReservas);
+  }, [])
+
   // Efectos al cambiar estados
   useEffect(() => {
-    setDataReservas(getReservas());
-  }, [numReservas]); // En caso de eliminar
+    getReservas(setDataReservas);
+  }, [numReservas]); // En caso de eliminar actualice la tabla
   
   useEffect(()=>{
     setDataBusqueda(dataReservas);
   }, [dataReservas])
   
   useEffect(() => {
-    setIdDetalle(dataBusqueda[0].id_reserva)
+    try {
+      setIdDetalle(dataBusqueda[0].id_reserva);
+    } catch (error) { // En caso de no encontrar coincidencias la busqueda
+      setIdDetalle('');
+    }
   }, [dataBusqueda])
+
+  useEffect(()=>{
+    getDetalleReserva(idDetalle, setDataDetalle);
+  }, [idDetalle])
 
   // Funciones para la busqueda
   const requestBusqueda = (valor) => {
@@ -169,7 +183,8 @@ const ReservasModerador = () => {
     setShowConfirmacionBorrado('');
   };
 
-  // Pruebas de estados
+  console.log('Conteo')
+
   return (
       <React.Fragment>
           <div className={classes.boxTablaReservas}>
@@ -193,8 +208,7 @@ const ReservasModerador = () => {
             <ConfirmacionEntrega
               idReserva={showConfirmacionEntrega}
               hideModal={() => setShowConfirmacionEntrega('')}
-              infoReserva={getInfoReserva(showConfirmacionEntrega)}
-              detalleReserva={getDetalleReserva(showConfirmacionEntrega)}
+              infoReserva={getInfoReserva(showConfirmacionEntrega, dataReservas)}
             />
             
             {/* ------------- Tabla Reservas --------------- */}
@@ -241,7 +255,7 @@ const ReservasModerador = () => {
                         </Button>
                       </TableCell>
                       <TableCell align='center'className={classes.tableCell}> 
-                        <IconButton aria-label='Eliminar' size='small' 
+                        <IconButton aria-label='Eliminar' size='medium' 
                         onClick={() => setShowConfirmacionBorrado(row.id_reserva)}>
                           <DeleteIcon style={{fill: 'red'}}/>
                         </IconButton>
@@ -256,7 +270,8 @@ const ReservasModerador = () => {
           </div>
 
           <div className={classes.boxTablaDetalles}>
-            <TablaDetalleReserva productos={getDetalleReserva(idDetalle)}/>
+            {/* ------------- Tabla Detalle Reservas --------------- */}
+            <TablaDetalleReserva productos={dataDetalle}/>
           </div>
       </React.Fragment>
   );
