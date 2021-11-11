@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from "react";
 import { Modal, Button } from "react-bootstrap";
-import { makeStyles, withStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';

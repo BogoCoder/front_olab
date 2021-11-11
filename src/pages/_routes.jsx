@@ -2,7 +2,6 @@ import React from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import HomePage from "./home";
 import Reservas from "./Reservas";
-import Usuario from "./Usuario";
 import Prestamos from "./Prestamos";
 import Historial from "./Historial";
 import Inventario from "./Inventario";
@@ -68,12 +67,12 @@ const Routes = ({ admin }) => {
 	return (
 		<BrowserRouter>
 			<Switch>
-				<Route path='/Usuario'>
-					<Usuario admin={admin} />
-				</Route>
-
-				<Route path='/Cliente' component={HomeCliente} />
-				<Route path='/ClientePerfil' component={PerfilCliente} />
+				<Route path='/Cliente' 
+					component={HomeCliente} 
+				/>
+				<Route path='/ClientePerfil' 
+					component={PerfilCliente} 
+				/>
 
 				<Route path='/Reservas'>
 					<Reservas admin={admin} user={user}/>

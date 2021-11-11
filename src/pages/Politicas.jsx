@@ -19,7 +19,9 @@ const contenido = () => {
                                 }
 
     return (
+      <div style={{backgroundColor: '#F7F7F7',  width: '100%', height : '94vh'}}>
         <Politicaspage accesibilityconfigs={testing_accesibility} restrictedusers={testing_users} condidenceusers={testing_users}/>
+      </div>
     )
 }
 const Politicas = ({content,admin,user}) => {
