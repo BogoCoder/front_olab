@@ -5,6 +5,7 @@ ul {
 }
 li {
     display: inline;
+    padding: 2px
 }
 #bt1{
     position: relative;

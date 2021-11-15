@@ -6,7 +6,6 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import { MdAccountCircle }  from "react-icons/md";
 import { MdChromeReaderMode } from "react-icons/md";
-import { MdShoppingCart } from "react-icons/md";
 
 
 function SeccionLateral(){
