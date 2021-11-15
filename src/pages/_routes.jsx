@@ -63,7 +63,7 @@ let user = { tipo: "Auxiliar", nombre: "David Martinez" };
 /* Imports para el test nada mas, solo iconos -------------------------------------------------------------------------*/
 
 const Routes = ({ admin }) => {
-	admin = "false";
+	admin = "true";
 	return (
 		<BrowserRouter>
 			<Switch>
@@ -110,7 +110,7 @@ const Routes = ({ admin }) => {
 					<Politicas user={user} admin={"true"}/>
 				</Route>
 				<Route path='/Auxiliares'>
-					<Auxiliares />
+					<Auxiliares admin={admin} user={user}/>
 				</Route>
 				<Route exact path='/'>
 					<TipoUsuario />

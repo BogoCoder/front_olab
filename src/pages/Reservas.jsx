@@ -12,7 +12,7 @@ const contenido = () => {
       </React.Fragment>
     )
 }
-const Reservas = ({content,admin,user}) => {
+const Reservas = ({admin,user}) => {
   return (
     <Tempadminaux content={contenido()} admin={admin} user={user?user:null}/>
   )
