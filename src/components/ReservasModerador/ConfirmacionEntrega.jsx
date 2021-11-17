@@ -52,7 +52,7 @@ const ConfirmacionEntrega = ({
   }
 
   return(
-      <Modal show={true} onHide={hideModal} centered>
+      <Modal show={true} onHide={hideModal} centered backdrop="static">
         <Modal.Header closeButton>
 				  <Modal.Title>Entrega</Modal.Title>
 			  </Modal.Header>

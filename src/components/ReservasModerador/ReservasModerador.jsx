@@ -181,9 +181,8 @@ const ReservasModerador = () => {
     //Elimina la fila, debe llamar a la API para eliminar
     console.log('Eliminar reserva:', id_reserva)
     setShowConfirmacionBorrado('');
+    // setNumReservas(numReservas - 1);
   };
-
-  console.log('Conteo')
 
   return (
       <React.Fragment>

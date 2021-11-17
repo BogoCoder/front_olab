@@ -227,7 +227,8 @@ const PrestamosModerador = () => {
                 <TableBody>
                   {dataBusqueda.map( (row) => (
                     <TableRow key={row.id_prestamo} className={classes.tableRow}
-                    style={{backgroundColor: (row.id_prestamo===idDetalle) ? 'rgba(23, 80, 166, .23)':'white'}}>
+                      style={{backgroundColor: (row.id_prestamo===idDetalle) ? 'rgba(23, 80, 166, .23)':'white'}}
+                    >
                       <TableCell align='center'className={classes.tableCell}> 
                         <IconButton aria-label='Detalles' size='small'
                         onClick={() => setIdDetalle(row.id_prestamo)}>
