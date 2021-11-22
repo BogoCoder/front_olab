@@ -44,7 +44,7 @@ export default function TablaDetallesEntrega({productos}) {
 
         <TableBody>
           {productos.map((row) => (
-            <TableRow key={row.codigo} className={classes.tableRow}>
+            <TableRow key={row.serial} className={classes.tableRow}>
               <TableCell align="left" className={classes.tableCell}>{row.descripcion}</TableCell>
               <TableCell align="center" className={classes.tableCell}>{row.cantidad}</TableCell>
             </TableRow>

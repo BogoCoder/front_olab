@@ -1,67 +1,67 @@
 const dataPrueba = [{
-    id_reserva: '001',
+    prestamo_id: '001',
     nombre: 'Andrés Salazar',
     posicion: 'Estudiante',
     correo: 'and.sal@urosario.edu.co',
-    fecha_limite: '2021-08-20 13:00'
+    entrega: "2021-11-19T00:00:00.000Z"
   },
   {
-    id_reserva: '002',
+    prestamo_id: '002',
     nombre: 'Camilo Martínez',
     posicion: 'Estudiante',
     correo: 'cam.mar@urosario.edu.co',
-    fecha_limite: '2021-08-20 14:35'
+    entrega: '2021-08-20 14:35'
   },
   {
-    id_reserva: '003',
+    prestamo_id: '003',
     nombre: 'Camilo Martínez',
     posicion: 'Estudiante',
     correo: 'cam.mar@urosario.edu.co',
-    fecha_limite: '2021-08-20 14:35'
+    entrega: '2021-08-20 14:35'
   },
   {
-    id_reserva: '004',
+    prestamo_id: '004',
     nombre: 'Camilo Martínez',
     posicion: 'Estudiante',
     correo: 'cam.mar@urosario.edu.co',
-    fecha_limite: '2021-08-20 14:35'
+    entrega: '2021-08-20 14:35'
   },
   {
-    id_reserva: '005',
+    prestamo_id: '005',
     nombre: 'Camilo Martínez',
     posicion: 'Estudiante',
     correo: 'cam.mar@urosario.edu.co',
-    fecha_limite: '2021-08-20 14:35'
+    entrega: '2021-08-20 14:35'
   },
   {
-    id_reserva: '006',
+    prestamo_id: '006',
     nombre: 'Pepito Perez',
     posicion: 'Estudiante',
     correo: 'pep.per@urosario.edu.co',
-    fecha_limite: '2021-08-20 14:35'
+    entrega: '2021-08-20 14:35'
   }
 ];
 
 const detallePrueba = [
     {
-      id_reserva: '001',
+      prestamo_id: '001',
       productos: [
         {
-          codigo: '000001',
+          serial: '000001',
           descripcion: 'Generador de funciones arbitrarias',
           categoria: 'Cat1',
           ubicacion: 'Estanteria 1',
           cantidad: '1',
         },
         {
-          codigo: '000002',
+          serial: '000002',
           descripcion: 'Pasta de soldadura',
           categoria: 'Cat2',
           ubicacion: 'Estanteria 2',
           cantidad: '1',
         },
         {
-          codigo: '000003',
+          serial: '000003',
           descripcion: 'Led rojo',
           categoria: 'Cat3',
           ubicacion: 'Estanteria 3',
@@ -70,17 +70,17 @@ const detallePrueba = [
       ]
     },
     {
-      id_reserva: '002',
+      prestamo_id: '002',
       productos: [
         {
-          codigo: '000001',
+          serial: '000001',
           descripcion: 'Generador de funciones arbitrarias',
           categoria: 'Cat1',
           ubicacion: 'Estanteria 1',
           cantidad: '1',
         },
         {
-          codigo: '000002',
+          serial: '000002',
           descripcion: 'Pasta de soldadura',
           categoria: 'Cat2',
           ubicacion: 'Estanteria 2',
@@ -89,10 +89,10 @@ const detallePrueba = [
       ]
     },
     {
-      id_reserva: '003',
+      prestamo_id: '003',
       productos: [
         {
-          codigo: '000001',
+          serial: '000001',
           descripcion: 'Generador de funciones arbitrarias',
           categoria: 'Cat1',
           ubicacion: 'Estanteria 1',
@@ -101,17 +101,17 @@ const detallePrueba = [
       ]
     },
     {
-      id_reserva: '004',
+      prestamo_id: '004',
       productos: [
         {
-          codigo: '000001',
+          serial: '000001',
           descripcion: 'Generador de funciones arbitrarias',
           categoria: 'Cat1',
           ubicacion: 'Estanteria 1',
           cantidad: '1',
         },
         {
-          codigo: '000002',
+          serial: '000002',
           descripcion: 'Pasta de soldadura',
           categoria: 'Cat2',
           ubicacion: 'Estanteria 2',
@@ -120,45 +120,45 @@ const detallePrueba = [
       ]
     },
     {
-      id_reserva: '005',
+      prestamo_id: '005',
       productos: [
         {
-          codigo: '000001',
+          serial: '000001',
           descripcion: 'Generador de funciones arbitrarias',
           categoria: 'Cat1',
           ubicacion: 'Estanteria 1',
           cantidad: '1',
         },
         {
-          codigo: '000002',
+          serial: '000002',
           descripcion: 'Pasta de soldadura',
           categoria: 'Cat2',
           ubicacion: 'Estanteria 2',
           cantidad: '1',
         },
         {
-          codigo: '000003',
+          serial: '000003',
           descripcion: 'Jumpers',
           categoria: 'Cat2',
           ubicacion: 'Estanteria 2',
           cantidad: '10',
         },
         {
-          codigo: '000004',
+          serial: '000004',
           descripcion: 'Arduino',
           categoria: 'Cat4',
           ubicacion: 'Estanteria 2',
           cantidad: '1',
         },
         {
-          codigo: '000005',
+          serial: '000005',
           descripcion: 'Panel solar',
           categoria: 'Cat5',
           ubicacion: 'Estanteria 2',
           cantidad: '1',
         },
         {
-          codigo: '000006',
+          serial: '000006',
           descripcion: 'Panel solar',
           categoria: 'Cat5',
           ubicacion: 'Estanteria 2',
@@ -167,17 +167,17 @@ const detallePrueba = [
       ]
     },
     {
-      id_reserva: '006',
+      prestamo_id: '006',
       productos: [
         {
-          codigo: '000001',
+          serial: '000001',
           descripcion: 'Generador de funciones arbitrarias',
           categoria: 'Cat1',
           ubicacion: 'Estanteria 1',
           cantidad: '1',
         },
         {
-          codigo: '000002',
+          serial: '000002',
           descripcion: 'Pasta de soldadura',
           categoria: 'Cat2',
           ubicacion: 'Estanteria 2',

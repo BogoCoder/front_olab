@@ -193,9 +193,9 @@ const AuxiliaresModerador = () => {
 
       </div>
 
-      {/* --------- Gráfica estadísticas -------- */}
       <Row className={classes.boxEstadisticasHorarios}>
-
+        
+        {/* --------- Gráfica estadísticas -------- */}
         <Col className={classes.boxInferiores} style={{marginRight: '10px'}}>
           <div className={classes.titulos}>
             Estadísticas
@@ -204,11 +204,13 @@ const AuxiliaresModerador = () => {
           
           <GraficaEstadisticas idAuxiliar={showEstadisticas} />
         </Col>
-
+        
+        {/* --------- Tabla con horarios -------- */}
         <Col className={classes.boxInferiores} style={{marginLeft: '10px'}}>
           <div className={classes.titulos}>
             Horarios
           </div>
+          Aquí irá una tabla editable con los horarios. No es prioritaria.
         </Col>
 
       </Row>

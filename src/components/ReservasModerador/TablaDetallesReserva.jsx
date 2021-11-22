@@ -30,7 +30,7 @@ export default function TablaDetalleReserva({productos}) {
         
         <TableHead>
           <TableRow>
-            <TableCell align="left"> Código </TableCell>
+            <TableCell align="left"> Serial </TableCell>
             <TableCell align="left"> Descripción </TableCell>
             <TableCell align="left"> Categoría </TableCell>
             <TableCell align="left"> Ubicación </TableCell>
@@ -40,9 +40,9 @@ export default function TablaDetalleReserva({productos}) {
 
         <TableBody>
           {productos.map((row) => (
-            <TableRow key={row.codigo}>
+            <TableRow key={row.serial}>
               <TableCell component="th" scope="row">
-                {row.codigo}
+                {row.serial}
               </TableCell>
               <TableCell align="left">{row.descripcion}</TableCell>
               <TableCell align="left">{row.categoria}</TableCell>
