@@ -19,9 +19,11 @@ import Button from '@material-ui/core/Button';
 import TablaDetalleReserva from './TablaDetallesReserva';
 import ConfirmacionBorrado from './ConfirmacionBorrado';
 import ConfirmacionEntrega from './ConfirmacionEntrega';
+import { rutaApi } from '../rutas';
 
 // Datos de prueba
-import { dataPrueba, detallePrueba } from './dataPruebas';
+// import { dataPrueba, detallePrueba } from './dataPruebas';
+const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb3JyZW8iOiJnZXJtYW5vYmFuZG9AdXJvc2FyaW8uZWR1LmNvIiwiaWF0IjoxNjM3NTg5NjU5LCJleHAiOjE2Mzc2NzYwNTl9.SY-_OYofX0xpMmzuXO1vq3BQUVJikHv5UcUUjGcgiPk';
 
 
 // Crear estilos
@@ -100,29 +102,82 @@ const useStyles = makeStyles({
 
 // Función para obtener todas las reservas realizadas
 const getReservas = (setData) => {
-  setData(dataPrueba);
+  const ruta = rutaApi + '/prestamos/estadoReservas';
+
+  // Consultar a la API
+  fetch(ruta, {
+    method: "GET",
+    headers: {
+      "token-acceso": token,
+    },
+  })
+  .then((res) => {
+    return res.json();
+  })
+  .then((res) => {
+    setData(res);
+    return res;
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 };
 
 // Función para obtener los productos reservados dado un Id de reserva
-const getDetalleReserva = (id_reserva, setData) => {
-  try {
-    const dataDetalle = detallePrueba.find(e => e.id_reserva===id_reserva).productos 
-    setData(dataDetalle);
-  } catch (error) {
-    console.log('Error getDetalle', error.message) //Al estar vacío no encuentra productos
+const getDetalleReserva = (prestamo_id, setData) => {
+  if (prestamo_id==='') {
+    setData([]);
     return []
   }
+  const ruta = rutaApi + '/prestamos/reservaxid/' + prestamo_id;
+
+  // Consultar a la API
+  fetch(ruta, {
+    method: "GET",
+    headers: {
+      "token-acceso": token,
+    },
+  })
+  .then((res) => {
+    return res.json();
+  })
+  .then((res) => {
+    setData(res);
+    return res;
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 };
 
 // Función para obtener toda la info, no productos, de una reserva por id
-const getInfoReserva = (id_reserva, data) => {
+const getInfoReserva = (prestamo_id, data) => {
   try {
-    const dataInfo = data.find(e => e.id_reserva===id_reserva);
+    const dataInfo = data.find(e => e.prestamo_id===prestamo_id);
     return dataInfo; 
   } catch (error) {
     console.log('Error getInfo', error.message)
     return {}
   }
+};
+
+// Función para eliminar la reserva por la API
+const deleteReserva = (prestamo_id) => {
+  const ruta = rutaApi + '/prestamos/eliminarReserva/' + prestamo_id;
+
+  // Eliminar por la Api
+  fetch(ruta, {
+    method: "DELETE",
+    headers: {
+      "token-acceso": token,
+    },
+  })
+  .then((res) => {
+    console.log(res);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 };
 
 // ------------------------ Componente a exportar ----------------------------
@@ -150,11 +205,12 @@ const ReservasModerador = () => {
   
   useEffect(()=>{
     setDataBusqueda(dataReservas);
+    setNumReservas(dataReservas.length)
   }, [dataReservas])
   
   useEffect(() => {
     try {
-      setIdDetalle(dataBusqueda[0].id_reserva);
+      setIdDetalle(dataBusqueda[0].prestamo_id);
     } catch (error) { // En caso de no encontrar coincidencias la busqueda
       setIdDetalle('');
     }
@@ -177,13 +233,12 @@ const ReservasModerador = () => {
   };
 
   // Función para eliminar reserva
-  const eliminarReserva = (id_reserva) => {
-    //Elimina la fila, debe llamar a la API para eliminar
-    console.log('Eliminar reserva:', id_reserva)
-    setShowConfirmacionBorrado('');
+  const eliminarReserva = (prestamo_id) => {
+    console.log('Eliminar reserva:', prestamo_id)
+    deleteReserva(prestamo_id);
+    setShowConfirmacionBorrado('');  // Guardar modal
+    setNumReservas(numReservas - 1);  // Actualizar tabla
   };
-
-  console.log('Conteo')
 
   return (
       <React.Fragment>
@@ -202,13 +257,16 @@ const ReservasModerador = () => {
               confirmModal={() => eliminarReserva(showConfirmacionBorrado)}
               message={`¿Está seguro de que desea eliminar la reserva ${showConfirmacionBorrado},
               de ${showConfirmacionBorrado==='' ? 
-              '' : dataBusqueda.find((r)=> r.id_reserva===showConfirmacionBorrado).nombre}?`}
+              '' : dataBusqueda.find((r)=> r.prestamo_id===showConfirmacionBorrado).nombre}?`}
             />
             {/* ---------- Confirmación entrega ----------- */}
+            {/* La ruta para conectarse a la Api se llama adentro */}
             <ConfirmacionEntrega
               idReserva={showConfirmacionEntrega}
               hideModal={() => setShowConfirmacionEntrega('')}
               infoReserva={getInfoReserva(showConfirmacionEntrega, dataReservas)}
+              setNumReservas = {setNumReservas}
+              numReservas = {numReservas}
             />
             
             {/* ------------- Tabla Reservas --------------- */}
@@ -225,7 +283,7 @@ const ReservasModerador = () => {
                     <TableCell className={classes.tableCell} align="left">Nombre </TableCell>
                     <TableCell className={classes.tableCell} align="left">Posición </TableCell>
                     <TableCell className={classes.tableCell} align="left">Correo </TableCell>
-                    <TableCell className={classes.tableCell} align="left">Fecha limite </TableCell>
+                    <TableCell className={classes.tableCell} align="left">Fecha Entrega</TableCell>
                     <TableCell className={classes.tableCell} />
                     <TableCell className={classes.tableCell} />
                   </TableRow>
@@ -233,11 +291,11 @@ const ReservasModerador = () => {
 
                 <TableBody>
                   {dataBusqueda.map( (row) => (
-                    <TableRow key={row.id_reserva} className={classes.tableRow}
-                    style={{backgroundColor: (row.id_reserva===idDetalle) ? 'rgba(23, 80, 166, .23)':'white'}}>
+                    <TableRow key={row.prestamo_id} className={classes.tableRow}
+                    style={{backgroundColor: (row.prestamo_id===idDetalle) ? 'rgba(23, 80, 166, .23)':'white'}}>
                       <TableCell align='center'className={classes.tableCell}> 
                         <IconButton aria-label='Detalles' size='small'
-                        onClick={() => setIdDetalle(row.id_reserva)}>
+                        onClick={() => setIdDetalle(row.prestamo_id)}>
                           <SearchIcon/>
                         </IconButton>
                       </TableCell>
@@ -246,17 +304,19 @@ const ReservasModerador = () => {
                       </TableCell>
                       <TableCell align="left" className={classes.tableCell}>{row.posicion}</TableCell>
                       <TableCell align="left" className={classes.tableCell}>{row.correo}</TableCell>
-                      <TableCell align="left" className={classes.tableCell}>{row.fecha_limite}</TableCell>
+                      <TableCell align="left" className={classes.tableCell}>
+                        {row.entrega.substring(0,10) + ' '+ row.entrega.substring(11,16)}
+                      </TableCell>
                       <TableCell align='center'className={classes.tableCell}> 
                         <Button variant="contained" disableElevation size='small'
                         className={classes.botonEntrega}
-                        onClick={() => setShowConfirmacionEntrega(row.id_reserva)}> 
+                        onClick={() => setShowConfirmacionEntrega(row.prestamo_id)}> 
                           Entrega 
                         </Button>
                       </TableCell>
                       <TableCell align='center'className={classes.tableCell}> 
                         <IconButton aria-label='Eliminar' size='medium' 
-                        onClick={() => setShowConfirmacionBorrado(row.id_reserva)}>
+                        onClick={() => setShowConfirmacionBorrado(row.prestamo_id)}>
                           <DeleteIcon style={{fill: 'red'}}/>
                         </IconButton>
                       </TableCell>

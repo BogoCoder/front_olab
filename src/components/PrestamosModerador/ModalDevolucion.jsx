@@ -139,10 +139,11 @@ export default function ModalDevolucion({
           Cancelar
         </Button>
         <Button onClick={() => {
-          console.log('Devolución', estadoDevolucion);
+          console.log('Devolución', estadoDevolucion); // Función para devolver en la API
           hideModal()}
           } 
-          className={classes.botonesFoot}>
+          className={classes.botonesFoot}
+        >
           Confirmar
         </Button>
       </Modal.Footer>
