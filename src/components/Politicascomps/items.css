@@ -1,3 +1,11 @@
+.rowdvd div{
+    position: relative;
+    align-self: center;
+}
+.grayer{
+    border-bottom: rgb(109, 109, 109);
+    border-bottom-style: solid;
+}
 .rowsug{
     position: relative;
     top: 0;

@@ -1,14 +1,19 @@
 import React from 'react';
 import Tempadminaux from "../components/Template_admin_aux";
+import AuxiliaresModerador from "../components/Auxiliares/AuxiliaresModerador"
 
 const contenido = () => {
     return (
-        <div>AAAAAAAAAAAAAAAAAAAAAAAAAAqui Va la componente Auxiliares(solo admin)</div>
+      <React.Fragment>
+      <div style={{backgroundColor: '#F7F7F7',  width: '100%', height : '94vh'}}>
+        <AuxiliaresModerador />
+      </div>
+    </React.Fragment>
     )
 }
-const Auxiliares = ({content}) => {
+const Auxiliares = ({admin,user}) => {
   return (
-    <Tempadminaux content={contenido()} admin="true"/>
+    <Tempadminaux content={contenido()} admin={admin} user={user?user:null}/>
   )
 }
 

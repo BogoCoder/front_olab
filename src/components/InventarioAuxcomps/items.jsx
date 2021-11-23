@@ -1,6 +1,6 @@
 import React from 'react';
-import "./iteminvent.css";
-import "./itemsugerencias.css"
+import "./items.css";
+
 import { FaEdit, } from "react-icons/fa";
 import { TiPlus } from "react-icons/ti";
 import { TiMinus } from "react-icons/ti";
@@ -19,7 +19,7 @@ const Iteminvent= ({header,articuloinfo}) => {
   const {img,articulo,cantidad} = articuloinfo
   return (
     <React.Fragment>
-        <div className={header ? "row rowinvent grayer":"row rowinvent"} style={{height:height}}>
+        <div className={header ? "rowdvd rowinvent grayer":"rowdvd rowinvent"} style={{height:height}}>
             {!header && <div className="img">{img}</div>}
             <div className="material">{articulo}</div>
             <div className="cantidad">{cantidad}</div>
@@ -43,7 +43,7 @@ const Itemsugerencias= ({articuloinfo}) => {
   const {articulo,cantidad} = articuloinfo
   return (
     <React.Fragment>
-        <div className= "row rowsug" style={{height:height}}>
+        <div className= "rowdvd rowsug" style={{height:height}}>
             <div className="material">{articulo}</div>
             <div className="cantidad">{cantidad}</div>
             <div><IconButton aria-label="remove" size="small" color="primary"><ImCross /></IconButton></div>

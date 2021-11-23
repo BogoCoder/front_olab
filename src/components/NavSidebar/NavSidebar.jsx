@@ -59,10 +59,7 @@ const Header = ({admin}) => {
           <SidebarContent>
             <Menu iconShape="square">
             
-            
-            <MenuItem active={true} icon={<HiUserCircle/>}><Link to="/Usuario"></Link>Usuario</MenuItem>
-            
-            <MenuItem icon={<RiShoppingCart2Fill />}><Link to="/Reservas">Reservas</Link></MenuItem>
+            <MenuItem active={true} icon={<RiShoppingCart2Fill />}><Link to="/Reservas">Reservas</Link></MenuItem>
               
               
             <MenuItem icon={<GiReceiveMoney />}><Link to="/Prestamos">Préstamos</Link></MenuItem>
