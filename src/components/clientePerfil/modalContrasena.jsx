@@ -13,7 +13,8 @@ import InputAdornment from '@mui/material/InputAdornment';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import PasswordStrengthBar from 'react-password-strength-bar';
-
+import { useFormControl } from '@mui/material/FormControl';
+import FormHelperText from '@mui/material/FormHelperText';
 
 export default function ModalContrasena() {
   const [open, setOpen] = useState(false);
@@ -60,6 +61,22 @@ export default function ModalContrasena() {
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
+
+  let boolequal = false
+
+  function MyFormHelperText() {
+    const { focused } = useFormControl() || {};
+
+    const helperText = React.useMemo(() => {
+      if (boolequal) {
+          return '';
+      }
+
+      return 'Las contraseñas no coinciden :(';
+    }, [focused]);
+
+    return <FormHelperText>{helperText}</FormHelperText>;
+  }
 
   return (
     <div>
@@ -115,13 +132,15 @@ export default function ModalContrasena() {
               </InputAdornment>
             }
           />
+          <MyFormHelperText />
+        {boolequal = values.password1 === values.password2}
         </FormControl>
         </DialogContent>
         <DialogActions>
           <Button variant="contained" onClick={handleCancel}>Cancelar</Button>
           <Button
           variant="contained"
-          onClick={()=>((values.password1 === values.password2) && values.boolpass ? handleClose() : alert('error con la contraseña'))}>
+          onClick={()=>((values.password1 === values.password2) && values.boolpass ? handleClose() : alert('Error: Contraseñas no coinciden o contraseña débil.'))}>
           Editar
           </Button>
         </DialogActions>
