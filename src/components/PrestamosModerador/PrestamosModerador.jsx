@@ -24,9 +24,11 @@ import TablaDetallesPrestamos from './TablaDetallesPrestamo';
 import AnuncioEstadoPrestamo from './AnuncioEstadoPrestamo';
 import ModalNuevoPrestamo from './ModalNuevoPrestamo';
 import ModalDevolucion from './ModalDevolucion';
+import { rutaApi } from '../rutas';
 
 // Importar datos de prueba
 import {dataPrueba, detallePrueba} from './dataPrueba';
+const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb3JyZW8iOiJnZXJtYW5vYmFuZG9AdXJvc2FyaW8uZWR1LmNvIiwiaWF0IjoxNjM3NTg5NjU5LCJleHAiOjE2Mzc2NzYwNTl9.SY-_OYofX0xpMmzuXO1vq3BQUVJikHv5UcUUjGcgiPk';
 
 // Crear estilos
 const useStyles = makeStyles({
@@ -134,19 +136,54 @@ const estadoPrestamo = (fecha_limite_devolucion) => {
 
 // Función para obtener todos los prestamos activos
 const getPrestamos = (setData) => {
-  setData(dataPrueba);
+  const ruta = rutaApi + '/prestamos/estadoPrestamos';
+
+  // Consultar a la API
+  fetch(ruta, {
+    method: "GET",
+    headers: {
+      "token-acceso": token,
+    },
+  })
+  .then((res) => {
+    return res.json();
+  })
+  .then((res) => {
+    setData(res);
+    return res;
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 };
 
 // Función para obtener los productos prestados dado un ID de prestamo
-const getDetallePrestamo = (id_prestamo, setData) => {
-  try {
-    const dataDetalle = detallePrueba.find(e => e.id_prestamo===id_prestamo).productos 
-    setData(dataDetalle);
-  } catch (error) {
-    console.log('Error getDetalle', error.message) //Al estar vacío no encuentra productos
+const getDetallePrestamo = (prestamo_id, setData) => {
+  if (prestamo_id==='') {
+    setData([]);
     return []
   }
+  const ruta = rutaApi + '/prestamos/reservaxid/' + prestamo_id;
+
+  // Consultar a la API
+  fetch(ruta, {
+    method: "GET",
+    headers: {
+      "token-acceso": token,
+    },
+  })
+  .then((res) => {
+    return res.json();
+  })
+  .then((res) => {
+    setData(res);
+    return res;
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 };
+
 
 // -------------------------------------------
 // ---------- Componente a exportar ----------
@@ -160,11 +197,16 @@ const PrestamosModerador = () => {
   const [dataDetalle, setdataDetalle] = useState([]);
   const [showDevolucion, setShowDevolucion] = useState(false);
   const [showNuevoPrestamo, setShowNuevoPrestamo] = useState(false);
+  const [forceUpdateCount, setForceUpdateCount] = useState(0) 
 
   // Cargar datos al iniciar
   useEffect(() => {
     getPrestamos(setDataPrestamos);
   }, [])
+
+  useEffect(() => {
+    getPrestamos(setDataPrestamos);
+  }, [forceUpdateCount]) // Actualizar tabla al devolver préstamo.
 
   // Efectos al cambiar estados
   useEffect(()=>{
@@ -173,7 +215,7 @@ const PrestamosModerador = () => {
 
   useEffect(() => {
     try {
-      setIdDetalle(dataBusqueda[0].id_prestamo)
+      setIdDetalle(dataBusqueda[0].prestamo_id)
     } catch (error) { // En caso de no encontrar coincidencias la busqueda
       setIdDetalle('')
     }
@@ -193,6 +235,12 @@ const PrestamosModerador = () => {
   };
   const cancelBusqueda = () => {
     setDataBusqueda(dataPrestamos);
+  };
+
+  // Función para actualizar tabla al devolver préstamo
+  const forzarActualizacion = () =>{
+    setIdDetalle('');
+    setForceUpdateCount(forceUpdateCount + 1)
   };
 
   return(
@@ -226,12 +274,12 @@ const PrestamosModerador = () => {
 
                 <TableBody>
                   {dataBusqueda.map( (row) => (
-                    <TableRow key={row.id_prestamo} className={classes.tableRow}
-                      style={{backgroundColor: (row.id_prestamo===idDetalle) ? 'rgba(23, 80, 166, .23)':'white'}}
+                    <TableRow key={row.prestamo_id} className={classes.tableRow}
+                      style={{backgroundColor: (row.prestamo_id===idDetalle) ? 'rgba(23, 80, 166, .23)':'white'}}
                     >
                       <TableCell align='center'className={classes.tableCell}> 
                         <IconButton aria-label='Detalles' size='small'
-                        onClick={() => setIdDetalle(row.id_prestamo)}>
+                        onClick={() => setIdDetalle(row.prestamo_id)}>
                           <SearchIcon/>
                         </IconButton>
                       </TableCell>
@@ -240,10 +288,14 @@ const PrestamosModerador = () => {
                       </TableCell>
                       <TableCell align="left" className={classes.tableCell}>{row.posicion}</TableCell>
                       <TableCell align="left" className={classes.tableCell}>{row.correo}</TableCell>
-                      <TableCell align="left" className={classes.tableCell}>{row.fecha_entrega}</TableCell>
-                      <TableCell align="left" className={classes.tableCell}>{row.fecha_limite_devolucion}</TableCell>
+                      <TableCell align="left" className={classes.tableCell}>
+                        {row.entrega.substring(0,10) + ' '+ row.entrega.substring(11,16)}
+                      </TableCell>
+                      <TableCell align="left" className={classes.tableCell}>
+                        {row.devolucion.substring(0,10) + ' '+ row.devolucion.substring(11,16)}
+                      </TableCell>
                       <TableCell align="center" className={classes.tableCell}> 
-                        {estadoPrestamo(row.fecha_limite_devolucion)}
+                        {estadoPrestamo(row.devolucion)}
                       </TableCell>
                     </TableRow>
                   ))
@@ -296,6 +348,7 @@ const PrestamosModerador = () => {
         hideModal={() => setShowDevolucion(false)}
         idPrestamo={idDetalle}
         productos={dataDetalle}
+        onConfirmDevolucion = { () => forzarActualizacion()}
       />
 
       {/* ---------- Modal nuevo prestamo sin reserva ----------*/}

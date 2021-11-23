@@ -1,51 +1,51 @@
 const dataPrueba = [{
-    id_prestamo: '01',
+    prestamo_id: '01',
     nombre: 'Ricardo Tapias',
     posicion: 'Estudiante',
     correo: 'ric.tap@urosario.edu.co',
-    fecha_entrega: '2021-10-20 11:00',
-    fecha_limite_devolucion: '2021-10-25 11:00'
+    entrega: '2021-10-20 11:00',
+    devolucion: '2021-10-25 11:00'
   }, {
-    id_prestamo: '02',
+    prestamo_id: '02',
     nombre: 'Bruno Diaz',
     posicion: 'Estudiante',
     correo: 'bru.dia@urosario.edu.co',
-    fecha_entrega: '2021-10-20 11:00',
-    fecha_limite_devolucion: '2021-10-30 11:00'
+    entrega: '2021-10-20 11:00',
+    devolucion: '2021-10-30 11:00'
   }, {
-    id_prestamo: '03',
+    prestamo_id: '03',
     nombre: 'Bruno Diaz',
     posicion: 'Estudiante',
     correo: 'bru.dia@urosario.edu.co',
-    fecha_entrega: '2021-10-25 11:00',
-    fecha_limite_devolucion: '2021-11-29 11:00'
+    entrega: '2021-10-25 11:00',
+    devolucion: '2021-11-29 11:00'
   }, {
-    id_prestamo: '04',
+    prestamo_id: '04',
     nombre: 'Camila Mendez',
     posicion: 'Profesor',
     correo: 'cam.men@urosario.edu.co',
-    fecha_entrega: '2021-10-10 11:00',
-    fecha_limite_devolucion: '2021-10-28 11:00'
+    entrega: '2021-10-10 11:00',
+    devolucion: '2021-10-28 11:00'
   }, {
-    id_prestamo: '05',
+    prestamo_id: '05',
     nombre: 'Juan Galindo',
     posicion: 'Profesor',
     correo: 'juan.gal@urosario.edu.co',
-    fecha_entrega: '2021-10-10 11:00',
-    fecha_limite_devolucion: '2021-10-31 11:00'
+    entrega: '2021-10-10 11:00',
+    devolucion: '2021-10-31 11:00'
   }, {
-    id_prestamo: '06',
+    prestamo_id: '06',
     nombre: 'Camilo Martínez',
     posicion: 'Estudiante',
     correo: 'cam.mar@urosario.edu.co',
-    fecha_entrega: '2021-10-10 11:00',
-    fecha_limite_devolucion: '2021-11-01 11:00'
+    entrega: '2021-10-10 11:00',
+    devolucion: '2021-11-01T11:00:45.000Z'
   }
 ];
 
 const detallePrueba = [
   {
-    id_prestamo: '01',
+    prestamo_id: '01',
     productos: [
       {
         codigo: '000001',
@@ -71,7 +71,7 @@ const detallePrueba = [
     ]
   },
   {
-    id_prestamo: '02',
+    prestamo_id: '02',
     productos: [
       {
         codigo: '000001',
@@ -90,7 +90,7 @@ const detallePrueba = [
     ]
   },
   {
-    id_prestamo: '03',
+    prestamo_id: '03',
     productos: [
       {
         codigo: '000001',
@@ -102,7 +102,7 @@ const detallePrueba = [
     ]
   },
   {
-    id_prestamo: '04',
+    prestamo_id: '04',
     productos: [
       {
         codigo: '000001',
@@ -121,7 +121,7 @@ const detallePrueba = [
     ]
   },
   {
-    id_prestamo: '05',
+    prestamo_id: '05',
     productos: [
       {
         codigo: '000001',

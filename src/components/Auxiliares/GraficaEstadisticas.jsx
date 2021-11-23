@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 import Plotly from "plotly.js"
 import createPlotlyComponent from 'react-plotly.js/factory';
-import { FaEdit as EditIcon } from "react-icons/fa";
+import { RiLineChartFill as LineChartFillIcon} from "react-icons/ri";
 
 // Importar datos de prueba 
 import { dataEstadisticasAux } from './dataPrueba';
@@ -70,7 +70,7 @@ const GraficaEstadisticas = ({idAuxiliar}) => {
       <React.Fragment>
         <div className={classes.mensajeInicial}>
           Seleccione un auxiliar pulsando sobre el icono <br/>
-          <EditIcon style={{fill: '#1750a6', marginTop: '10px'}}/>
+          <LineChartFillIcon style={{fill: '#1750a6', marginTop: '10px'}}/>
         </div>
       </React.Fragment>
     )

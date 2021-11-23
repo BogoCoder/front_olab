@@ -20,6 +20,7 @@ import ConfirmacionEliminado from './ConfirmacionEliminado';
 import ModalEditarAuxiliar from './ModalEditarAuxiliar';
 import ModalAgregarAuxiliar from './ModalAgregarAuxiliar';
 import GraficaEstadisticas from './GraficaEstadisticas';
+import { rutaApi, token } from '../rutas';
 
 // Importar datos de prueba
 import {dataPruebaAuxiliares} from './dataPrueba';
@@ -81,15 +82,47 @@ const useStyles = makeStyles({
 
 // Función para obtener los auxiliares
 const getAuxiliares = (setData) => {
-  setData(dataPruebaAuxiliares);
+  const ruta = rutaApi + '/usuarios/auxiliares';
+
+  // Consultar a la API
+  fetch(ruta, {
+    method: "GET",
+    headers: {
+      "token-acceso": token,
+    },
+  })
+  .then((res) => {
+    return res.json();
+  })
+  .then((res) => {
+    setData(res);
+    return res;
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 };
 
 // Función para eliminar auxiliar
-const eliminarAuxiliar = (id, setDataDel) => {
-  //Elimina la fila, debe llamar a la API para eliminar
-  console.log('Eliminado el auxiliar:', id)
-  setDataDel('');
-  // Renderizar de nuevo para que no aparezca la fila
+const putEliminarAuxiliar = (id) => {
+  const ruta = rutaApi + '/usuarios/eliminarAuxiliar';
+  const data = { "correo": id };
+
+  // Eliminar por la Api
+  fetch(ruta, {
+    method: "PUT",
+    headers: {
+      "token-acceso": token,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  })
+  .then((res) => {
+    console.log(res);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 };
 
 
@@ -103,19 +136,24 @@ const AuxiliaresModerador = () => {
   const [showModalEditar, setShowModalEditar] = useState('');
   const [showModalAgregar, setShowModalAgregar] = useState(false);
   const [showEstadisticas, setShowEstadisticas] = useState('');
+  const [forceUpdateCount, setForceUpdateCount] = useState(0) 
 
   // Cargar datos al iniciar
   useEffect(() => {
     getAuxiliares(setDataAuxiliares);
-    console.log('¿Cúantas veces corre esto?')
   }, [])
 
+  // Forzar actualización de la tabla
+  useEffect(() => {
+    getAuxiliares(setDataAuxiliares);
+  }, [forceUpdateCount])
+
   // Prueba estados
-  console.log('Data auxiliares:', dataAuxiliares );
-  console.log('Modal eliminar:', showConfirmacionEliminar);
-  console.log('Modal editar:', showModalEditar);
-  console.log('Modal agregar:', showModalAgregar);
-  console.log('Mostrar estadísticas:', showEstadisticas);
+  // console.log('Data auxiliares:', dataAuxiliares );
+  // console.log('Modal eliminar:', showConfirmacionEliminar);
+  // console.log('Modal editar:', showModalEditar);
+  // console.log('Modal agregar:', showModalAgregar);
+  // console.log('Mostrar estadísticas:', showEstadisticas);
 
   return(
     <React.Fragment>
@@ -144,8 +182,7 @@ const AuxiliaresModerador = () => {
             <TableHead>
               <TableRow className={classes.tableRow}>
                 <TableCell className={classes.tableCell} align="left"> Nombre </TableCell>
-                <TableCell className={classes.tableCell} align="left"> Programa </TableCell>
-                <TableCell className={classes.tableCell} align="left"> Corte </TableCell>
+                <TableCell className={classes.tableCell} align="left"> Posición </TableCell>
                 <TableCell className={classes.tableCell} align="left"> Correo </TableCell>
                 <TableCell className={classes.tableCell} align="left"> Celular </TableCell>
                 <TableCell className={classes.tableCell} />
@@ -157,29 +194,28 @@ const AuxiliaresModerador = () => {
             <TableBody>
             {
               dataAuxiliares.map( (row) => (
-                <TableRow key={row.id} className={classes.tableRow}>
+                <TableRow key={row.correo} className={classes.tableRow}>
                   <TableCell className={classes.tableCell} align="left"> {row.nombre} </TableCell>
-                  <TableCell className={classes.tableCell} align="left"> {row.programa} </TableCell>
-                  <TableCell className={classes.tableCell} align="left"> {row.corte} </TableCell>
+                  <TableCell className={classes.tableCell} align="left"> {row.posicion} </TableCell>
                   <TableCell className={classes.tableCell} align="left"> {row.correo} </TableCell>
                   <TableCell className={classes.tableCell} align="left"> {row.celular} </TableCell>
                   <TableCell className={classes.tableCell} align="center">
                     <IconButton aria-label='boton-estadisticas' size='small'
-                      onClick={() => setShowEstadisticas(row.id)}
+                      onClick={() => setShowEstadisticas(row.correo)}
                     >
                       <LineChartFillIcon style={{fill: '#1750a6', fontSize: 24}}/>
                     </IconButton>
                   </TableCell>
                   <TableCell className={classes.tableCell} align="center">
                     <IconButton aria-label='boton-estadisticas' size='small'
-                      onClick={() => setShowModalEditar(row.id)}
+                      onClick={() => setShowModalEditar(row.correo)}
                     >
                       <EditIcon style={{fill: '#1750a6'}}/>
                     </IconButton>
                   </TableCell>
                   <TableCell className={classes.tableCell} align="center">
                     <IconButton aria-label='boton-estadisticas' size='small'
-                      onClick={() => setshowConfirmacionEliminar(row.id)}
+                      onClick={() => setshowConfirmacionEliminar(row.correo)}
                     >
                       <ClearIcon style={{fill: 'red'}}/>
                     </IconButton>
@@ -211,6 +247,7 @@ const AuxiliaresModerador = () => {
             Horarios
           </div>
           Aquí irá una tabla editable con los horarios. No es prioritaria.
+          O unos botones para agregar usuarios.
         </Col>
 
       </Row>
@@ -219,16 +256,21 @@ const AuxiliaresModerador = () => {
       <ModalAgregarAuxiliar
         showModal={showModalAgregar}
         hideModal={() => setShowModalAgregar(false)}
+        forzarActualizacion={() => setForceUpdateCount(forceUpdateCount + 1)}
       />
 
       {/* -------------- Modal confirmación eliminación ------------------ */}
       <ConfirmacionEliminado 
         showModal={showConfirmacionEliminar}
         hideModal={() => setshowConfirmacionEliminar('')}
-        confirmModal={() => eliminarAuxiliar(showConfirmacionEliminar, setshowConfirmacionEliminar)}
+        confirmModal={() => {
+          putEliminarAuxiliar(showConfirmacionEliminar);
+          setForceUpdateCount(forceUpdateCount + 1);
+          setshowConfirmacionEliminar('');
+        }}
         message = {`¿Esta seguro que desea eliminar al auxiliar 
           ${ showConfirmacionEliminar==='' ?
-            '' : dataAuxiliares.find((r) => r.id===showConfirmacionEliminar).nombre
+            '' : dataAuxiliares.find((r) => r.correo===showConfirmacionEliminar).nombre
           } 
           ?`}
       />

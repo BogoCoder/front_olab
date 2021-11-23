@@ -5,7 +5,7 @@ import WarningIcon from '@material-ui/icons/Warning';
 import ErrorIcon from '@material-ui/icons/Error';
 
 const diasDiffDevolucion = (id, data) => {
-  const fechaLimDev = data.find(e => e.id_prestamo===id).fecha_limite_devolucion 
+  const fechaLimDev = data.find(e => e.prestamo_id===id).devolucion 
   const diaHoy = new Date()
   const fechaDev = new Date(fechaLimDev)
   const diasDiff = Math.floor((fechaDev - diaHoy)/(1000*60*60*24))
@@ -51,7 +51,7 @@ export default function AnuncioEstadoPrestamo ({idDetalle, dataPrestamos}){
   if(idDetalle===''){
     return(
       <React.Fragment>
-        No se encontraron resultados
+        Seleccione un préstamo.
       </React.Fragment>
     );
   }

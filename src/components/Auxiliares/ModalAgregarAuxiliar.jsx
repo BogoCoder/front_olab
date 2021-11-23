@@ -1,6 +1,7 @@
 import React from "react";
 import { Modal, Button } from "react-bootstrap";
 import { makeStyles } from '@material-ui/core/styles';
+import { rutaApi, token } from '../rutas';
 
 const useStyles = makeStyles({
 	botonesFoot: {
@@ -15,9 +16,35 @@ const useStyles = makeStyles({
   },
 });
 
+const putAgregarAuxiliar = () => {
+  console.log('Agregar auxiliar aquí');
+  // Se debe agregar un aviso en caso de que no se encuentre el correo ingresado en usuarios
+  /*
+  const ruta = rutaApi + '/usuarios/agregarAuxiliar';
+  const data = { "correo": texto };
+
+  // Eliminar por la Api
+  fetch(ruta, {
+    method: "PUT",
+    headers: {
+      "token-acceso": token,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  })
+  .then((res) => {
+    console.log(res);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+  */
+};
+
 const ModalAgregarAuxiliar = ({
   showModal,
   hideModal,
+  forzarActualizacion,
 }) => {
   const classes = useStyles();
 
@@ -29,7 +56,7 @@ const ModalAgregarAuxiliar = ({
 			</Modal.Header>
 
       <Modal.Body>
-        Motrar buscar estudiantes por nombre, solo renderizar la busqueda.
+        Indique el correo del usuario a registrar como auxiliar.
       </Modal.Body>
 
       <Modal.Footer>
@@ -37,9 +64,10 @@ const ModalAgregarAuxiliar = ({
           Cancelar
         </Button>
         <Button onClick={() => {
-          console.log('Agregar auxiliar seleccionado'); // Función para editar en la API
-          hideModal()}
-          } 
+            putAgregarAuxiliar();
+            forzarActualizacion();
+            hideModal();
+          }} 
           className={classes.botonesFoot}
         >
           Agregar
