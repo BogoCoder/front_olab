@@ -1,18 +1,6 @@
 import React from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import HomePage from "./home";
-<<<<<<< HEAD
-import Reservas from "./Reservas"
-import Usuario from "./Usuario"
-import Prestamos from "./Prestamos"
-import Historial from "./Historial"
-import Inventario from "./Inventario"
-import Politicas from "./Politicas"
-import Auxiliares from "./Auxiliarestab"
-import TipoUsuario from "./Tipo_usuario"
-import LogIn from "./login"
-import {v4 as uuidv4} from "uuid"
-=======
 import Reservas from "./Reservas";
 import Prestamos from "./Prestamos";
 import Historial from "./Historial";
@@ -21,7 +9,6 @@ import Politicas from "./Politicas";
 import Auxiliares from "./Auxiliarestab";
 import TipoUsuario from "./Tipo_usuario";
 import { v4 as uuidv4 } from "uuid";
->>>>>>> eab15aaab9598a40f2860194ac514aefd963cb83
 
 /* Imports y cosas para el test nada mas, solo iconos y arrays --------------------------------------------------------*/
 import { CgAlarm } from "react-icons/cg";
@@ -39,6 +26,9 @@ import { SiAirplayvideo } from "react-icons/si";
 // import navbarCliente from "../components/NavSidebarCliente";
 import HomeCliente from "./homeCliente";
 import PerfilCliente from "./PerfilCliente";
+import LogIn from "./login";
+
+import ProtectedRoute from "../components/ProtectedRoute";
 
 var n_items = 16;
 var imgs_test = [
@@ -77,48 +67,32 @@ let user = { tipo: "Auxiliar", nombre: "David Martinez" };
 
 const Routes = ({ admin }) => {
 	admin = "true";
+	let isAuthenticated = localStorage.getItem("isAuthenticated");
 	return (
 		<BrowserRouter>
 			<Switch>
-				<Route path='/Cliente' 
-					component={HomeCliente} 
+				<ProtectedRoute 
+				path='/Cliente' 
+				component={HomeCliente} 
+				isAuthenticated={isAuthenticated}
 				/>
-				<Route path='/ClientePerfil' 
-					component={PerfilCliente} 
+				<ProtectedRoute 
+				path='/ClientePerfil' 
+				component={PerfilCliente} 
+				isAuthenticated={isAuthenticated}
 				/>
 
-<<<<<<< HEAD
-        </Route>
-        <Route path="/Politicas">
-          <Politicas/>
-        </Route>
-        <Route path="/Auxiliares">
-          <Auxiliares/>
-        </Route>
-        <Route path="/TipoUsuario">
-          <TipoUsuario/>
-        </Route>
-        <Route path="/home">
-          <HomePage />
-        </Route>
-        <Route path="/">
-          <LogIn />
-        </Route>
-      </Switch>
-    </BrowserRouter>
-  );
-=======
-				<Route path='/Reservas'>
-					<Reservas admin={admin} user={user}/>
-				</Route>
-				<Route path='/Prestamos'>
-					<Prestamos admin={admin} user={user}/>
-				</Route>
-				<Route path='/Historial'>
-					<Historial admin={admin} />
-				</Route>
-				<Route path='/Inventario'>
-					<Inventario
+				<ProtectedRoute path='/Reservas' isAuthenticated={isAuthenticated}
+					component={Reservas} admin={admin} user={user}
+				/>
+				<ProtectedRoute path='/Prestamos' isAuthenticated={isAuthenticated}
+					component={Prestamos} admin={admin} user={user}
+				/>
+				<ProtectedRoute path='/Historial' isAuthenticated={isAuthenticated}
+					component={Historial} admin={admin}
+				/>
+				<ProtectedRoute path='/Inventario' isAuthenticated={isAuthenticated}
+					component={Inventario}
 						admin={"true"}
 						user={user}
 						inventario={[...Array(n_items)].map((item) => {
@@ -138,24 +112,27 @@ const Routes = ({ admin }) => {
 								cantidad: Math.floor(Math.random() * 15),
 							};
 						})}
-					/>
-				</Route>
-				<Route path='/Politicas'>
-					<Politicas user={user} admin={"true"}/>
-				</Route>
-				<Route path='/Auxiliares'>
-					<Auxiliares admin={admin} user={user}/>
-				</Route>
+				/>
+				<ProtectedRoute path='/Politicas' isAuthenticated={isAuthenticated}
+					component={Politicas} user={user} admin={"true"}
+				/>
+				<ProtectedRoute path='/Auxiliares' isAuthenticated={isAuthenticated}
+					component={Auxiliares} admin={admin} user={user}
+				/>
+				<ProtectedRoute path='/selecusuario' isAuthenticated={isAuthenticated}
+					component={TipoUsuario}
+				/>
+				<ProtectedRoute 
+				path='/homeAux' 
+				isAuthenticated={isAuthenticated}
+				component={HomePage}
+				/>
 				<Route exact path='/'>
-					<TipoUsuario />
-				</Route>
-				<Route path='/homeAux'>
-					<HomePage />
+					<LogIn />
 				</Route>
 			</Switch>
 		</BrowserRouter>
 	);
->>>>>>> eab15aaab9598a40f2860194ac514aefd963cb83
 };
 
 export default Routes;

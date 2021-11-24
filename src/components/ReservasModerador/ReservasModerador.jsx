@@ -23,7 +23,7 @@ import { rutaApi } from '../rutas';
 
 // Datos de prueba
 // import { dataPrueba, detallePrueba } from './dataPruebas';
-const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb3JyZW8iOiJnZXJtYW5vYmFuZG9AdXJvc2FyaW8uZWR1LmNvIiwiaWF0IjoxNjM3NTg5NjU5LCJleHAiOjE2Mzc2NzYwNTl9.SY-_OYofX0xpMmzuXO1vq3BQUVJikHv5UcUUjGcgiPk';
+const token = localStorage.getItem("token");
 
 
 // Crear estilos

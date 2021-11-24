@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState } from "react";
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
@@ -11,6 +11,9 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import {ReactComponent as OLabLogo} from '../assets/olab_logo.svg';
+
+import { useForm } from "react-hook-form";
+import {rutaApi, rutaLogin} from "./rutas";
 
 function Copyright(props) {
   return (
@@ -32,16 +35,75 @@ function Copyright(props) {
 
 const theme = createTheme();
 
-export default function SignInSide() {
-  const handleSubmit = (event) => {
+export default function SignInSide(props) {
+
+  const { register, handleSubmit } = useForm();
+	const [feedback, setFeedback] = useState("");
+	const [er, setER] = useState(false);
+	console.log(props);
+
+  const formDataToJSON = (fd) => {
+    const json = {};
+    Array.from(fd.entries()).forEach(([key, value]) => {
+      json[key] = value;
+    })
+    const datas = JSON.stringify(json);
+    return datas;
+  }
+
+  const handleSubmits = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
+
+    const datas = formDataToJSON(data);
+    console.log(datas);
     // eslint-disable-next-line no-console
     console.log({
-      email: data.get('email'),
-      password: data.get('password'),
+      email: data.get('correo'),
+      password: data.get('contrasenia'),
     });
   };
+
+	const onSubmit = (e) => {
+		let error = false;
+    e.preventDefault();
+		fetch(`${rutaApi}/auth/login`, {
+			method: "post",
+			mode: "cors",
+			headers: {
+				Accept: "application/json",
+				"Content-Type": "application/json",
+			},
+
+			body: formDataToJSON(new FormData(e.currentTarget)),
+		})
+			.then((res) => {
+				if (res.ok) {
+					error = false;
+					console.log("Se logueó bien!!!!");
+				} else {
+					error = true;
+					console.log("Hubo un error al loguear :(");
+					setER(true);
+				}
+				return res.json();
+			})
+			.then((res) => {
+				if (error) {
+					console.log(res);
+					setFeedback(res);
+					setER(true);
+				} else {
+					// Si se logueó sin errores...
+					localStorage.setItem("token", res.token);
+          localStorage.setItem("isAuthenticated", true);
+					console.log("window location: " + window.location.host);
+					window.location.assign(`${rutaLogin}/homeAux`);
+				}
+			})
+			.catch((err) => console.log(err));
+	};
+
 
   return (
     <ThemeProvider theme={theme}>
@@ -102,26 +164,26 @@ export default function SignInSide() {
             <Typography component="h1" variant="h6">
               Iniciar sesión
             </Typography>
-            <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
+            <Box component="form" noValidate onSubmit={onSubmit} sx={{ mt: 1 }}>
               <TextField
                 margin="normal"
                 required
                 fullWidth
-                id="user"
-                label="Nombre de usuario"
-                name="user"
-                autoComplete="user"
+                id="correo"
+                label="Correo del usuario"
+                name="correo"
+                autoComplete="correo"
                 autoFocus
               />
               <TextField
                 margin="normal"
                 required
                 fullWidth
-                name="password"
+                name="contrasenia"
                 label="Contraseña"
                 type="password"
-                id="password"
-                autoComplete="current-password"
+                id="contrasenia"
+                autoComplete="current-contrasenia"
               />
               <FormControlLabel
                 control={<Checkbox value="remember" color="primary" />}

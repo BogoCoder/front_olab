@@ -1,6 +1,6 @@
 import React from 'react';
 import SignInSide from "../components/SignInSide"
-const HomePage = () => {
+const HomePage = (props) => {
   return (
     <React.Fragment>
       <SignInSide />
