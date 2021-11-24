@@ -20,7 +20,7 @@ const Iteminvent= ({header,articuloinfo}) => {
   return (
     <React.Fragment>
         <div className={header ? "rowdvd rowinvent grayer":"rowdvd rowinvent"} style={{height:height}}>
-            {!header && <div className="img">{img}</div>}
+            <div className="img">{img}</div>
             <div className="material">{articulo}</div>
             <div className="cantidad">{cantidad}</div>
             {!header &&

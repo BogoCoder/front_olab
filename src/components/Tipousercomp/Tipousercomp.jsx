@@ -1,8 +1,18 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./Tipousercomp.css";
+import { Redirect } from "react-router"
+import { useHistory } from "react-router-dom"
 
 const TipoUsercomp = ({ content, admin, tipousuario, nombre }) => {
+	//return <Redirect to="/Politicas" />
+	const history = useHistory()
+	const go_client_page = () => {
+		history.push("/Cliente")
+	}
+	const go_modder_page = () => {
+		history.push("/Politicas")
+	}
 	return (
 		<React.Fragment>
 			<div className='containertpsr' style={{ backgroundColor: "white" }}>
@@ -10,10 +20,10 @@ const TipoUsercomp = ({ content, admin, tipousuario, nombre }) => {
 					<div>Ingresar como:</div>
 				</div>
 				<div className='Botones'>
-					<button type='button' className='bclient btntpsr'>
+					<button type='button' className='bclient btntpsr' onClick={go_client_page}>
 						<div>Cliente</div>
 					</button>
-					<button type='button' className='bmod btntpsr'>
+					<button type='button' onClick={go_modder_page} className='bmod btntpsr'>
 						<div>Moderador</div>
 					</button>
 				</div>

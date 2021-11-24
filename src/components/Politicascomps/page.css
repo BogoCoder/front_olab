@@ -1,10 +1,11 @@
 .containerpoliticas{
     position:absolute;
-    top: 10%;
+    top: 5%;
     bottom: 0;
     left: 80px;
     right: 0;
-    height: 90%;
+    height: 95%;
+    background-color: #F7F7F7;
 }
 .divconfigs{
     position: absolute;
