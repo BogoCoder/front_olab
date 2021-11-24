@@ -26,10 +26,6 @@ import ModalNuevoPrestamo from './ModalNuevoPrestamo';
 import ModalDevolucion from './ModalDevolucion';
 import { rutaApi } from '../rutas';
 
-// Importar datos de prueba
-import {dataPrueba, detallePrueba} from './dataPrueba';
-const token = localStorage.getItem("token");
-
 // Crear estilos
 const useStyles = makeStyles({
   boxTablaPrestamos: { 
@@ -135,7 +131,7 @@ const estadoPrestamo = (fecha_limite_devolucion) => {
 };
 
 // Función para obtener todos los prestamos activos
-const getPrestamos = (setData) => {
+const getPrestamos = (setData, token) => {
   const ruta = rutaApi + '/prestamos/estadoPrestamos';
 
   // Consultar a la API
@@ -158,7 +154,7 @@ const getPrestamos = (setData) => {
 };
 
 // Función para obtener los productos prestados dado un ID de prestamo
-const getDetallePrestamo = (prestamo_id, setData) => {
+const getDetallePrestamo = (prestamo_id, setData, token) => {
   if (prestamo_id==='') {
     setData([]);
     return []
@@ -189,6 +185,7 @@ const getDetallePrestamo = (prestamo_id, setData) => {
 // ---------- Componente a exportar ----------
 const PrestamosModerador = () => {
   const classes = useStyles();
+  const token = localStorage.getItem("token");
 
   // Componentes de estado
   const [dataPrestamos, setDataPrestamos] = useState([]);
@@ -201,11 +198,11 @@ const PrestamosModerador = () => {
 
   // Cargar datos al iniciar
   useEffect(() => {
-    getPrestamos(setDataPrestamos);
+    getPrestamos(setDataPrestamos, token);
   }, [])
 
   useEffect(() => {
-    getPrestamos(setDataPrestamos);
+    getPrestamos(setDataPrestamos, token);
   }, [forceUpdateCount]) // Actualizar tabla al devolver préstamo.
 
   // Efectos al cambiar estados
@@ -222,7 +219,7 @@ const PrestamosModerador = () => {
   }, [dataBusqueda])
 
   useEffect(() => {
-    getDetallePrestamo(idDetalle, setdataDetalle);
+    getDetallePrestamo(idDetalle, setdataDetalle, token);
   }, [idDetalle])
 
   // Funciones para la busqueda

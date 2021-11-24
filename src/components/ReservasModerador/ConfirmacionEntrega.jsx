@@ -5,10 +5,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import TablaDetallesEntrega from "./TablaDetallesEntrega";
 import { rutaApi } from '../rutas';
 
-// Datos de prueba
-// import { detallePrueba } from './dataPruebas';
-const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb3JyZW8iOiJnZXJtYW5vYmFuZG9AdXJvc2FyaW8uZWR1LmNvIiwiaWF0IjoxNjM3NTg5NjU5LCJleHAiOjE2Mzc2NzYwNTl9.SY-_OYofX0xpMmzuXO1vq3BQUVJikHv5UcUUjGcgiPk';
-
 const useStyles = makeStyles({
 	botones: {
     height: '42px',
@@ -35,7 +31,7 @@ const useStyles = makeStyles({
 });
 
 // Función para obtener los productos reservados dado un Id de reserva
-const getDetalleReserva = (prestamo_id, setData) => {
+const getDetalleReserva = (prestamo_id, setData, token) => {
   if (prestamo_id==='') {
     setData([]);
     return []
@@ -62,7 +58,7 @@ const getDetalleReserva = (prestamo_id, setData) => {
 };
 
 // Función para pasar el prestamo a entregado por la Api
-const putConfirmarEntrega = (idReserva) => {
+const putConfirmarEntrega = (idReserva, token) => {
   const ruta = rutaApi + '/prestamos/confirmarPrestamo/' + idReserva;
 
   // Modificar el estado del préstamo por la Api
@@ -89,11 +85,12 @@ const ConfirmacionEntrega = ({
     numReservas
 }) => {
   const classes = useStyles();
+  const token = localStorage.getItem("token");
   
   const [detalleReserva, setDetalleReserva] = useState([]);
 
   useEffect(() => {
-    getDetalleReserva(idReserva, setDetalleReserva)
+    getDetalleReserva(idReserva, setDetalleReserva, token)
   }, [idReserva])
 
   if (idReserva==='') {
@@ -117,7 +114,7 @@ const ConfirmacionEntrega = ({
             <div className="col-md-3 ml-auto">
               <Button className={classes.botones} 
                 onClick={() => {
-                  putConfirmarEntrega(idReserva);
+                  putConfirmarEntrega(idReserva, token);
                   setNumReservas(numReservas - 1);;
                   hideModal();
                 }}

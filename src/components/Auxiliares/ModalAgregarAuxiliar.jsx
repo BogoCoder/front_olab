@@ -47,6 +47,7 @@ const ModalAgregarAuxiliar = ({
   forzarActualizacion,
 }) => {
   const classes = useStyles();
+  const token = localStorage.getItem("token");
 
   return (
     <Modal show={showModal} onHide={hideModal} centered backdrop="static">

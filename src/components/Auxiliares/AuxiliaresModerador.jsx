@@ -22,10 +22,6 @@ import ModalAgregarAuxiliar from './ModalAgregarAuxiliar';
 import GraficaEstadisticas from './GraficaEstadisticas';
 import { rutaApi, token } from '../rutas';
 
-// Importar datos de prueba
-import {dataPruebaAuxiliares} from './dataPrueba';
-
-
 
 // Crear estilos
 const useStyles = makeStyles({
@@ -81,7 +77,7 @@ const useStyles = makeStyles({
 });
 
 // Función para obtener los auxiliares
-const getAuxiliares = (setData) => {
+const getAuxiliares = (setData, token) => {
   const ruta = rutaApi + '/usuarios/auxiliares';
 
   // Consultar a la API
@@ -104,7 +100,7 @@ const getAuxiliares = (setData) => {
 };
 
 // Función para eliminar auxiliar
-const putEliminarAuxiliar = (id) => {
+const putEliminarAuxiliar = (id, token) => {
   const ruta = rutaApi + '/usuarios/eliminarAuxiliar';
   const data = { "correo": id };
 
@@ -129,6 +125,7 @@ const putEliminarAuxiliar = (id) => {
 // ---------------- Componente a exportar -------------------
 const AuxiliaresModerador = () => {
   const classes = useStyles();
+  const token = localStorage.getItem("token");
 
   // Estados
   const [dataAuxiliares, setDataAuxiliares] = useState([]);
@@ -140,12 +137,12 @@ const AuxiliaresModerador = () => {
 
   // Cargar datos al iniciar
   useEffect(() => {
-    getAuxiliares(setDataAuxiliares);
+    getAuxiliares(setDataAuxiliares, token);
   }, [])
 
   // Forzar actualización de la tabla
   useEffect(() => {
-    getAuxiliares(setDataAuxiliares);
+    getAuxiliares(setDataAuxiliares, token);
   }, [forceUpdateCount])
 
   // Prueba estados
@@ -264,7 +261,7 @@ const AuxiliaresModerador = () => {
         showModal={showConfirmacionEliminar}
         hideModal={() => setshowConfirmacionEliminar('')}
         confirmModal={() => {
-          putEliminarAuxiliar(showConfirmacionEliminar);
+          putEliminarAuxiliar(showConfirmacionEliminar, token);
           setForceUpdateCount(forceUpdateCount + 1);
           setshowConfirmacionEliminar('');
         }}

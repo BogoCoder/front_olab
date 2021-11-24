@@ -21,10 +21,6 @@ import ConfirmacionBorrado from './ConfirmacionBorrado';
 import ConfirmacionEntrega from './ConfirmacionEntrega';
 import { rutaApi } from '../rutas';
 
-// Datos de prueba
-// import { dataPrueba, detallePrueba } from './dataPruebas';
-const token = localStorage.getItem("token");
-
 
 // Crear estilos
 const useStyles = makeStyles({
@@ -101,7 +97,7 @@ const useStyles = makeStyles({
 });
 
 // Función para obtener todas las reservas realizadas
-const getReservas = (setData) => {
+const getReservas = (setData, token) => {
   const ruta = rutaApi + '/prestamos/estadoReservas';
 
   // Consultar a la API
@@ -124,7 +120,7 @@ const getReservas = (setData) => {
 };
 
 // Función para obtener los productos reservados dado un Id de reserva
-const getDetalleReserva = (prestamo_id, setData) => {
+const getDetalleReserva = (prestamo_id, setData, token) => {
   if (prestamo_id==='') {
     setData([]);
     return []
@@ -162,7 +158,7 @@ const getInfoReserva = (prestamo_id, data) => {
 };
 
 // Función para eliminar la reserva por la API
-const deleteReserva = (prestamo_id) => {
+const deleteReserva = (prestamo_id, token) => {
   const ruta = rutaApi + '/prestamos/eliminarReserva/' + prestamo_id;
 
   // Eliminar por la Api
@@ -183,6 +179,7 @@ const deleteReserva = (prestamo_id) => {
 // ------------------------ Componente a exportar ----------------------------
 const ReservasModerador = () => {
   const classes = useStyles();
+  const token = localStorage.getItem("token");
 
   // Componentes de estado
   const [dataReservas, setDataReservas] = useState([]);
@@ -195,12 +192,12 @@ const ReservasModerador = () => {
 
   // Traer datos al iniciar
   useEffect(() => {
-    getReservas(setDataReservas);
+    getReservas(setDataReservas, token);
   }, [])
 
   // Efectos al cambiar estados
   useEffect(() => {
-    getReservas(setDataReservas);
+    getReservas(setDataReservas, token);
   }, [numReservas]); // En caso de eliminar actualice la tabla
   
   useEffect(()=>{
@@ -217,7 +214,7 @@ const ReservasModerador = () => {
   }, [dataBusqueda])
 
   useEffect(()=>{
-    getDetalleReserva(idDetalle, setDataDetalle);
+    getDetalleReserva(idDetalle, setDataDetalle, token);
   }, [idDetalle])
 
   // Funciones para la busqueda
@@ -235,7 +232,7 @@ const ReservasModerador = () => {
   // Función para eliminar reserva
   const eliminarReserva = (prestamo_id) => {
     console.log('Eliminar reserva:', prestamo_id)
-    deleteReserva(prestamo_id);
+    deleteReserva(prestamo_id, token);
     setShowConfirmacionBorrado('');  // Guardar modal
     setNumReservas(numReservas - 1);  // Actualizar tabla
   };

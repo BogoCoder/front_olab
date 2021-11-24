@@ -15,9 +15,6 @@ import { rutaApi } from '../rutas';
 // Otros componentes
 import CustomSwitch from './CustomSwitch';
 
-// Datos de prueba
-const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb3JyZW8iOiJnZXJtYW5vYmFuZG9AdXJvc2FyaW8uZWR1LmNvIiwiaWF0IjoxNjM3NTg5NjU5LCJleHAiOjE2Mzc2NzYwNTl9.SY-_OYofX0xpMmzuXO1vq3BQUVJikHv5UcUUjGcgiPk';
-
 const useStyles = makeStyles({
 	botonesFoot: {
     color: 'white',
@@ -58,7 +55,7 @@ const getPlantillaDevolucion = (productos) => {
 };
 
 // Función para realizar la devolución del prestamo en la Api
-const postDevolverPrestamo = (idPrestamo) => {
+const postDevolverPrestamo = (idPrestamo, token) => {
   const ruta = rutaApi + '/prestamos/devolverPrestamo/' + idPrestamo;
 
   // Devolver por la Api
@@ -87,6 +84,7 @@ export default function ModalDevolucion({
   onConfirmDevolucion
 }){
   const classes = useStyles();
+  const token = localStorage.getItem("token");
 
   // Estados para guardar estado y observaciones
   const [estadoDevolucion, setEstadoDevolucion] = useState(getPlantillaDevolucion(productos));
@@ -166,7 +164,7 @@ export default function ModalDevolucion({
         </Button>
         <Button onClick={() => {
             console.log('Devolución', estadoDevolucion); // Función para devolver en la API
-            postDevolverPrestamo(idPrestamo);
+            postDevolverPrestamo(idPrestamo, token);
             onConfirmDevolucion();
             hideModal();
           }} 
