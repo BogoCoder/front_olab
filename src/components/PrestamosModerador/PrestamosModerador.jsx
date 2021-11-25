@@ -66,7 +66,6 @@ const useStyles = makeStyles({
     maxHeight: '35vh',
     marginTop:'5px',
     marginLeft: '3%',
-    maxWidth: '97%',
     "&::-webkit-scrollbar-track, & *::-webkit-scrollbar-track": {
       borderRadius: 8,
       border: "1.5px solid #1750A6"
@@ -259,7 +258,7 @@ const PrestamosModerador = () => {
           onCancelSearch={() => cancelBusqueda()}
         />
         <Row>
-          <Col>
+          <Col xs={8}>
             <TableContainer component={Paper} className={classes.tableContainer}>
               <Table stickyHeader className={classes.table} aria-label="tabla-prestamos" border={0}>
                 <TableHead>
@@ -307,7 +306,7 @@ const PrestamosModerador = () => {
             </TableContainer>
           </Col>  
 
-          <Col xs={3} style={{margin: '0 3% 0 1.5%'}}>
+          <Col xs={4}>
             <Row className="justify-content-center">
               <Button variant="contained" 
                 className={classes.botonNuevoPrestamo}
