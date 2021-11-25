@@ -79,7 +79,7 @@ const Header = ({admin}) => {
           </SidebarContent>
           <SidebarFooter>
             <Menu iconShape="square">
-              <MenuItem icon={<FiLogOut />}>Cerrar sesión</MenuItem>
+              <MenuItem icon={<FiLogOut />}><Link to="/">Cerrar sesión</Link></MenuItem>
             </Menu>
           </SidebarFooter>
         </ProSidebar>
