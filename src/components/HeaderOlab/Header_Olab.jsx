@@ -4,9 +4,11 @@ import "./Header_Olab.css";
 import { BsFillBellFill } from "react-icons/bs";
 import { FaUserCircle } from "react-icons/fa";
 
-const HeaderOlab = ({ tipousuario, nombre }) => {
-	console.log(tipousuario);
-	if (!(tipousuario && nombre)) {
+const HeaderOlab = () => {
+	const nombre = localStorage.getItem("nombre");
+	const tipousr = localStorage.getItem("rol");
+
+	if (!(tipousr && nombre)) {
 		console.log("No Hay usuario");
 		return (
 			<React.Fragment>
@@ -21,7 +23,7 @@ const HeaderOlab = ({ tipousuario, nombre }) => {
 				<div className='conti'>
 					<div className='Titulo'>Laboratorio Tesla</div>
 					<div className='Nombreuser'>
-						{tipousuario} {nombre}
+						{tipousr} {nombre}
 					</div>
 					<div className='Dibujo1'>{<BsFillBellFill />}</div>
 					<div className='Dibujo2'>{<FaUserCircle />}</div>
