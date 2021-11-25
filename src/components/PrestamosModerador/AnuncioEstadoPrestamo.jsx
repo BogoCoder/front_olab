@@ -13,22 +13,23 @@ const diasDiffDevolucion = (id, data) => {
 };
 
 const iconoEstado = (diasDiff) => {
+  const size = '24vh';
   if (diasDiff < 0){
     return(
       <React.Fragment>
-        <ErrorIcon style={{fill: 'red', fontSize: 170}} />
+        <ErrorIcon style={{fill: 'red', fontSize: size}} />
       </React.Fragment>
     );
   } else if (diasDiff <= 1){
     return(
       <React.Fragment>
-        <WarningIcon style={{fill: 'orange', fontSize: 170}} />
+        <WarningIcon style={{fill: 'orange', fontSize: size}} />
       </React.Fragment>
     );
   } else {
     return(
       <React.Fragment>
-        <CheckCircleIcon style={{fill: 'green', fontSize: 170}} />  
+        <CheckCircleIcon style={{fill: 'green', fontSize: size}} />  
       </React.Fragment>
     );
   }
