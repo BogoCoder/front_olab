@@ -249,7 +249,7 @@ const AuxiliaresModerador = () => {
         <Col className={classes.boxInferiores} style={{marginRight: '10px'}}>
           <div className={classes.titulos}>
             Estadísticas
-            {showEstadisticas==='' ? '' : ' - ' + dataAuxiliares.find((r) => r.id===showEstadisticas).nombre}
+            {showEstadisticas==='' ? '' : ' - ' + dataAuxiliares.find((r) => r.correo===showEstadisticas).nombre}
           </div>
           
           <GraficaEstadisticas idAuxiliar={showEstadisticas} />
