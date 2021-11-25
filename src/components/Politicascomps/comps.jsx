@@ -45,7 +45,7 @@ const Accesibilityconfigscomp=() => {
     setShowModal(prev => !prev);
   };
 
-      // Consultas de la API
+  // Consultas de la API
   // Función para obtener las configuraciones
   const getConfigs = (setData) => {
     const ruta = rutaApi + '/politicas';
@@ -60,26 +60,22 @@ const Accesibilityconfigscomp=() => {
       return res.json();
     })
     .then((res) => {
-      //console.log(res)
       if (typeof res === "string"){
         setData(defconfig);
-        console.log(token)
       }
       else{
         setData(res);
       }
-      //
       return res;
     })
     .catch((err) => {
       setData(defconfig);
-      //console.log(err);
+      console.log(err);
     });
   };
 
   const setConfigs = () => {
     const ruta = rutaApi + '/politicas/actualizarPoliticas';
-    console.log(content)
 
     fetch(ruta, {
       method: "PUT",
@@ -90,7 +86,6 @@ const Accesibilityconfigscomp=() => {
       body: JSON.stringify(content)
     })
     .then((res) => {
-      console.log(content)
       return res.json();
     })
     .then((res) => {
@@ -109,13 +104,25 @@ const Accesibilityconfigscomp=() => {
   const guardarconfigs = () => {
     setConfigs();
   }
-  function Number_buttom({defValue}){
-    return (
+  function changecontent(event, input){
 
-    <input id="s" type="number" min="0" max="150" defaultValue={defValue}></input>
+    if (input[1]==="horas_reserva"){
+      content[input[0]].horas_reserva = event.target.value
+    }
+    else if (input[1]==="dias_prestamo"){
+      content[input[0]].dias_prestamo = event.target.value
+    }
+    else if (input[1]==="max_renovaciones"){
+      content[input[0]].max_renovaciones = event.target.value
+    }
+  }
+  function Number_buttom({defValue, input}){
+    return (
+    <input id="s" type="number" min="0" max="150" defaultValue={defValue} onChange={(event)=>changecontent(event,input)}></input>
     )
   }
-  function Fila_configs({nombre, abierta, restringida, confidencial}){
+
+  function Fila_configs({tipo,nombre, abierta, restringida, confidencial}){
     return(
           <div className="filaccess" >
 
@@ -130,9 +137,9 @@ const Accesibilityconfigscomp=() => {
             {nombre && 
                         <React.Fragment>
                         <div>{nombre}</div>
-                        <div><Number_buttom defValue={abierta}/></div>
-                        <div><Number_buttom defValue={restringida}/></div>
-                        <div><Number_buttom defValue={confidencial}/></div>
+                        <div><Number_buttom input={[0,tipo]} defValue={abierta}/></div>
+                        <div><Number_buttom input={[1,tipo]} defValue={restringida}/></div>
+                        <div><Number_buttom input={[2,tipo]} defValue={confidencial}/></div>
                         </React.Fragment>
             }
           </div>
@@ -145,9 +152,9 @@ const Accesibilityconfigscomp=() => {
         <div className="subtitledvd">Categorias de Accesibilidad</div>
         <div className="accessdvd">
           <Fila_configs abierta="Abierta" restringida="Restringida" confidencial="Confidencial" />
-          <Fila_configs nombre="Tiempo de reserva (horas)" abierta={content[0].horas_reserva} restringida={content[1].horas_reserva} confidencial={content[2].horas_reserva} />
-          <Fila_configs nombre="Tiempo de préstamo (días)" abierta={content[0].dias_prestamo} restringida={content[1].dias_prestamo} confidencial={content[2].dias_prestamo} />
-          <Fila_configs nombre="Máximo de renovaciones" abierta={content[0].max_renovaciones} restringida={content[1].max_renovaciones} confidencial={content[2].max_renovaciones} />
+          <Fila_configs nombre="Tiempo de reserva (horas)" tipo="horas_reserva" abierta={content[0].horas_reserva} restringida={content[1].horas_reserva} confidencial={content[2].horas_reserva} />
+          <Fila_configs nombre="Tiempo de préstamo (días)" tipo="dias_prestamo" abierta={content[0].dias_prestamo} restringida={content[1].dias_prestamo} confidencial={content[2].dias_prestamo} />
+          <Fila_configs nombre="Máximo de renovaciones" tipo="max_renovaciones" abierta={content[0].max_renovaciones} restringida={content[1].max_renovaciones} confidencial={content[2].max_renovaciones} />
         </div>
         <button type="button" className="btnsearchaccess btntpsr" onClick={guardarconfigs}>Guardar</button>
         <Modal show={showModal} onHide={openModal}>
