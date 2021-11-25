@@ -14,12 +14,12 @@ import LogIn from "./login";
 
 import ProtectedRoute from "../components/ProtectedRoute";
 
-
-let user = { tipo: "Auxiliar", nombre: "David Martinez" };
 /* Imports para el test nada mas, solo iconos -------------------------------------------------------------------------*/
 
 const Routes = ({ admin }) => {
-	admin = "true";
+	const rol = localStorage.getItem("rol");
+	admin = (rol==='administrador') ? 'true': 'false';
+	let user = { tipo: rol, nombre: localStorage.getItem("nombre") };
 	let isAuthenticated = localStorage.getItem("isAuthenticated");
 	return (
 		<BrowserRouter>
@@ -42,15 +42,13 @@ const Routes = ({ admin }) => {
 					component={Prestamos} admin={admin} user={user}
 				/>
 				<ProtectedRoute path='/Historial' isAuthenticated={isAuthenticated}
-					component={Historial} admin={admin}
+					component={Historial} admin={admin} user={user}
 				/>
 				<ProtectedRoute path='/Inventario' isAuthenticated={isAuthenticated}
-					component={Inventario}
-						admin={"true"}
-						user={user}
+					component={Inventario} admin={admin} user={user}
 				/>
 				<ProtectedRoute path='/Politicas' isAuthenticated={isAuthenticated}
-					component={Politicas} user={user} admin={"true"}
+					component={Politicas} admin={admin} user={user}
 				/>
 				<ProtectedRoute path='/Auxiliares' isAuthenticated={isAuthenticated}
 					component={Auxiliares} admin={admin} user={user}

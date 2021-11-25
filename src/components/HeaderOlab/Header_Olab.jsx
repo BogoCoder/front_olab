@@ -1,7 +1,6 @@
 import React from "react";
 import { ReactComponent as OLabLogo } from "../../assets/olab_logo.svg";
 import "./Header_Olab.css";
-import { BsFillBellFill } from "react-icons/bs";
 import { FaUserCircle } from "react-icons/fa";
 
 const HeaderOlab = ({ tipousuario, nombre }) => {
@@ -23,7 +22,6 @@ const HeaderOlab = ({ tipousuario, nombre }) => {
 					<div className='Nombreuser'>
 						{tipousuario} {nombre}
 					</div>
-					<div className='Dibujo1'>{<BsFillBellFill />}</div>
 					<div className='Dibujo2'>{<FaUserCircle />}</div>
 				</div>
 			</React.Fragment>

@@ -14,9 +14,9 @@ const contenido = () => {
         </div>
     )
 }
-const Historial = ({content,admin}) => {
+const Historial = ({admin,user}) => {
   return (
-    <Tempadminaux content={contenido()} admin={admin}/>
+    <Tempadminaux content={contenido()} admin={admin} user={user?user:null}/>
   )
 }
 
