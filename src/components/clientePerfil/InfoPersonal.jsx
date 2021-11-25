@@ -12,20 +12,17 @@ const Item = styled(Paper)(({ theme }) => ({
     color: theme.palette.text.secondary,
 }));
 
-function InfoPersonal(){
-    let nombre = "Luisa Jaramillo"
-    let id = 1064824965
-    let email = 'luisa.jaramillo@urosario.edu.co'
+function InfoPersonal(props){
     return (
         <React.Fragment>
-            <h2 style={{textAlign: 'left'}}>Información Personal</h2>
+            <h2 style={{textAlign: 'left', marginBottom:'20px'}}>Información Personal</h2>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
                 <Item>
                 <ul>
                     <li>
                         <h3>Nombre de Usuario</h3>
-                        {nombre}
+                        {props.usuario.nombre}
                     </li>
                 </ul>
                 </Item>
@@ -34,18 +31,8 @@ function InfoPersonal(){
                 <Item>
                 <ul>
                     <li>
-                        <h3>ID</h3>
-                        {id}
-                    </li>
-                </ul>
-                </Item>
-                </Grid>
-                <Grid item xs={12}>
-                <Item>
-                <ul>
-                    <li>
-                        <h3>e-mail</h3>
-                        {email}
+                        <h3>e-mail / ID</h3>
+                        {props.usuario.email}
                     </li>
                 </ul>
                 </Item>
