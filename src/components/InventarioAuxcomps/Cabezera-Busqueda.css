@@ -9,24 +9,3 @@
     font-family: 'Montserrat', sans-serif;
     color: #4B6B9C;
 }
-.busqueda{
-    position: absolute;
-    height: 50%;
-    width:50%;
-    left: 0%;
-    border-radius: 5px;
-    border: rgb(150, 150, 150);
-    border-width: 1px;
-    border-style: solid;
-    font-family: 'Montserrat', sans-serif;
-}
-.btnsearch{
-    position: absolute;
-    top: 0%;
-    height: 60%;
-    width: 5%;
-    left: 51%;
-    border-radius: 5px;
-    font-family: 'Montserrat', sans-serif;
-    text-align: center;
-}

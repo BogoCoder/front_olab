@@ -44,15 +44,6 @@
     left:1%;
     bottom:2%;
 }
-.btnsearch2 {
-    position: absolute;
-    top: 15%;
-    height: 50%;
-    left: 51%;
-    border-radius: 5px;
-    font-family: 'Montserrat', sans-serif;
-    text-align: center;
-}
 .btnsearchaccess{
     position: absolute;
     top: 83%;

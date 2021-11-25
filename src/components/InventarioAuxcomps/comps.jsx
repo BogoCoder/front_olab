@@ -1,24 +1,91 @@
-import React, {useState,useRef} from 'react';
+import React, {useState,useRef,useEffect} from 'react';
 import {Iteminvent,Itemsugerencias} from "./items"
 import "./Scrollableinvent.css"
 import "./Scrollablesugs.css"
 import "./Cabezera-Busqueda.css"
-const Scrollableinvent= ({content}) => {
+import SearchBar from "material-ui-search-bar";
 
-  /*const [items,setItems] = useState([{img:"",
-                                      articulo:"Articulo",
-                                      cantidad:"Cantidad"}])
 
-  setItems((previtems) => {
-    return [...previtems,{img,articulo,cantidad}]
-  })*/
+/* Imports y cosas para el test nada mas, solo iconos y arrays --------------------------------------------------------*/
+import { CgAlarm } from "react-icons/cg";
+import { CgBoy } from "react-icons/cg";
+import { HiChip } from "react-icons/hi";
+import { FcCableRelease } from "react-icons/fc";
+import { RiSubwayWifiLine } from "react-icons/ri";
+import { GiWifiRouter } from "react-icons/gi";
+import { GrSelection } from "react-icons/gr";
+import { MdPhotoSizeSelectActual } from "react-icons/md";
+import { FcElectronics } from "react-icons/fc";
+import { GiCircuitry } from "react-icons/gi";
+import { GiCircularSaw } from "react-icons/gi";
+import { SiAirplayvideo } from "react-icons/si";
+import { v4 as uuidv4 } from "uuid";
+
+
+var n_items = 16;
+var imgs_test = [
+	<SiAirplayvideo />,
+	<CgAlarm />,
+	<CgBoy />,
+	<HiChip />,
+	<FcCableRelease />,
+	<RiSubwayWifiLine />,
+	<GiWifiRouter />,
+	<GrSelection />,
+	<MdPhotoSizeSelectActual />,
+	<FcElectronics />,
+	<GiCircuitry />,
+	<GiCircularSaw />,
+];
+var items_test = [
+	"Arduino",
+	"Chip AND",
+	"Chip XOR",
+	"Jumper",
+	"Motor",
+	"Pinzas",
+	"Sensor",
+	"Boton",
+	"Multimetro",
+	"Voltimetro",
+	"Chip NOT",
+	"Ventilador",
+	"Resistencias",
+	"Bateria",
+	"Transistor",
+];
+
+const Scrollableinvent= () => {
+  const inventario_productos = [...Array(n_items)].map((item) => {
+                              return {
+                                id: uuidv4(),
+                                img: imgs_test[Math.floor(Math.random() * imgs_test.length)],
+                                articulo:items_test[Math.floor(Math.random() * items_test.length)],
+                                cantidad: Math.floor(Math.random() * 120),
+                              }})
+
+  const [datafiltrada, setFiltro] = useState(inventario_productos)
+  
+  const handlesearch = (busqueda) => {
+
+    const val = String(busqueda)
+    console.log(val)
+    const filasfiltradas = inventario_productos.filter((row) => {
+      return row.articulo.toLowerCase().includes(val.toLowerCase());
+      });
+      setFiltro(filasfiltradas)
+    }
+    const cancelsearch = () => {setFiltro(inventario_productos)}
+
+
   return (
       <React.Fragment>
+          <SearchBar className="busqueda" placeholder="Buscar Material" onChange={(buscado) => handlesearch(buscado)} onCancelSearch={cancelsearch}/>
           <div className="scrollable scrollinvent">
             <Iteminvent header="true" articuloinfo={{img:"",articulo:"Material",cantidad:"Cantidad"}}/>
-            {content &&
+            {datafiltrada &&
             <React.Fragment>{
-              content.map( (item)=>(
+              datafiltrada.map( (item)=>(
               <Iteminvent key={item.id} articuloinfo={item}/>
             ))}</React.Fragment>}
           </div>
@@ -27,15 +94,22 @@ const Scrollableinvent= ({content}) => {
   )
 }
 
-const SugerenciasCompra= ({content}) => {
+const SugerenciasCompra= () => {
+  const sugerencias_compra = [...Array(n_items)].map((item) => {
+    return {
+      id: uuidv4(),
+      articulo:
+        items_test[Math.floor(Math.random() * items_test.length)],
+      cantidad: Math.floor(Math.random() * 15),
+    }})
 
   return (
       <React.Fragment>
           <div className="titulo"><div>Sugerencias de compra</div></div>
           <div className="scrollable sugs">
-            {content &&
+            {sugerencias_compra &&
             <React.Fragment>{
-              content.map( (item)=>(
+              sugerencias_compra.map( (item)=>(
               <Itemsugerencias key={item.id} articuloinfo={item}/>
             ))}</React.Fragment>}
           </div>
@@ -43,30 +117,7 @@ const SugerenciasCompra= ({content}) => {
   )
 }
 
-const Busqueda= ({content}) => {
-  const searchref = useRef();
-  const [search,setSearch] = useState("")
-
-  const handleChange = () => {}
-
-  const handlesearch = () => {
-    const value = searchref.current.value
-    if (value === "") return;
-
-    setSearch((prevsearch) => {
-      return [...prevsearch,value]
-      })
-      searchref.current.value = null
-  }
-  return (
-      <React.Fragment>
-            <input className="busqueda" ref={searchref}type="text" placeholder="Buscar por nombre" onChange={handleChange} />
-            <button type="button" className="btnsearch btntpsr" onClick={handlesearch}>Buscar</button>
-    </React.Fragment>
-  )
-}
-
-const Cabezera= ({content}) => {
+const Cabezera= () => {
   return (
       <React.Fragment>
             <div className="cab">Inventario</div>
@@ -75,6 +126,5 @@ const Cabezera= ({content}) => {
 }
 export {Scrollableinvent,
         SugerenciasCompra,
-        Cabezera,
-        Busqueda
+        Cabezera
 }
