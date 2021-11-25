@@ -108,7 +108,12 @@ const getReservas = (setData, token) => {
     },
   })
   .then((res) => {
-    return res.json();
+    if (res.status===403){
+      alert('No tiene los permisos requeridos para esta página.');
+      return [];
+    } else {
+      return res.json();
+    }
   })
   .then((res) => {
     setData(res);
