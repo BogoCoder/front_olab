@@ -1,7 +1,8 @@
-import React from "react";
+import React, {useState} from "react";
 import { Modal, Button } from "react-bootstrap";
 import { makeStyles } from '@material-ui/core/styles';
-import { rutaApi, token } from '../rutas';
+import TextField from '@material-ui/core/TextField';
+import { rutaApi} from '../rutas';
 
 const useStyles = makeStyles({
 	botonesFoot: {
@@ -16,14 +17,13 @@ const useStyles = makeStyles({
   },
 });
 
-const putAgregarAuxiliar = () => {
-  console.log('Agregar auxiliar aquí');
+const putAgregarAuxiliar = (texto, token, setNoEncontrado, cerrarModal) => {
+  console.log('Agregar auxiliar con correo:', texto);
   // Se debe agregar un aviso en caso de que no se encuentre el correo ingresado en usuarios
-  /*
   const ruta = rutaApi + '/usuarios/agregarAuxiliar';
   const data = { "correo": texto };
 
-  // Eliminar por la Api
+  // Agregar por la Api
   fetch(ruta, {
     method: "PUT",
     headers: {
@@ -33,12 +33,16 @@ const putAgregarAuxiliar = () => {
     body: JSON.stringify(data)
   })
   .then((res) => {
-    console.log(res);
+    if (res.status===404) {
+      console.log('Usuario no encontrado');
+      setNoEncontrado(true);
+    } else {
+      cerrarModal();
+    }
   })
   .catch((err) => {
     console.log(err);
   });
-  */
 };
 
 const ModalAgregarAuxiliar = ({
@@ -49,8 +53,21 @@ const ModalAgregarAuxiliar = ({
   const classes = useStyles();
   const token = localStorage.getItem("token");
 
+  // Estado para almacenar correo ingresado
+  const [textoCorreo, setTextoCorreo] = useState('');
+  const [noEncontrado, setNoEncontrado] = useState(false);
+
+  const handleTextoCorreo = (event) => {
+    setTextoCorreo(event.target.value);
+  };
+
+  const cerrarModal = () =>{
+    hideModal();
+    setNoEncontrado(false);
+  };
+
   return (
-    <Modal show={showModal} onHide={hideModal} centered backdrop="static">
+    <Modal show={showModal} onHide={cerrarModal} centered backdrop="static">
     
       <Modal.Header closeButton>
 				<Modal.Title> Agregar auxiliar </Modal.Title>
@@ -58,16 +75,27 @@ const ModalAgregarAuxiliar = ({
 
       <Modal.Body>
         Indique el correo del usuario a registrar como auxiliar.
+          <TextField
+            label="Correo del nuevo auxiliar"
+            variant="filled"
+            style={{width: '90%'}}
+            onChange={handleTextoCorreo}
+          />
+          
+          { noEncontrado && 
+            <div className='alert alert-danger' style={{marginTop: '30px'}}> 
+              Usuario no encontrado. Intente de nuevo.
+            </div>
+          }
       </Modal.Body>
 
       <Modal.Footer>
-        <Button onClick={hideModal} className={classes.botonesFoot}>
+        <Button onClick={cerrarModal} className={classes.botonesFoot}>
           Cancelar
         </Button>
         <Button onClick={() => {
-            putAgregarAuxiliar();
+            putAgregarAuxiliar(textoCorreo, token, setNoEncontrado, cerrarModal);
             forzarActualizacion();
-            hideModal();
           }} 
           className={classes.botonesFoot}
         >

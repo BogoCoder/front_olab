@@ -193,12 +193,12 @@ const ReservasModerador = () => {
   // Traer datos al iniciar
   useEffect(() => {
     getReservas(setDataReservas, token);
-  }, [])
+  }, []);
 
   // Efectos al cambiar estados
   useEffect(() => {
     getReservas(setDataReservas, token);
-  }, [numReservas]); // En caso de eliminar actualice la tabla
+  }, [numReservas, token]); // En caso de eliminar actualice la tabla
   
   useEffect(()=>{
     setDataBusqueda(dataReservas);
@@ -215,7 +215,7 @@ const ReservasModerador = () => {
 
   useEffect(()=>{
     getDetalleReserva(idDetalle, setDataDetalle, token);
-  }, [idDetalle])
+  }, [idDetalle, token])
 
   // Funciones para la busqueda
   const requestBusqueda = (valor) => {

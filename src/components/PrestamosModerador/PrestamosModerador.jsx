@@ -203,7 +203,7 @@ const PrestamosModerador = () => {
 
   useEffect(() => {
     getPrestamos(setDataPrestamos, token);
-  }, [forceUpdateCount]) // Actualizar tabla al devolver préstamo.
+  }, [forceUpdateCount, token]) // Actualizar tabla al devolver préstamo.
 
   // Efectos al cambiar estados
   useEffect(()=>{
@@ -220,7 +220,7 @@ const PrestamosModerador = () => {
 
   useEffect(() => {
     getDetallePrestamo(idDetalle, setdataDetalle, token);
-  }, [idDetalle])
+  }, [idDetalle, token])
 
   // Funciones para la busqueda
   const requestBusqueda = (valor) => {

@@ -91,7 +91,7 @@ const ConfirmacionEntrega = ({
 
   useEffect(() => {
     getDetalleReserva(idReserva, setDetalleReserva, token)
-  }, [idReserva])
+  }, [idReserva, token])
 
   if (idReserva==='') {
     return(<Modal show={false}></Modal>)

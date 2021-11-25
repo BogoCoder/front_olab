@@ -143,7 +143,7 @@ const AuxiliaresModerador = () => {
   // Forzar actualización de la tabla
   useEffect(() => {
     getAuxiliares(setDataAuxiliares, token);
-  }, [forceUpdateCount])
+  }, [forceUpdateCount, token])
 
   // Prueba estados
   // console.log('Data auxiliares:', dataAuxiliares );
@@ -262,8 +262,8 @@ const AuxiliaresModerador = () => {
         hideModal={() => setshowConfirmacionEliminar('')}
         confirmModal={() => {
           putEliminarAuxiliar(showConfirmacionEliminar, token);
-          setForceUpdateCount(forceUpdateCount + 1);
           setshowConfirmacionEliminar('');
+          setForceUpdateCount(forceUpdateCount + 1);
         }}
         message = {`¿Esta seguro que desea eliminar al auxiliar 
           ${ showConfirmacionEliminar==='' ?
