@@ -12,7 +12,6 @@ import {
 } from "react-pro-sidebar";
 
 //import icons from react icons
-import { HiUserCircle } from "react-icons/hi";
 import { RiShoppingCart2Fill, RiBankLine } from "react-icons/ri";
 import { GiReceiveMoney, GiOpenBook } from "react-icons/gi";
 import { FaHistory, FaUserAlt } from "react-icons/fa";
@@ -41,45 +40,49 @@ const Header = ({admin}) => {
     <>
       <div id="header">
           {/* collapsed props to change menu size using menucollapse state */}
-        <ProSidebar collapsed={menuCollapse} id="menubox" onMouseEnter={()=>{setMenuCollapse(false)}} onMouseLeave={()=>{setMenuCollapse(true)}}>
+        <ProSidebar collapsed={menuCollapse} id="menubox" 
+          onMouseEnter={()=>{setMenuCollapse(false)}} 
+          onMouseLeave={()=>{setMenuCollapse(true)}}
+        >
           <SidebarHeader id="headerbox">
-          <div className="logotext">
-              {/* small and big change using menucollapse state */}
-              <p>{menuCollapse ? <OLabLogo /> : <OLabLogo />}</p>
+            <div className="logotext">
+                {/* small and big change using menucollapse state */}
+                <p>{menuCollapse ? <OLabLogo /> : <OLabLogo />}</p>
             </div>
             <div className="closemenu" onClick={menuIconClick}>
-                {/* changing menu collapse icon on click */}
-              {menuCollapse ? (
-                <FiArrowRightCircle/>
-              ) : (
-                <FiArrowLeftCircle/>
-              )}
+                  {/* changing menu collapse icon on click */}
+                {menuCollapse ? (
+                  <FiArrowRightCircle/>
+                ) : (
+                  <FiArrowLeftCircle/>
+                )}
             </div>
           </SidebarHeader>
           <SidebarContent>
             <Menu iconShape="square">
-            
-            <MenuItem active={true} icon={<RiShoppingCart2Fill />}><Link to="/Reservas">Reservas</Link></MenuItem>
               
-              
-            <MenuItem icon={<GiReceiveMoney />}><Link to="/Prestamos">Préstamos</Link></MenuItem>
-              
-              
-            <MenuItem icon={<FaHistory />}><Link to="/Historial">Historial</Link></MenuItem>
-              
-              
-            <MenuItem icon={<GiOpenBook />}><Link to="/Inventario">Inventario</Link></MenuItem>
-            {admin ==="true" &&
-            <React.Fragment>
-            <MenuItem icon={<RiBankLine />}><Link to="/Politicas">Politicas</Link></MenuItem>
-            <MenuItem icon={<FaUserAlt />}><Link to="/Auxiliares">Auxiliares</Link></MenuItem>
-            </React.Fragment>
-            }
+              <MenuItem active={true} icon={<RiShoppingCart2Fill />}><Link to="/Reservas">Reservas</Link></MenuItem>
+              <MenuItem icon={<GiReceiveMoney />}><Link to="/Prestamos">Préstamos</Link></MenuItem>
+              <MenuItem icon={<FaHistory />}><Link to="/Historial">Historial</Link></MenuItem>
+              <MenuItem icon={<GiOpenBook />}><Link to="/Inventario">Inventario</Link></MenuItem>
+              {admin ==="true" &&
+              <React.Fragment>
+                <MenuItem icon={<RiBankLine />}><Link to="/Politicas">Politicas</Link></MenuItem>
+                <MenuItem icon={<FaUserAlt />}><Link to="/Auxiliares">Auxiliares</Link></MenuItem>
+              </React.Fragment>
+              }
             </Menu>
           </SidebarContent>
+          
           <SidebarFooter>
             <Menu iconShape="square">
-              <MenuItem icon={<FiLogOut />}><Link to="/">Cerrar sesión</Link></MenuItem>
+              <MenuItem icon={<FiLogOut />}> 
+                <Link to="/"
+                 onClick={() => {localStorage.clear()}}
+                >
+                  Cerrar sesión
+                </Link>
+              </MenuItem>
             </Menu>
           </SidebarFooter>
         </ProSidebar>

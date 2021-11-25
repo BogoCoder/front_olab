@@ -197,15 +197,10 @@ export default function SignInSide(props) {
               >
                 Iniciar sesión
               </Button>
-              <Grid container>
-                <Grid item xs>
+              <Grid container >
+                <Grid item xs >
                   <Link href="#" variant="body2">
                     ¿Olvidaste tu contraseña?
-                  </Link>
-                </Grid>
-                <Grid item>
-                  <Link href="#" variant="body2">
-                    {"Regístrate aquí"}
                   </Link>
                 </Grid>
               </Grid>
