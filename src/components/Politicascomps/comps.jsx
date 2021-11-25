@@ -1,4 +1,4 @@
-import React, {useState,useRef} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Itemusuario} from "./items"
 import "./comps.css"
 
@@ -6,8 +6,72 @@ import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import { BsPlusCircle } from "react-icons/bs";
 import { IconButton } from '@material-ui/core';
+import { v4 as uuidv4 } from "uuid";
+import { rutaApi} from '../rutas';
 
-const Accesibilityconfigscomp=({content}) => {
+const Accesibilityconfigscomp=() => {
+  const token = localStorage.getItem("token");
+  // Estados Iniciales
+  const defconfig = [
+                      {
+                          "categoria": "abierta",
+                          "horas_reserva": "-1",
+                          "dias_prestamo": "-1",
+                          "max_renovaciones": "-1"
+                      },
+                      {
+                          "categoria": "restringida",
+                          "horas_reserva": "-1",
+                          "dias_prestamo": "-1",
+                          "max_renovaciones": "-1"
+                      },
+                      {
+                          "categoria": "confidencial",
+                          "horas_reserva": "-1",
+                          "dias_prestamo": "-1",
+                          "max_renovaciones": "-1"
+                      }
+                  ];
+
+  const [content, setContent] = useState(defconfig);
+
+
+  // Función para obtener las ocnfiguraciones
+  const getConfigs = (setData) => {
+    const ruta = rutaApi + '/politicas';
+
+    // Consultar a la API
+    fetch(ruta, {
+      method: "GET",
+      headers: {
+        "token-acceso": token,
+      },
+    })
+    .then((res) => {
+      return res.json();
+    })
+    .then((res) => {
+      //console.log(res)
+      if (typeof res === "string"){
+        setData(defconfig);
+        console.log(res)
+      }
+      else{
+        setData(res);
+      }
+      //
+      return res;
+    })
+    .catch((err) => {
+      setData(defconfig);
+      console.log(err);
+    });
+  };
+
+  // Cargar datos al iniciar
+  useEffect(() => {
+  getConfigs(setContent);
+  },[])
 
   function Number_buttom({defValue}){
     return (
@@ -45,16 +109,63 @@ const Accesibilityconfigscomp=({content}) => {
         <div className="subtitledvd">Categorias de Accesibilidad</div>
         <div className="accessdvd">
           <Fila_configs abierta="Abierta" restringida="Restringida" confidencial="Confidencial" />
-          <Fila_configs nombre="Tiempo de reserva (horas)" abierta={content.abierta.reserva} restringida={content.restringida.reserva} confidencial={content.confidencial.reserva} />
-          <Fila_configs nombre="Tiempo de préstamo (días)" abierta={content.abierta.prestamo} restringida={content.restringida.prestamo} confidencial={content.confidencial.prestamo} />
-          <Fila_configs nombre="Máximo de renovaciones" abierta={content.abierta.renov} restringida={content.restringida.renov} confidencial={content.confidencial.renov} />
+          <Fila_configs nombre="Tiempo de reserva (horas)" abierta={content[0].horas_reserva} restringida={content[1].horas_reserva} confidencial={content[2].horas_reserva} />
+          <Fila_configs nombre="Tiempo de préstamo (días)" abierta={content[0].dias_prestamo} restringida={content[1].dias_prestamo} confidencial={content[2].dias_prestamo} />
+          <Fila_configs nombre="Máximo de renovaciones" abierta={content[0].max_renovaciones} restringida={content[1].max_renovaciones} confidencial={content[2].max_renovaciones} />
         </div>
         <button type="button" className="btnsearchaccess btntpsr" onClick={guardarconfigs}>Guardar</button>
-  </React.Fragment>
-)
+  </React.Fragment>)
 }
 
-const Scrolluserscomp= ({title,content}) => {
+const Scrolluserscomp= ({title,kind}) => {
+  const token = localStorage.getItem("token");
+  const defconfig = [
+                    {nombre:"Juan Gonzales",posicion:"Profesor"},
+                    {nombre:"David Martinez",posicion:"Estudiante"},
+                    {nombre:"Samuel Perez",posicion:"Profesor"},
+                    {nombre:"Pedro Martinez",posicion:"Profesor"},
+                    {nombre:"Sandra Saenz",posicion:"Estudiante"},
+                    {nombre:"Miguel Gutierrez",posicion:"Profesor"},
+                  ]
+  const [content, setContent] = useState(defconfig);
+  // Función para obtener las personas
+  const getConfigs = (setData) => {
+    const ruta = rutaApi + '/politicas/usuarios/'+kind;
+
+    // Consultar a la API
+    fetch(ruta, {
+      method: "GET",
+      headers: {
+        "token-acceso": token,
+      },
+    })
+    .then((res) => {
+      return res.json();
+    })
+    .then((res) => {
+      //console.log(res)
+      if (typeof res === "string"){
+        setData(defconfig);
+        console.log(res)
+      }
+      else{
+        console.log(res)
+        setData(res);
+      }
+      //
+      return res;
+    })
+    .catch((err) => {
+      setData(defconfig);
+      console.log(err);
+    });
+  };
+
+  // Cargar datos al iniciar
+  useEffect(() => {
+  getConfigs(setContent);
+  },[])
+
   function SearchInput() {
     return (
       <Autocomplete
@@ -80,7 +191,7 @@ const Scrolluserscomp= ({title,content}) => {
             {content &&
             <React.Fragment>{
               content.map( (user)=>(
-              <Itemusuario key={user.id} userinfo={user}/>
+              <Itemusuario key={uuidv4()} userinfo={user}/>
             ))}</React.Fragment>}
           </div>
     </React.Fragment>
