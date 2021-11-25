@@ -79,12 +79,11 @@ const useStyles = makeStyles({
     padding: "0px 16px"
   },
   botonNuevoUsuario: {
-    height: '60%',
+    height: '35%',
     width: '75%',
     backgroundColor: '#ededed',
     textTransform: 'none',
-    color: '#013570',
-    marginTop: '5%'
+    color: '#013570'
   }
 });
 
@@ -256,18 +255,18 @@ const AuxiliaresModerador = () => {
           <div className={classes.titulos}>
             Agregar usuarios 
           </div>
-          <Row className="justify-content-center">
+          <Row className="justify-content-center" style={{padding: '10px'}}>
             <Button variant="contained" 
               className={classes.botonNuevoUsuario}
               onClick={() => setShowAgregarUsuarios(true)}
             >
               <AddCircleIcon style={{fill: '#013570', fontSize: 70}}/>
-              Agregar usuarios manualmente
+              Agregar manualmente
             </Button>
           </Row>
-          <br/>
-          
-          <AgregarUsuariosCSV />
+          <Row className="justify-content-center" style={{marginTop: '10px'}}>
+            <AgregarUsuariosCSV />
+          </Row>
         </Col>
 
       </Row>

@@ -1,9 +1,20 @@
 import React, { useState } from 'react'
 import Button from '@material-ui/core/Button';
+import { makeStyles } from '@material-ui/core/styles';
 import { rutaApi} from '../rutas';
 
 // Código adaptado de Nurudeen Amedu (Junio, 2021)
 // https://dev.to/theallegrarr/read-csv-files-in-react-apps-without-installing-any-package-hn7
+
+const useStyles = makeStyles({
+    botonAgregar: {
+        backgroundColor: '#ededed',
+        textTransform: 'none',
+        color: '#013570',
+        margin:'10px auto 10px auto',
+        display: 'block'
+    }
+});
 
 // Función para descargar datos de contraseñas
 const DescargarArchivo = ({text, filename, label}) => {
@@ -45,6 +56,7 @@ const postAgregarUsuarios = (data, setContrasenias, token) => {
   };
 
 export default function AgregarUsuariosCSV(){
+    const classes = useStyles();
     const token = localStorage.getItem("token");
 
     const [csvFile, setCsvFile] = useState();
@@ -98,13 +110,14 @@ export default function AgregarUsuariosCSV(){
                 </input>
                 <br/>
                 <Button variant="contained"
+                    className={classes.botonAgregar}
                     onClick={(e) => {
                         e.preventDefault()
                         if(csvFile)submit()
                         // Agregar modal que muestre una tabla con los valores ingresados y ahí se confirme
                     }}
                 >
-                    Agregar
+                    Agregar desde archivo
                 </Button>
             </form>
             
