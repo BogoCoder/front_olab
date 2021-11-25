@@ -90,12 +90,12 @@ const useStyles = makeStyles({
     backgroundColor: '#1C6EE5',
     color: 'white',
     padding: '1px 25% 1px 25%',
-    height: '40px',
+    height: '6vh',
     width: '75%',
     fontWeight: 'bold'
   },
   botonNuevoPrestamo: {
-    height: '120px',
+    height: '15vh',
     width: '75%',
     backgroundColor: '#ededed',
     textTransform: 'none',
@@ -316,7 +316,7 @@ const PrestamosModerador = () => {
                 Agregar préstamo sin reserva
               </Button>
             </Row>
-            <Row className="justify-content-center" style={{marginTop:'15%'}}>
+            <Row className="justify-content-center" style={{marginTop:'10%'}}>
               <Button variant="contained" 
                 className={classes.botonDevolucion}
                 onClick={() => { setShowDevolucion(true)}}
