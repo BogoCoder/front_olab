@@ -98,7 +98,7 @@ export default function SignInSide(props) {
 					localStorage.setItem("token", res.token);
           localStorage.setItem("isAuthenticated", true);
 					console.log("window location: " + window.location.host);
-					window.location.assign(`${rutaLogin}/homeAux`);
+					window.location.assign(`${rutaLogin}/selecusuario`);
 				}
 			})
 			.catch((err) => console.log(err));

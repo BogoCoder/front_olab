@@ -2,14 +2,14 @@ import React from 'react';
 import Tempadminaux from "../components/Template_admin_aux";
 import Inventariopage from "../components/InventarioAuxcomps/page"
 
-const contenido = (inventario,sugerencias) => {
+const contenido = () => {
     return (
-        <Inventariopage inventario={inventario} sugerencias={sugerencias}/>
+        <Inventariopage />
     )
 }
-const Inventario = ({content,admin,inventario, sugerencias,user}) => {
+const Inventario = ({admin,user}) => {
   return (
-    <Tempadminaux content={contenido(inventario,sugerencias)} admin={admin} user={user?user:null}/>
+    <Tempadminaux content={contenido()} admin={admin} user={user?user:null}/>
   )
 }
 
