@@ -97,8 +97,19 @@ export default function SignInSide(props) {
 					// Si se logueó sin errores...
 					localStorage.setItem("token", res.token);
           localStorage.setItem("isAuthenticated", true);
+          localStorage.setItem("nombre", res.nombre);
+          localStorage.setItem("rol", res.rol);
+          localStorage.setItem("correo", res.correo);
 					console.log("window location: " + window.location.host);
-					window.location.assign(`${rutaLogin}/selecusuario`);
+
+          if (res.rol === "administrador" || res.rol === "auxiliar" || res.rol === "moderador") { 
+            window.location.assign(`${rutaLogin}/selecusuario`);
+          }
+
+          else {
+            window.location.assign(`${rutaLogin}/Cliente`);
+          }
+					
 				}
 			})
 			.catch((err) => console.log(err));
