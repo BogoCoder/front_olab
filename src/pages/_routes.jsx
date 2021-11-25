@@ -1,6 +1,5 @@
 import React from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import HomePage from "./home";
 import Reservas from "./Reservas";
 import Prestamos from "./Prestamos";
 import Historial from "./Historial";
@@ -11,7 +10,6 @@ import TipoUsuario from "./Tipo_usuario";
 import HomeCliente from "./homeCliente";
 import PerfilCliente from "./PerfilCliente";
 import LogIn from "./login";
-
 import ProtectedRoute from "../components/ProtectedRoute";
 
 /* Imports para el test nada mas, solo iconos -------------------------------------------------------------------------*/
@@ -55,11 +53,6 @@ const Routes = ({ admin }) => {
 				/>
 				<ProtectedRoute path='/selecusuario' isAuthenticated={isAuthenticated}
 					component={TipoUsuario}
-				/>
-				<ProtectedRoute 
-				path='/homeAux' 
-				isAuthenticated={isAuthenticated}
-				component={HomePage}
 				/>
 				<Route exact path='/'>
 					<LogIn />
