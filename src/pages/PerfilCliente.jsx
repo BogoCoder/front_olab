@@ -15,6 +15,10 @@ const Item = styled(Paper)(({ theme }) => ({
 	color: theme.palette.text.secondary,
 }));
 
+let usuario = {
+	"nombre": "Luisa Jaramillo",
+	"email": "luisa.jaramillo@urosario.edu.co"}
+
 function PerfilCliente() {
 	return (
 		<React.Fragment>
@@ -38,7 +42,7 @@ function PerfilCliente() {
 					<SeccionLateral />
 				</Grid>
 				<Grid item xs={7}>
-					<InfoPersonal/>
+					<InfoPersonal usuario={usuario}/>
 				</Grid>
 			</Grid>
 		</Box>
