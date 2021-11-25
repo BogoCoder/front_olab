@@ -14,13 +14,17 @@ import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import ClearIcon from '@material-ui/icons/Clear';
 import { FaEdit as EditIcon } from "react-icons/fa";
 import { RiLineChartFill as LineChartFillIcon} from "react-icons/ri";
+import Button from '@material-ui/core/Button';
+import AddCircleIcon from '@material-ui/icons/AddCircle';
+import { rutaApi} from '../rutas';
 
 // Componentes adicionales
 import ConfirmacionEliminado from './ConfirmacionEliminado';
 import ModalEditarAuxiliar from './ModalEditarAuxiliar';
 import ModalAgregarAuxiliar from './ModalAgregarAuxiliar';
 import GraficaEstadisticas from './GraficaEstadisticas';
-import { rutaApi, token } from '../rutas';
+import ModalAgregarUsuarios from './ModalAgregarUsuarios';
+import AgregarUsuariosCSV from './AgregarUsuariosCSV';
 
 
 // Crear estilos
@@ -74,6 +78,14 @@ const useStyles = makeStyles({
   tableCell: {
     padding: "0px 16px"
   },
+  botonNuevoUsuario: {
+    height: '60%',
+    width: '75%',
+    backgroundColor: '#ededed',
+    textTransform: 'none',
+    color: '#013570',
+    marginTop: '5%'
+  }
 });
 
 // Función para obtener los auxiliares
@@ -133,7 +145,8 @@ const AuxiliaresModerador = () => {
   const [showModalEditar, setShowModalEditar] = useState('');
   const [showModalAgregar, setShowModalAgregar] = useState(false);
   const [showEstadisticas, setShowEstadisticas] = useState('');
-  const [forceUpdateCount, setForceUpdateCount] = useState(0) 
+  const [forceUpdateCount, setForceUpdateCount] = useState(0);
+  const [showAgregarUsuarios, setShowAgregarUsuarios] = useState(false);
 
   // Cargar datos al iniciar
   useEffect(() => {
@@ -238,13 +251,23 @@ const AuxiliaresModerador = () => {
           <GraficaEstadisticas idAuxiliar={showEstadisticas} />
         </Col>
         
-        {/* --------- Tabla con horarios -------- */}
+        {/* --------- Ingresar usuarios -------- */}
         <Col className={classes.boxInferiores} style={{marginLeft: '10px'}}>
           <div className={classes.titulos}>
-            Horarios
+            Agregar usuarios 
           </div>
-          Aquí irá una tabla editable con los horarios. No es prioritaria.
-          O unos botones para agregar usuarios.
+          <Row className="justify-content-center">
+            <Button variant="contained" 
+              className={classes.botonNuevoUsuario}
+              onClick={() => setShowAgregarUsuarios(true)}
+            >
+              <AddCircleIcon style={{fill: '#013570', fontSize: 70}}/>
+              Agregar usuarios manualmente
+            </Button>
+          </Row>
+          <br/>
+          
+          <AgregarUsuariosCSV />
         </Col>
 
       </Row>
@@ -276,6 +299,12 @@ const AuxiliaresModerador = () => {
       <ModalEditarAuxiliar
         showModal={showModalEditar}
         hideModal={() => setShowModalEditar('')}
+      />
+
+      {/* --------------- Modal agregar usuario ----------------- */}
+      <ModalAgregarUsuarios 
+        showModal={showAgregarUsuarios}
+        hideModal={() => setShowAgregarUsuarios(false)}
       />
 
     </React.Fragment>
