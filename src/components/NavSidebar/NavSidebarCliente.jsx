@@ -10,6 +10,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
+import { rutaLogin } from "../rutas";
 
 const WhiteTextTypography = withStyles({
 	root: {
@@ -27,6 +28,16 @@ const NavbarCliente = () => {
 
 	const handleClose = () => {
 		setAnchorEl(null);
+	};
+
+	const onLogout = () => {
+		handleClose();
+		localStorage.setItem("isAuthenticated", false);
+		localStorage.removeItem("token");
+		localStorage.removeItem("nombre");
+		localStorage.removeItem("correo");
+		localStorage.removeItem("rol");
+		window.location.assign(`${rutaLogin}/`);
 	};
 
 	return (
@@ -132,7 +143,7 @@ const NavbarCliente = () => {
 							<MenuItem onClick={handleClose}>Mi cuenta</MenuItem>
 						</Link>
 
-						<MenuItem onClick={handleClose}>Cerrar sesión</MenuItem>
+						<MenuItem onClick={() => onLogout()}>Cerrar sesión</MenuItem>
 					</Menu>
 				</div>
 			</nav>
