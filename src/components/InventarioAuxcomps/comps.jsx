@@ -165,7 +165,6 @@ const CreateItem = ((token,item, forceuptd) => {
 
 const Createkit = ((token,item, forceuptd) => {
   const ruta = rutaApi + '/kits/crearkit';
-
   fetch(ruta, {
     method: "POST",
     headers: {
@@ -436,7 +435,7 @@ const Modalcreatekit = ({
   const token = localStorage.getItem("token");
   const [kititems, setkititems] = useState([])
   const [all_data, setall_data] = useState([])
-  const [newkit, setNewkit] = useState({"kit_id":uuidv4(),
+  const [newkit, setNewkit] = useState({"serial":uuidv4(),
                                         "nombre":"",
                                         "categoria":"",
                                         "items":[]})
@@ -479,14 +478,15 @@ const Modalcreatekit = ({
     hideModal();
   };
   const handlecreate = () =>{
-    if (kititems.length === 0 || newkit.nombre === "" || newkit.categoria === ""){
+    if (kititems.length === 0 || newkit.nombre === ""){
       console.log("Nada para enviar")
       return
     }
-    newkit.items = kititems
+    newkit.items = kititems.map((item)=>{ return {"serial":item.serial,"cantidad":item.cantidad,"estado":item.estado}})
     console.log(newkit)
+    console.log(token)
     Createkit(token, newkit, forceuptd)
-    setNewkit({"kit_id":uuidv4(),
+    setNewkit({"serial":uuidv4(),
               "nombre":"",
               "categoria":"",
               "items":[]})
@@ -495,12 +495,14 @@ const Modalcreatekit = ({
 
   const pluscant=(item) =>{
     item.solicitado = item.solicitado + 1
+    item.cantidad = item.solicitado
     setmapdata( mapdata + 1)
   }
   const minuscant=(item) =>{
     if (item.solicitado > 0) {
     item.solicitado = item.solicitado - 1
-    setkititems(kititems.filter((item)=>item.solicitado >0))
+    item.cantidad = item.solicitado
+    setkititems(kititems.filter((item)=>item.cantidad >0))
     setmapdata( mapdata + 1)
     }
   }
@@ -524,8 +526,9 @@ const Modalcreatekit = ({
         pluscant(aux)
     }
     else{
-      console.log(aux)
+      //console.log(aux)
       aux.solicitado = aux.solicitado+1
+      aux.cantidad = aux.solicitado
       kititems.push(aux)
       setmapdata(mapdata + 1)
     }
@@ -533,11 +536,11 @@ const Modalcreatekit = ({
   }
   const handleTextonombrekit = (event) => {
     newkit.nombre = event.target.value
-    console.log(newkit)
+    //console.log(newkit)
   };
   const handleTextocatkit = (event) => {
     newkit.categoria = event.target.value
-    console.log(newkit)
+    //console.log(newkit)
   };
   return (
     <Modal fullscreen={true} aria-labelledby="example-custom-modal-styling-title" show={showModal} onHide={cerrarModal} centered backdrop="static">
