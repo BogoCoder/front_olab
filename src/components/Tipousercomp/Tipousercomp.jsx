@@ -11,7 +11,7 @@ const TipoUsercomp = ({ content, admin, tipousuario, nombre }) => {
 		history.push("/Cliente")
 	}
 	const go_modder_page = () => {
-		history.push("/Politicas")
+		history.push("/Reservas")
 	}
 	return (
 		<React.Fragment>

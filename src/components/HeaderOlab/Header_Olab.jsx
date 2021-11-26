@@ -1,7 +1,6 @@
 import React from "react";
 import { ReactComponent as OLabLogo } from "../../assets/olab_logo.svg";
 import "./Header_Olab.css";
-import { BsFillBellFill } from "react-icons/bs";
 import { FaUserCircle } from "react-icons/fa";
 
 const HeaderOlab = () => {
@@ -25,7 +24,6 @@ const HeaderOlab = () => {
 					<div className='Nombreuser'>
 						{tipousr} {nombre}
 					</div>
-					<div className='Dibujo1'>{<BsFillBellFill />}</div>
 					<div className='Dibujo2'>{<FaUserCircle />}</div>
 				</div>
 			</React.Fragment>

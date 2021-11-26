@@ -1,14 +1,15 @@
 import React from 'react';
 import Tempadminaux from "../components/Template_admin_aux";
+import EnDesarrollo from '../components/EnDesarrollo';
 
 const contenido = () => {
     return (
-        <div>AAAAAAAAAAAAAAAAAAAAAAAAAAqui Va la componente Historial</div>
+      <EnDesarrollo />
     )
 }
-const Historial = ({content,admin}) => {
+const Historial = ({admin,user}) => {
   return (
-    <Tempadminaux content={contenido()} admin={admin}/>
+    <Tempadminaux content={contenido()} admin={admin} user={user?user:null}/>
   )
 }
 
