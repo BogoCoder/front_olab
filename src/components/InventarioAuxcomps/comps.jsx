@@ -484,7 +484,7 @@ const Modalcreatekit = ({
     }
     newkit.items = kititems.map((item)=>{ return {"serial":item.serial,"cantidad":item.cantidad,"estado":item.estado}})
     console.log(newkit)
-    console.log(token)
+    //console.log(token)
     Createkit(token, newkit, forceuptd)
     setNewkit({"serial":uuidv4(),
               "nombre":"",
