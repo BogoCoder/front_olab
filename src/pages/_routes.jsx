@@ -27,18 +27,22 @@ const Routes = ({ admin }) => {
 					path='/Cliente'
 					component={HomeCliente}
 					isAuthenticated={isAuthenticated}
+					user={user}
+					admin={admin}
 				/>
 				<ProtectedRoute
 					path='/ClientePerfil'
 					component={PerfilCliente}
 					isAuthenticated={isAuthenticated}
+					user={user}
+					admin={admin}
 				/>
 				<ProtectedRoute
 					path='/PrestamosCliente'
 					isAuthenticated={isAuthenticated}
 					component={HistorialPrestamo}
 					user={user}
-					admin={"true"}
+					admin={admin}
 				/>
 
 				<ProtectedRoute

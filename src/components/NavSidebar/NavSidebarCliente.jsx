@@ -143,7 +143,15 @@ const NavbarCliente = () => {
 							<MenuItem onClick={handleClose}>Mi cuenta</MenuItem>
 						</Link>
 
-						<MenuItem onClick={() => onLogout()}>Cerrar sesión</MenuItem>
+						<Link
+							to='/'
+							onClick={() => {
+								localStorage.clear();
+							}}
+							style={{ textDecoration: "none", color: "black" }}
+						>
+							<MenuItem>Cerrar sesión</MenuItem>
+						</Link>
 					</Menu>
 				</div>
 			</nav>
