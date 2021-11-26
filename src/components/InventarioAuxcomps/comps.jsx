@@ -298,8 +298,9 @@ const Modalcreateitem = ({
   //const [textoSerial, setTextoSerial] = useState(serial);
   const [newitem, setnewitem] = useState({"serial":"",
                                           "nombre":"",
-                                          "tipo":"",
-                                          "cantidad":""});
+                                          "tipo":"obj",
+                                          "cantidad":"",
+                                          "ubicacion":""});
 
   const handleTextoserial = (event) => {
     newitem.serial = event.target.value
@@ -309,12 +310,12 @@ const Modalcreateitem = ({
     newitem.nombre = event.target.value
     console.log(newitem)
   };
-  const handleTextotipo = (event) => {
-    newitem.tipo = event.target.value
-    console.log(newitem)
-  };
   const handleTextocantidad = (event) => {
     newitem.cantidad = event.target.value
+    console.log(newitem)
+  };
+  const handleTextoubicacion = (event) => {
+    newitem.ubicacion = event.target.value
     console.log(newitem)
   };
 
@@ -344,8 +345,8 @@ const Modalcreateitem = ({
               <TableRow className={classes.tableRow}>
                 <TableCell className={classes.tableCell} align="left"> Serial </TableCell>
                 <TableCell className={classes.tableCell} align="left"> Nombre </TableCell>
-                <TableCell className={classes.tableCell} align="left"> Tipo </TableCell>
                 <TableCell className={classes.tableCell} align="left"> Cantidad </TableCell>
+                <TableCell className={classes.tableCell} align="left"> Ubicacion </TableCell>
               </TableRow>
             </TableHead>
 
@@ -365,16 +366,16 @@ const Modalcreateitem = ({
             onChange={handleTextonombre}
           /></TableCell>
           <TableCell className={classes.tableCell} align="left"><TextField
-            label="Tipo"
-            variant="filled"
-            style={{width: '90%'}}
-            onChange={handleTextotipo}
-          /></TableCell>
-          <TableCell className={classes.tableCell} align="left"><TextField
             label="Cantidad"
             variant="filled"
             style={{width: '90%'}}
             onChange={handleTextocantidad}
+          /></TableCell>
+          <TableCell className={classes.tableCell} align="left"><TextField
+            label="Ubicacion"
+            variant="filled"
+            style={{width: '90%'}}
+            onChange={handleTextoubicacion}
           /></TableCell>
 
           </TableRow>
@@ -474,6 +475,9 @@ const Scrollableinvent= () => {
     new_data.cantidad = new_data.cantidad - 1
     EditItem(token, new_data, ()=>{setUpdatte(updatte+1)})
   }
+  const handleremove=(item) =>{
+
+  }
   return (
       <React.Fragment>
           <SearchBar className="busqueda" placeholder="Buscar Material" onChange={(buscado) => handlesearch(buscado)} onCancelSearch={cancelsearch}/>
@@ -496,7 +500,7 @@ const Scrollableinvent= () => {
                         <IconButton onClick={()=>edititem(item.serial,item.nombre, item.cantidad, item.ubicacion)} aria-label="edit" size="small" color="primary"><FaEdit /></IconButton>
                         <IconButton onClick={()=>pluscant(item)} aria-label="plus1" size="small"color="primary"><TiPlus /></IconButton>
                         <IconButton onClick={()=>minuscant(item)} aria-label="minus1" size="small" color="primary"><TiMinus /></IconButton>
-                        <IconButton aria-label="remove" size="small" color="primary"><FaTrash /></IconButton>
+                        <IconButton onClick={()=>handleremove(item)} aria-label="remove" size="small" color="primary"><FaTrash /></IconButton>
                         </div>
                 </div>
             </React.Fragment>
