@@ -22,7 +22,8 @@ import TableCell from '@material-ui/core/TableCell';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
 import TextField from '@material-ui/core/TextField';
-
+import Autocomplete from '@mui/material/Autocomplete';
+import { BsPlusCircle } from "react-icons/bs";
 // Crear estilos
 const useStyles = makeStyles({
   boxTablaAuxiliares: { 
@@ -162,6 +163,33 @@ const CreateItem = ((token,item, forceuptd) => {
 
 })
 
+const Createkit = ((token,item, forceuptd) => {
+  const ruta = rutaApi + '/kits/crearkit';
+
+  fetch(ruta, {
+    method: "POST",
+    headers: {
+      "token-acceso": token,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(item)
+  })
+  .then((res) => {
+    return res.json()
+    
+  })
+  .then((res) =>{
+    
+    if (forceuptd){
+      forceuptd()
+      console.log(res);
+    }
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+
+})
 const Modaledititem = ({
   showModal,
   hideModal,
@@ -399,6 +427,184 @@ const Modalcreateitem = ({
   );
 };
 
+const Modalcreatekit = ({
+  showModal,
+  hideModal,
+  forceuptd,
+}) => {
+  const classes = useStyles();
+  const token = localStorage.getItem("token");
+  const [kititems, setkititems] = useState([])
+  const [all_data, setall_data] = useState([])
+  const [newkit, setNewkit] = useState({"kit_id":uuidv4(),
+                                        "nombre":"",
+                                        "categoria":"",
+                                        "items":[]})
+  const [mapdata, setmapdata] = useState(1)
+  const [searchval, setSearchval] = useState("")
+
+  const getInvent = () => {
+    const ruta = rutaApi + '/inventario/consultar_aux';
+
+    fetch(ruta, {
+      method: "GET",
+      headers: {
+        "token-acceso": token,
+      },
+    })
+    .then((res) => {
+      return res.json();
+    })
+    .then((res) => {
+      
+      if (typeof res === "string"){
+        setall_data([]);
+      }
+      else{
+        const aux = res.map((item)=>Object.assign({},item,{"solicitado":0, "estado":"disponible"}))
+        setall_data(aux);
+      }
+      return res;
+    })
+    .catch((err) => {
+      setall_data([]);
+      console.log(err);
+    });
+  };
+  useEffect(()=>{
+    getInvent()
+  },[])
+
+  const cerrarModal = () =>{
+    hideModal();
+  };
+  const handlecreate = () =>{
+    if (kititems.length === 0 || newkit.nombre === "" || newkit.categoria === ""){
+      console.log("Nada para enviar")
+      return
+    }
+    newkit.items = kititems
+    console.log(newkit)
+    Createkit(token, newkit, forceuptd)
+    setNewkit({"kit_id":uuidv4(),
+              "nombre":"",
+              "categoria":"",
+              "items":[]})
+    hideModal()
+  };
+
+  const pluscant=(item) =>{
+    item.solicitado = item.solicitado + 1
+    setmapdata( mapdata + 1)
+  }
+  const minuscant=(item) =>{
+    if (item.solicitado > 0) {
+    item.solicitado = item.solicitado - 1
+    setkititems(kititems.filter((item)=>item.solicitado >0))
+    setmapdata( mapdata + 1)
+    }
+  }
+  function SearchInput() {
+    return (
+      <Autocomplete
+      id="inputSearch"
+      value={searchval}
+      onChange={(event, newval) => {setSearchval(newval)}}
+      freeSolo
+      size="small"
+      sx={{width: '100%',height:"100%"}}
+      options={all_data.map((user) => user.nombre)}
+      renderInput={(params) => <TextField {...params} label="Buscar por nombre" margin="normal"/>}
+      />
+    );
+  }
+  const handleaddtokit=()=>{
+    const aux = all_data.filter((item)=>(item.nombre === searchval))[0]
+    if (kititems.some(elem=> searchval === elem.nombre)){
+        pluscant(aux)
+    }
+    else{
+      console.log(aux)
+      aux.solicitado = aux.solicitado+1
+      kititems.push(aux)
+      setmapdata(mapdata + 1)
+    }
+    
+  }
+  const handleTextonombrekit = (event) => {
+    newkit.nombre = event.target.value
+    console.log(newkit)
+  };
+  const handleTextocatkit = (event) => {
+    newkit.categoria = event.target.value
+    console.log(newkit)
+  };
+  return (
+    <Modal fullscreen={true} aria-labelledby="example-custom-modal-styling-title" show={showModal} onHide={cerrarModal} centered backdrop="static">
+    
+      <Modal.Header closeButton>
+				<Modal.Title> Crear Kit</Modal.Title>
+			</Modal.Header>
+
+      <Modal.Body>
+        <div className="divmodalkit">
+        <div className="inp4589"><SearchInput /></div>
+        <div className="lbl1">Nombre del kit:</div>
+        <div className="inp4590"><TextField
+                                  label="Nombre"
+                                  variant="filled"
+                                  style={{width: '90%'}}
+                                  onChange={handleTextonombrekit}/>
+        </div>
+        <div className="lbl2">Categoria del kit:</div>
+        <div className="inp4591"><TextField
+                                  label="Categoria"
+                                  variant="filled"
+                                  style={{width: '90%'}}
+                                  onChange={handleTextocatkit}/>
+        </div>
+      <div className="btn4589"><IconButton aria-label="adduser" onClick={()=>handleaddtokit()} color="primary"><BsPlusCircle /></IconButton></div>
+      <div className="scrollable2">
+          <div className={"rowdvd rowinvent grayer"} style={{height:"70px"}}>
+          <div className="material">Articulo</div>
+          <div className="cantidad">Cantidad</div>
+          </div>
+            {(kititems && mapdata) &&
+            <React.Fragment>{
+              kititems.map( (item)=>(
+
+                <React.Fragment  key={ uuidv4()}>
+                <div className={"rowdvd rowinvent"} style={{height:"50px"}}>
+                    <div className="material">{item.nombre}</div>
+                    <div className="cantidad">{item.solicitado}</div>
+                        <div className="btns">,
+                        <IconButton onClick={()=>pluscant(item)} aria-label="plus1" size="small"color="primary"><TiPlus /></IconButton>
+                        <IconButton onClick={()=>minuscant(item)} aria-label="minus1" size="small" color="primary"><TiMinus /></IconButton>
+                        </div>
+                </div>
+                
+            </React.Fragment>
+
+            ))}</React.Fragment>}
+          </div>
+          </div>
+      </Modal.Body>
+      
+      <Modal.Footer>
+        <Button onClick={cerrarModal} className={classes.botonesFoot}>
+          Cancelar
+        </Button>
+        <Button onClick={() => {handlecreate()}} 
+          className={classes.botonesFoot}
+        >
+          Agregar
+        </Button>
+      </Modal.Footer>
+
+    </Modal>
+  );
+};
+
 const Scrollableinvent= () => {
   const token = localStorage.getItem("token");
   const [inventario_productos, setInventario] = useState([])
@@ -409,6 +615,8 @@ const Scrollableinvent= () => {
   const [ubicacionactive, setubicacionactive] = useState("");
   const [updatte, setUpdatte] = useState(0)
   const [showModalcreateitem, setShowModalcreateitem] = useState(false)
+  const [showModalcreatekit, setShowModalcreatekit] = useState(false)
+
     // Consultas de la API
   // Función para obtener las configuraciones
   const getInvent = () => {
@@ -507,7 +715,7 @@ const Scrollableinvent= () => {
 
             ))}</React.Fragment>}
           </div>
-          <button type="button" className="btntpsr bb">Crear Kit</button>
+          <button onClick={()=>setShowModalcreatekit(true)} type="button" className="btntpsr bb">Crear Kit</button>
           <button onClick={()=>setShowModalcreateitem(true)} type="button" className="btntpsr bb creartbtn">Crear Articulo</button>
 
           <Modaledititem
@@ -526,6 +734,11 @@ const Scrollableinvent= () => {
         forceuptd={() => setUpdatte(updatte + 1)}
       />
 
+      <Modalcreatekit
+        showModal={showModalcreatekit}
+        hideModal={() => setShowModalcreatekit(false)}
+        forceuptd={() => setUpdatte(updatte + 1)}
+      />
     </React.Fragment>
   )
 }

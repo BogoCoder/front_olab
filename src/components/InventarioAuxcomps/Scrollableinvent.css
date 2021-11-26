@@ -39,3 +39,52 @@
     border-style: solid;
     font-family: 'Montserrat', sans-serif;
 }
+.divmodalkit{
+    position: absolute;
+    width: 100%;
+    left: 0;
+    top: 0;
+    height: 100%;
+}
+.btn4589{
+    position: absolute;
+    top: 7.5%;
+    left: 65%;
+}
+.inp4589{
+position: absolute;
+top: 5%;
+left: 10%;
+width: 55%;
+}
+.scrollable2{
+    position: absolute;
+    top: 17%;
+    bottom: 0;
+    overflow-y: scroll;
+    width: 50%;
+    height: 73%;
+    left: 10%;
+}
+.inp4590,.inp4591, .lbl1, .lbl2{
+    position: absolute;
+    left:65%;
+    width:30%;
+    height: 10px
+}
+.inp4590{
+    top:35%
+}
+.inp4591{
+    top:55%
+}
+.lbl1{
+    top:30%
+}
+.lbl2{
+    top:50%
+}
+.modal-header {
+    background: linear-gradient(0deg, rgba(28,110,229,1) 20%, rgba(11,57,125,1) 100%);
+    color: white;
+  }
