@@ -47,7 +47,7 @@ const Accesibilityconfigscomp=() => {
 
   // Consultas de la API
   // Función para obtener las configuraciones
-  const getConfigs = (setData) => {
+  const getConfigs = () => {
     const ruta = rutaApi + '/politicas';
 
     fetch(ruta, {
@@ -61,15 +61,15 @@ const Accesibilityconfigscomp=() => {
     })
     .then((res) => {
       if (typeof res === "string"){
-        setData(defconfig);
+        setContent(defconfig);
       }
       else{
-        setData(res);
+        setContent(res);
       }
       return res;
     })
     .catch((err) => {
-      setData(defconfig);
+      setContent(defconfig);
       console.log(err);
     });
   };
@@ -86,14 +86,25 @@ const Accesibilityconfigscomp=() => {
       body: JSON.stringify(content)
     })
     .then((res) => {
+      if (res.status === 400){
+        //getConfigs()
+        return null
+      }
       return res.json();
     })
     .then((res) => {
-      console.log(res)
-      openModal();
+      //console.log(res)
+      if (res == null){
+        console.log("No Se puedo Guardar")
+        return
+      }
+      else {
+        openModal();
+      }
     })
     .catch((err) => {
       console.log(err);
+      getConfigs()
     });
   };
 
@@ -101,9 +112,7 @@ const Accesibilityconfigscomp=() => {
   useEffect(() => {
   getConfigs(setContent);
   },[])
-  const guardarconfigs = () => {
-    setConfigs();
-  }
+
   function changecontent(event, input){
 
     if (input[1]==="horas_reserva"){
@@ -156,7 +165,7 @@ const Accesibilityconfigscomp=() => {
           <Fila_configs nombre="Tiempo de préstamo (días)" tipo="dias_prestamo" abierta={content[0].dias_prestamo} restringida={content[1].dias_prestamo} confidencial={content[2].dias_prestamo} />
           <Fila_configs nombre="Máximo de renovaciones" tipo="max_renovaciones" abierta={content[0].max_renovaciones} restringida={content[1].max_renovaciones} confidencial={content[2].max_renovaciones} />
         </div>
-        <button type="button" className="btnsearchaccess btntpsr" onClick={guardarconfigs}>Guardar</button>
+        <button type="button" className="btnsearchaccess btntpsr" onClick={setConfigs}>Guardar</button>
         <Modal show={showModal} onHide={openModal}>
 
           <Modal.Body>Guardado Correctamente</Modal.Body>
