@@ -10,6 +10,7 @@ import TableRow from "@material-ui/core/TableRow";
 import logo from "../assets/olab_logo.svg";
 import * as MdIcons from "react-icons/md";
 import DisponibilityBar from "./DisponibilityBar";
+import Grid from "@material-ui/core/Grid";
 
 const columns = [
 	{ id: "foto", label: "", width: 20 },
@@ -123,48 +124,47 @@ export default function StickyHeadTable() {
 	};
 
 	return (
-		<Paper sx={{ width: "100%", overflow: "hidden" }}>
-			<TableContainer sx={{ maxHeight: 440 }}>
-				<Table
-					stickyHeader
-					aria-label='sticky table'
-					style={{ width: 1200, marginLeft: "350px", marginTop: "50px" }}
-				>
-					<TableHead>
-						<TableRow>
-							{columns.map((column) => (
-								<TableCell
-									key={column.id}
-									align={column.align}
-									style={{ minWidth: column.minWidth }}
-								>
-									{column.label}
-								</TableCell>
-							))}
-						</TableRow>
-					</TableHead>
-					<TableBody>
-						{rows
-							.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-							.map((row) => {
-								return (
-									<TableRow hover role='checkbox' tabIndex={-1} key={row.code}>
-										{columns.map((column) => {
-											const value = row[column.id];
-											return (
-												<TableCell key={column.id} align={column.align}>
-													{column.format && typeof value === "number"
-														? column.format(value)
-														: value}
-												</TableCell>
-											);
-										})}
-									</TableRow>
-								);
-							})}
-					</TableBody>
-				</Table>
-			</TableContainer>
+		// <Grid>
+		<TableContainer sx={{ maxHeight: 440 }}>
+			<Table
+				stickyHeader
+				aria-label='sticky table'
+				// style={{ width: 1200, marginLeft: "350px", marginTop: "50px" }}
+			>
+				<TableHead>
+					<TableRow>
+						{columns.map((column) => (
+							<TableCell
+								key={column.id}
+								align={column.align}
+								style={{ minWidth: column.minWidth }}
+							>
+								{column.label}
+							</TableCell>
+						))}
+					</TableRow>
+				</TableHead>
+				<TableBody>
+					{rows
+						.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+						.map((row) => {
+							return (
+								<TableRow hover role='checkbox' tabIndex={-1} key={row.code}>
+									{columns.map((column) => {
+										const value = row[column.id];
+										return (
+											<TableCell key={column.id} align={column.align}>
+												{column.format && typeof value === "number"
+													? column.format(value)
+													: value}
+											</TableCell>
+										);
+									})}
+								</TableRow>
+							);
+						})}
+				</TableBody>
+			</Table>
 			<TablePagination
 				rowsPerPageOptions={[4, 25, 100]}
 				component='div'
@@ -173,8 +173,8 @@ export default function StickyHeadTable() {
 				page={page}
 				onPageChange={handleChangePage}
 				onRowsPerPageChange={handleChangeRowsPerPage}
-				style={{ width: 1200, marginLeft: "300px" }}
+				// style={{ width: 1200 }}
 			/>
-		</Paper>
+		</TableContainer>
 	);
 }
