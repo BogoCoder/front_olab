@@ -16,8 +16,9 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 let usuario = {
-	"nombre": "Luisa Jaramillo",
-	"email": "luisa.jaramillo@urosario.edu.co"}
+	"nombre": localStorage.getItem("nombre"),
+	"email": localStorage.getItem("correo")}
+
 
 function PerfilCliente() {
 	return (
