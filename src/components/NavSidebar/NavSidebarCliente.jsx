@@ -31,7 +31,7 @@ const NavbarCliente = () => {
 
 	return (
 		<React.Fragment>
-			<nav className='navbar navbar-expand-lg navbar-light bg-light'>
+			<nav className='navbar navbar-expand-lg navbar-light '>
 				<div className='container-fluid'>
 					<img src={logo} alt='logo' />
 					<button
@@ -86,12 +86,12 @@ const NavbarCliente = () => {
 						container
 						alignItems='center'
 						justifyContent='center'
-						spacing={2}
+						spacing={0}
 					>
 						<Grid item xs container direction='column' spacing={2}>
 							<Grid item xs>
 								<WhiteTextTypography variant='caption'>
-									Miguel Valencia Z.
+									{localStorage.getItem("nombre")}
 								</WhiteTextTypography>
 							</Grid>
 						</Grid>

@@ -2,51 +2,55 @@ import React from "react";
 import NavbarCliente from "../components/NavSidebar/NavSidebarCliente";
 import SeccionLateral from "../components/clientePerfil/SeccionLateral";
 import InfoPersonal from "../components/clientePerfil/InfoPersonal";
-import { styled } from '@mui/material/styles';
-import Paper from '@mui/material/Paper';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
+import { styled } from "@mui/material/styles";
+import Paper from "@mui/material/Paper";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
 import SearchInput from "../components/searchBar/SearchInput";
 
 const Item = styled(Paper)(({ theme }) => ({
 	...theme.typography.body2,
 	padding: theme.spacing(1),
-	textAlign: 'center',
+	textAlign: "center",
 	color: theme.palette.text.secondary,
 }));
 
 let usuario = {
-	"nombre": localStorage.getItem("nombre"),
-	"email": localStorage.getItem("correo")}
-
+	nombre: localStorage.getItem("nombre"),
+	email: localStorage.getItem("correo"),
+};
 
 function PerfilCliente() {
 	return (
 		<React.Fragment>
-		<NavbarCliente/>
-		<Box style={{
-					display: 'flex',
-					alignItems: 'center',
-					justifyContent: 'center',
-					margin: '1em'
-				}}>
-			<SearchInput/>
-		</Box>
-		<Box style={{
-					display: 'flex',
-					alignItems: 'center',
-					justifyContent: 'center',
-					margin: '2em'
-				}}>
-			<Grid container spacing={4} >
-				<Grid item xs={3} >
-					<SeccionLateral />
+			<NavbarCliente />
+			<Box
+				style={{
+					display: "flex",
+					alignItems: "center",
+					justifyContent: "center",
+					margin: "1em",
+				}}
+			>
+				<SearchInput />
+			</Box>
+			<Box
+				style={{
+					display: "flex",
+					alignItems: "center",
+					justifyContent: "center",
+					margin: "2em",
+				}}
+			>
+				<Grid container spacing={4}>
+					<Grid item xs={3}>
+						<SeccionLateral />
+					</Grid>
+					<Grid item xs={7}>
+						<InfoPersonal usuario={usuario} />
+					</Grid>
 				</Grid>
-				<Grid item xs={7}>
-					<InfoPersonal usuario={usuario}/>
-				</Grid>
-			</Grid>
-		</Box>
+			</Box>
 		</React.Fragment>
 	);
 }
