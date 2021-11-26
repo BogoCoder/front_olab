@@ -122,6 +122,7 @@ export default function SignInSide(props) {
       <CssBaseline />
         <Grid
           item
+          container
           direction='column'
           xs={false}
           sm={4}
