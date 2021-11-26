@@ -1,13 +1,13 @@
-.container {
-	height: 15px;
+.container-bar {
+	height: 1em;
 	background-color: #ccc;
 	position: relative;
 	border-radius: 7px;
-	width: 50px;
+	width: 4em;
 	transform: translateX(20px);
 }
 
-.container .low-disponibility {
+.container-bar .low-disponibility {
 	position: absolute;
 	height: 100%;
 	background-color: red;
@@ -15,7 +15,7 @@
 	border-radius: 7px;
 }
 
-.container .high-disponibility {
+.container-bar .high-disponibility {
 	position: absolute;
 	height: 100%;
 	background-color: green;
@@ -23,7 +23,7 @@
 	border-radius: 7px;
 }
 
-.container .medium-disponibility {
+.container-bar .medium-disponibility {
 	position: absolute;
 	height: 100%;
 	background-color: orange;
